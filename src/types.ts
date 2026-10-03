@@ -19,9 +19,9 @@ export interface AdapterRecord extends ProviderSummary {
   enabled: boolean
   builtIn: boolean
   createdAt?: string
-  secretHint?: string
   style?: string
   latencyBase?: number
+  secret?: { present: boolean; hint?: string; fingerprint?: string }
 }
 
 export interface ChannelState {
@@ -69,6 +69,7 @@ export interface CollapseMetrics {
 
 export interface CollapseResult {
   status: string
+  rule?: string
   message?: string
   finalText: string
   collapsedAt?: string

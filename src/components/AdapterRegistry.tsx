@@ -23,6 +23,7 @@ const EMPTY_FORM = {
   vendor: '',
   model: '',
   endpoint: '',
+  apiKey: '',
   persona: 'struktur',
   summary: '',
   weightDefault: 15,
@@ -39,6 +40,7 @@ export function AdapterRegistry({
   const [open, setOpen] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [listError, setListError] = useState<string | null>(null)
   const [form, setForm] = useState({ ...EMPTY_FORM })
 
   const submit = async () => {
@@ -126,6 +128,21 @@ export function AdapterRegistry({
               />
             </label>
 
+            <label className="field">
+              <span className="label">Zugangsschlüssel (optional)</span>
+              <input
+                type="password"
+                autoComplete="off"
+                value={form.apiKey}
+                onChange={(event) => setForm({ ...form, apiKey: event.target.value })}
+                placeholder="wird nur verschlüsselt abgelegt"
+              />
+              <span className="field__note">
+                Der Schlüssel verlässt den Server nicht: gespeichert werden nur Geheimtext,
+                maskierte Vorschau und Fingerprint.
+              </span>
+            </label>
+
             <label className="field field--wide">
               <span className="label">Persona</span>
               <select
@@ -200,6 +217,14 @@ export function AdapterRegistry({
                 {adapter.vendor} · {adapter.model}
               </span>
               <span className="adapterList__summary">{adapter.summary}</span>
+              {adapter.secret ? (
+                <span className="mono adapterList__secret">
+                  Tresor: {adapter.secret.present ? adapter.secret.hint : 'leer'}
+                  {adapter.secret.fingerprint
+                    ? ` · FP ${adapter.secret.fingerprint.slice(0, 8)}`
+                    : ''}
+                </span>
+              ) : null}
             </div>
             <div className="adapterList__actions">
               <button type="button" className="btn btn--ghost btn--small" onClick={() => onToggle(adapter.id)}>
@@ -209,7 +234,13 @@ export function AdapterRegistry({
                 <input
                   type="checkbox"
                   checked={adapter.enabled}
-                  onChange={(event) => void onToggleEnabled(adapter.id, event.target.checked)}
+                  onChange={(event) =>
+                    void onToggleEnabled(adapter.id, event.target.checked).catch((cause: unknown) => {
+                      setListError(
+                        cause instanceof ApiError ? cause.message : 'Umschalten fehlgeschlagen.',
+                      )
+                    })
+                  }
                 />
                 <span>aktiv</span>
               </label>
@@ -217,7 +248,15 @@ export function AdapterRegistry({
                 <button
                   type="button"
                   className="btn btn--danger btn--small"
-                  onClick={() => void onDelete(adapter.id)}
+                  onClick={() =>
+                    void onDelete(adapter.id).catch((cause: unknown) => {
+                      setListError(
+                        cause instanceof ApiError
+                          ? cause.message
+                          : 'Adapter konnte nicht entfernt werden.',
+                      )
+                    })
+                  }
                 >
                   Entfernen
                 </button>
@@ -226,6 +265,7 @@ export function AdapterRegistry({
           </li>
         ))}
       </ul>
+      {listError ? <p className="console__error">{listError}</p> : null}
     </section>
   )
 }

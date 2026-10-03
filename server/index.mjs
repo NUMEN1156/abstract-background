@@ -138,11 +138,14 @@ app.post('/api/superposition', async (request, reply) => {
   }
 
   const requestedIds = Array.isArray(body.providerIds) ? body.providerIds.map(String) : []
-  const providers = activeAdapters(requestedIds)
-  if (providers.length === 0) {
-    return reply
-      .code(400)
-      .send({ ok: false, error: 'Es ist kein Adapter aktiv. Aktivieren Sie mindestens einen.' })
+  let providers
+  try {
+    providers = activeAdapters(requestedIds)
+  } catch (error) {
+    if (error instanceof AdapterError) {
+      return reply.code(400).send({ ok: false, error: error.message, field: error.field })
+    }
+    throw error
   }
 
   const settings = {
@@ -199,9 +202,26 @@ app.post('/api/collapse', async (request, reply) => {
     return reply.code(404).send({ ok: false, error: 'Sitzung nicht gefunden oder abgelaufen.' })
   }
 
-  const weights = body.weights && typeof body.weights === 'object' ? body.weights : {}
+  const rawWeights =
+    body.weights && typeof body.weights === 'object' && !Array.isArray(body.weights)
+      ? body.weights
+      : {}
+  const weights = {}
+  for (const [key, value] of Object.entries(rawWeights)) {
+    const numeric = Number(value)
+    if (!Number.isFinite(numeric)) {
+      return reply.code(400).send({
+        ok: false,
+        error: `Das Gewicht für „${key}“ ist keine endliche Zahl.`,
+        field: key,
+      })
+    }
+    weights[key] = Math.min(100, Math.max(0, numeric))
+  }
+
   const result = collapse({
     prompt: session.prompt,
+    rule: session.settings.collapseRule,
     streams: [...session.streams.values()].map((stream) => ({
       id: stream.id,
       label: stream.label,

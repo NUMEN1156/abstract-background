@@ -202,8 +202,9 @@ export function useSuperposition() {
     try {
       const { adapters: list } = await api.adapters()
       setAdapters(list)
+      const usable = new Set(list.filter((adapter) => adapter.enabled).map((adapter) => adapter.id))
       setSelectedIds((prev) => {
-        if (prev.length > 0) return prev.filter((id) => list.some((adapter) => adapter.id === id))
+        if (prev.length > 0) return prev.filter((id) => usable.has(id))
         return list.filter((adapter) => adapter.enabled).map((adapter) => adapter.id)
       })
     } catch (cause) {
@@ -349,9 +350,16 @@ export function useSuperposition() {
 
   const setAdapterEnabled = useCallback(
     async (id: string, enabled: boolean) => {
-      await api.updateAdapter(id, { enabled })
-      pushLog('info', `Adapter ${id} ${enabled ? 'aktiviert' : 'deaktiviert'}`)
-      await refreshAdapters()
+      try {
+        await api.updateAdapter(id, { enabled })
+        pushLog('info', `Adapter ${id} ${enabled ? 'aktiviert' : 'deaktiviert'}`)
+        await refreshAdapters()
+      } catch (cause) {
+        const message =
+          cause instanceof ApiError ? cause.message : `Adapter ${id} konnte nicht umgeschaltet werden.`
+        pushLog('error', message)
+        throw cause
+      }
     },
     [pushLog, refreshAdapters],
   )

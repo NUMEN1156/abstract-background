@@ -131,6 +131,10 @@ class Session {
         const chunks = toTokenChunks(composeResponse(provider, this.prompt))
         const perChunk = provider.verbosity >= 1.1 ? 1 : provider.verbosity <= 0.85 ? 3 : 2
         const [minCadence, maxCadence] = provider.cadence
+        // Die Streuung moduliert Taktrate und Blockgröße des Kanals: höhere Werte erzeugen
+        // unregelmäßigere Ströme, niedrigere ein gleichmäßigeres, vorhersehbares Verhalten.
+        const temperature = Math.min(1, Math.max(0, Number(this.settings.temperature ?? 0.4)))
+        const cadenceScale = 0.6 + temperature * 0.9
         let index = 0
         let tokens = 0
 
@@ -166,7 +170,7 @@ class Session {
           }
 
           if (index < chunks.length) {
-            this.later(pushChunk, jitter(minCadence, maxCadence))
+            this.later(pushChunk, jitter(minCadence, maxCadence) * cadenceScale)
             return
           }
 

@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { ADAPTER_ACCENTS, BASE_PROVIDERS, PERSONA_PRESETS } from './providers.mjs'
+import { describeSecret, dropSecret, storeSecret } from './crypto.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const dataDir = path.join(path.resolve(here, '..'), '.data')
@@ -9,6 +10,8 @@ const storeFile = path.join(dataDir, 'adapters.json')
 
 /** Registry der Modelladapter. Basisadapter stammen aus dem Code, eigene aus dem Datenspeicher. */
 const custom = new Map()
+/** Schaltzustand der Basisadapter; im Datenspeicher überdauernd. */
+const builtInState = new Map()
 
 function slugify(value) {
   return String(value ?? '')
@@ -25,7 +28,11 @@ function persist() {
     fs.mkdirSync(dataDir, { recursive: true })
     fs.writeFileSync(
       storeFile,
-      JSON.stringify({ version: 1, adapters: [...custom.values()] }, null, 2),
+      JSON.stringify(
+        { version: 2, adapters: [...custom.values()], builtInState: Object.fromEntries(builtInState) },
+        null,
+        2,
+      ),
       'utf8',
     )
   } catch {
@@ -35,10 +42,12 @@ function persist() {
 
 function restore() {
   try {
-    const raw = fs.readFileSync(storeFile, 'utf8')
-    const parsed = JSON.parse(raw)
+    const parsed = JSON.parse(fs.readFileSync(storeFile, 'utf8'))
     for (const adapter of parsed?.adapters ?? []) {
       if (adapter?.id) custom.set(adapter.id, adapter)
+    }
+    for (const [id, state] of Object.entries(parsed?.builtInState ?? {})) {
+      builtInState.set(id, Boolean(state?.enabled))
     }
   } catch {
     /* Kein gespeicherter Stand vorhanden. */
@@ -47,23 +56,30 @@ function restore() {
 
 restore()
 
+/** Adapter ohne serverseitige Geheimnisse, aber mit maskiertem Tresorstatus. */
+function publicView(adapter) {
+  const { secretHint: _secretHint, ...rest } = adapter
+  const secret = adapter.builtIn ? null : describeSecret(adapter.id)
+  return {
+    ...rest,
+    enabled: adapter.builtIn
+      ? (builtInState.get(adapter.id) ?? true)
+      : adapter.enabled,
+    secret: secret
+      ? { present: secret.present, hint: secret.hint, fingerprint: secret.fingerprint }
+      : undefined,
+  }
+}
+
 export function listAdapters() {
   return [
-    ...BASE_PROVIDERS.map((provider) => ({ ...provider, builtIn: true })),
-    ...[...custom.values()].map((adapter) => ({ ...adapter, builtIn: false })),
+    ...BASE_PROVIDERS.map((provider) => publicView({ ...provider, builtIn: true })),
+    ...[...custom.values()].map((adapter) => publicView({ ...adapter, builtIn: false })),
   ]
 }
 
 export function getAdapter(id) {
   return listAdapters().find((adapter) => adapter.id === id) ?? null
-}
-
-export function activeAdapters(ids) {
-  const all = listAdapters().filter((adapter) => adapter.enabled)
-  if (!ids || ids.length === 0) return all
-  const wanted = new Set(ids)
-  const selected = all.filter((adapter) => wanted.has(adapter.id))
-  return selected.length > 0 ? selected : all
 }
 
 export class AdapterError extends Error {
@@ -72,6 +88,48 @@ export class AdapterError extends Error {
     this.name = 'AdapterError'
     this.field = field
   }
+}
+
+/**
+ * Wählt die beteiligten Adapter.
+ * Ohne Auswahl nehmen alle aktiven Adapter teil. Eine Auswahl, die keinen aktiven Adapter trifft,
+ * wird abgewiesen, damit nicht stillschweigend mehr Modelle befragt werden als angefordert.
+ */
+export function activeAdapters(ids) {
+  const all = listAdapters().filter((adapter) => adapter.enabled)
+  if (!ids || ids.length === 0) return all
+
+  const wanted = new Set(ids)
+  const selected = all.filter((adapter) => wanted.has(adapter.id))
+  if (selected.length === 0) {
+    throw new AdapterError(
+      'Keiner der gewählten Adapter ist aktiv. Aktivieren Sie die Adapter oder wählen Sie andere aus.',
+      'providerIds',
+    )
+  }
+  return selected
+}
+
+/** Prüft eine Endpunktangabe und verbietet eingebettete Zugangsdaten. */
+function validateEndpoint(raw) {
+  const endpoint = String(raw ?? '').trim()
+  if (endpoint.length === 0) return ''
+  let url
+  try {
+    url = new URL(endpoint)
+  } catch {
+    throw new AdapterError('Der Endpunkt muss eine vollständige http(s)-URL sein.', 'endpoint')
+  }
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+    throw new AdapterError('Der Endpunkt muss mit http:// oder https:// beginnen.', 'endpoint')
+  }
+  if (url.username || url.password) {
+    throw new AdapterError(
+      'Der Endpunkt darf keine Zugangsdaten in der URL enthalten. Hinterlegen Sie den Schlüssel im dafür vorgesehenen Feld.',
+      'endpoint',
+    )
+  }
+  return url.toString()
 }
 
 export function addAdapter(input = {}) {
@@ -90,9 +148,11 @@ export function addAdapter(input = {}) {
     throw new AdapterError('Die Modellkennung muss zwischen 2 und 96 Zeichen lang sein.', 'model')
   }
 
-  const endpoint = String(input.endpoint ?? '').trim()
-  if (endpoint.length > 0 && !/^https?:\/\/[^\s]+$/i.test(endpoint)) {
-    throw new AdapterError('Der Endpunkt muss eine vollständige http(s)-URL sein.', 'endpoint')
+  const endpoint = validateEndpoint(input.endpoint)
+
+  const apiKey = String(input.apiKey ?? '')
+  if (apiKey.length > 256) {
+    throw new AdapterError('Der Zugangsschlüssel ist zu lang (maximal 256 Zeichen).', 'apiKey')
   }
 
   const personaKey = PERSONA_PRESETS[input.persona] ? input.persona : 'struktur'
@@ -133,29 +193,41 @@ export function addAdapter(input = {}) {
     enabled: true,
     builtIn: false,
     weightDefault: Number(input.weightDefault ?? 15),
-    secretHint: String(input.secretHint ?? '').slice(0, 64) || 'serverseitig hinterlegt',
-    createdAt: new Date().toISOString(),
   }
+
+  // Zugangsschlüssel werden ausschließlich verschlüsselt abgelegt und nie ausgeliefert.
+  storeSecret(id, apiKey.length > 0 ? apiKey : `demo-${id}-${Math.random().toString(36).slice(2, 12)}`)
 
   custom.set(id, adapter)
   persist()
-  return adapter
+  return publicView({ ...adapter, builtIn: false })
 }
 
 export function updateAdapter(id, patch = {}) {
-  const current = custom.get(id)
-  if (!current) {
-    throw new AdapterError('Nur eigene Adapter lassen sich ändern.', 'id')
+  if (custom.has(id)) {
+    const current = custom.get(id)
+    const next = { ...current }
+    if (typeof patch.enabled === 'boolean') next.enabled = patch.enabled
+    if (patch.summary !== undefined) next.summary = String(patch.summary).slice(0, 160)
+    if (patch.weightDefault !== undefined) {
+      next.weightDefault = Math.min(100, Math.max(0, Number(patch.weightDefault) || 0))
+    }
+    custom.set(id, next)
+    persist()
+    return publicView({ ...next, builtIn: false })
   }
-  const next = { ...current }
-  if (typeof patch.enabled === 'boolean') next.enabled = patch.enabled
-  if (patch.summary !== undefined) next.summary = String(patch.summary).slice(0, 160)
-  if (patch.weightDefault !== undefined) {
-    next.weightDefault = Math.min(100, Math.max(0, Number(patch.weightDefault) || 0))
+
+  const isBuiltIn = BASE_PROVIDERS.some((provider) => provider.id === id)
+  if (isBuiltIn) {
+    if (typeof patch.enabled !== 'boolean') {
+      throw new AdapterError('Basisadapter lassen sich ausschließlich ein- oder ausschalten.', 'enabled')
+    }
+    builtInState.set(id, patch.enabled)
+    persist()
+    return getAdapter(id)
   }
-  custom.set(id, next)
-  persist()
-  return next
+
+  throw new AdapterError('Adapter nicht gefunden.', 'id')
 }
 
 export function removeAdapter(id) {
@@ -163,6 +235,7 @@ export function removeAdapter(id) {
     throw new AdapterError('Basisadapter sind fest verdrahtet und können nicht entfernt werden.', 'id')
   }
   custom.delete(id)
+  dropSecret(id)
   persist()
   return { id, removed: true }
 }

@@ -102,3 +102,8 @@ export function seedVault(providers) {
   }
   return describeVault()
 }
+
+/** Entfernt einen Tresoreintrag, wenn der zugehörige Adapter gelöscht wird. */
+export function dropSecret(providerId) {
+  return vault.delete(providerId)
+}

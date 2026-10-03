@@ -1591,3 +1591,30 @@ select {
     transition-duration: 1ms !important;
   }
 }
+/* ------------------------------------------------- Hinweise und Tresor ---- */
+
+.field__note {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+.adapterList__secret {
+  font-size: 10px;
+  color: var(--dim);
+  word-break: break-all;
+}
+
+.ruleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(79, 227, 208, 0.4);
+  border-radius: 999px;
+  padding: 4px 10px;
+}

@@ -68,3 +68,34 @@ pnpm start    # Produktionsbetrieb, liefert dist/ statisch aus
 
 Containerbetrieb über `Dockerfile` (Build-Stufe erzeugt `dist/`, Laufzeitstufe startet
 `server/index.mjs`), Health-Pfad `/api/health`, Port 3000.
+## Kollapsregeln
+
+Der Kollaps verändert keine Einzelantwort. Er wählt aus, ordnet zu und protokolliert. Drei Regeln
+stehen zur Wahl und wirken serverseitig:
+
+| Regel | Wirkung |
+| --- | --- |
+| Gewichtete Synthese | Träger nach höchstem Anteil; Beiträge ab 15 % werden als Ergänzungen eingemischt, darunter als Randnotiz ausgewiesen |
+| Bester Träger | Ausschließlich die Ausgabe mit dem höchsten Gewicht bildet das Ergebnis; alle übrigen Kanäle werden als nicht eingemischt kenntlich gemacht |
+| Konsens erzwingen | Es tragen nur Sätze, die gemeinsame Begriffe mindestens der Hälfte der betrachteten Ausgaben berühren; die gemeinsame Begriffsbasis wird ausgewiesen, abweichende Kanäle bleiben sichtbar |
+
+Die **Streuung** moduliert zusätzlich den Zeitverlauf der Kanäle: höhere Werte erzeugen
+unregelmäßigere Taktraten, niedrigere ein gleichmäßiges, vorhersehbares Streaming.
+
+## Schlüsselablage
+
+Zugangsschlüssel werden ausschließlich über `server/crypto.mjs` mit AES-256-GCM verschlüsselt
+abgelegt. Nach außen geben die Schnittstellen nur maskierte Vorschau, Fingerprint und Verfahren an.
+Endpunkt-URLs mit eingebetteten Zugangsdaten werden abgewiesen; der Schlüssel gehört in das dafür
+vorgesehene Feld. Der Adapterkatalog enthält daher niemals Rohgeheimnisse.
+
+## Grenzen des Prototyps
+
+- Die Anbieterantworten sind serverseitige Simulationen mit gemessener Laufzeit und Tokenzahl;
+  echte Anbieterendpunkte sind bewusst nicht angebunden.
+- Sitzungen liegen im Arbeitsspeicher und laufen nach 20 Minuten ohne Zugriff ab.
+- Der Adapterkatalog wird in `.data/adapters.json` gesichert. Im Container ist dieses Verzeichnis
+  flüchtig; für einen Dauerbetrieb gehört die Registry in eine Datenbank.
+- Die verändernden Schnittstellen (`POST/PATCH/DELETE /api/adapters`, Start und Kollaps) besitzen
+  keine Zugangskontrolle. Für den Produktivbetrieb ist eine Authentifizierung vorzuschalten; der
+  Prototyp ist auf die interne Vorschau ausgelegt.

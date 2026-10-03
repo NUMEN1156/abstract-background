@@ -7,6 +7,12 @@ const ROLE_CLASS: Record<string, string> = {
   Randnotiz: 'randnotiz',
 }
 
+const RULE_LABEL: Record<string, string> = {
+  'gewichtete-synthese': 'Gewichtete Synthese',
+  'bester-traeger': 'Bester Träger',
+  'konsens-erzwingen': 'Konsens erzwingen',
+}
+
 interface Props {
   result: CollapseResult
   accentOf: (label: string) => string
@@ -19,9 +25,14 @@ export function ResultPanel({ result, accentOf }: Props) {
     <section className="panel panel--result" aria-labelledby="result-title">
       <header className="panel__head">
         <h2 id="result-title">Finales Ergebnis</h2>
-        <span className="mono panel__value">
-          {result.collapsedAt ? formatClock(result.collapsedAt) : '—'}
-        </span>
+        <div className="panel__headActions">
+          {result.rule ? (
+            <span className="ruleBadge">{RULE_LABEL[result.rule] ?? result.rule}</span>
+          ) : null}
+          <span className="mono panel__value">
+            {result.collapsedAt ? formatClock(result.collapsedAt) : '—'}
+          </span>
+        </div>
       </header>
 
       {result.status !== 'kollabiert' ? (
