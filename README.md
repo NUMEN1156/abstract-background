@@ -4,6 +4,10 @@
 answers stream in parallel, are weighted individually, and collapse into a single result — with
 every step logged and every sentence traceable back to the model that produced it.
 
+**Live demo:** https://abstractbg-qehn8ouj.manus.space — no login required.
+
+[Deutsche Fassung](README.de.md) · [Lasttest-Bericht](reports/LOADTEST.md)
+
 [Deutsche Fassung](README.de.md) · [Lasttest-Bericht](reports/LOADTEST.md)
 
 ![License](https://img.shields.io/badge/license-MIT-4fe3d0)
