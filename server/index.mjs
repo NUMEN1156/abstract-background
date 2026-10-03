@@ -5,7 +5,7 @@ import Fastify from 'fastify'
 import websocket from '@fastify/websocket'
 import fastifyStatic from '@fastify/static'
 
-import { SuperpositionHub } from './hub.mjs'
+import { CapacityError, SuperpositionHub } from './hub.mjs'
 import { activeAdapters, addAdapter, AdapterError, listAdapters, removeAdapter, updateAdapter } from './adapters.mjs'
 import { collapse } from './synthesis.mjs'
 import { describeVault, seedVault } from './crypto.mjs'
@@ -155,7 +155,20 @@ app.post('/api/superposition', async (request, reply) => {
     temperature: Number(body.temperature ?? 0.4),
   }
 
-  const session = hub.createSession({ prompt, providers, settings })
+  let session
+  try {
+    session = hub.createSession({ prompt, providers, settings })
+  } catch (error) {
+    if (error instanceof CapacityError) {
+      return reply.code(429).send({
+        ok: false,
+        error: error.message,
+        field: 'capacity',
+        retryAfterSec: 30,
+      })
+    }
+    throw error
+  }
   hub.recordEmit()
   return {
     ok: true,

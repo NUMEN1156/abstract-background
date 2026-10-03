@@ -120,3 +120,25 @@ Zusätzlich weist das Ergebnis die **Gewichtskonzentration** aus (Summe der quad
 Gewichtsanteile, 1 = ein einziger Träger) und die **Modellgüte** als gewichtetes Mittel der
 Selbstbewertungen. Die vollständige Matrix wird im Ergebnisbereich als Heatmap dargestellt, die
 größten Abweichungen zusätzlich als Liste.
+## Lasttest
+
+`scripts/loadtest.mjs` prüft Nebenläufigkeit, Latenz und Skalierung gegen eine laufende Instanz:
+
+```sh
+NODE_ENV=production PORT=3200 ABSTRACT_MAX_SESSIONS=200 node server/index.mjs &
+pnpm loadtest --base=http://127.0.0.1:3200 --sessions=120 --combined-sessions=60
+```
+
+Der Lauf erzeugt Sitzungen, verbindet je Sitzung einen WebSocket-Client, prüft die Vollständigkeit
+der Ereignispuffer über späte Zweitverbindungen, misst die Kollaps-Latenz im Ruhezustand und
+während laufender Ströme, benchmarkt die Kohärenzmatrix über wachsende Modellzahlen und ermittelt
+den Durchsatz einfacher HTTP-Endpunkte. Berichte landen in `reports/` als JSON und Markdown.
+
+Messwerte und Auswertung: [Lasttestbericht](reports/LOADTEST.md). Kurzfassung — 200 gleichzeitige
+Sitzungen mit 800 Kanälen und rund 75.000 Ereignissen ohne Kanalverlust, Kollaps-Latenz P95 unter
+40 ms auch unter Last, rund 2.500 HTTP-Anfragen pro Sekunde, Speicherbedarf etwa 0,6 MB je
+gehaltener Sitzung.
+
+Die Obergrenze gleichzeitiger Sitzungen steuert `ABSTRACT_MAX_SESSIONS` (Standard 120). Ist sie
+erreicht und keine Sitzung abgeschlossen, wird der neue Auftrag mit HTTP 429 abgelehnt, statt eine
+laufende Sitzung zu verdrängen. Die Telemetrie weist RSS, Heap und gepufferte Ereignisse aus.

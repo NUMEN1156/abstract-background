@@ -41,6 +41,9 @@ export interface Telemetry {
   totalMessages: number
   avgLatencyMs: number
   uptimeSec: number
+  bufferedEvents?: number
+  maxSessions?: number
+  memory?: { rssMb: number; heapUsedMb: number }
 }
 
 export interface ProtocolStep {

@@ -37,6 +37,20 @@ export function TelemetryRail({ telemetry, history, log }: Props) {
             <dt>Meldungen total</dt>
             <dd className="mono">{telemetry ? formatNumber(telemetry.totalMessages) : '—'}</dd>
           </div>
+          <div>
+            <dt>Puffer</dt>
+            <dd className="mono">
+              {telemetry?.bufferedEvents !== undefined
+                ? formatNumber(telemetry.bufferedEvents)
+                : '—'}
+            </dd>
+          </div>
+          <div>
+            <dt>Speicher</dt>
+            <dd className="mono">
+              {telemetry?.memory ? `${telemetry.memory.rssMb.toFixed(0)} MB` : '—'}
+            </dd>
+          </div>
         </dl>
 
         <div className="spark" aria-hidden="true">

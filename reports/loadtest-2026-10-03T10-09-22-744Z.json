@@ -1,0 +1,385 @@
+{
+  "at": "2026-10-03T10:09:22.744Z",
+  "durationMs": 24336.55,
+  "config": {
+    "base": "http://127.0.0.1:3200",
+    "sessions": 120,
+    "sessionConcurrency": 40,
+    "collapseRequests": 120,
+    "collapseConcurrency": 32,
+    "httpRequests": 1000,
+    "httpConcurrency": 50,
+    "replaySamples": 5,
+    "timeoutMs": 90000,
+    "outDir": "reports"
+  },
+  "streams": {
+    "requested": 120,
+    "accepted": 120,
+    "rejected": 0,
+    "rejectionReasons": [],
+    "completed": 120,
+    "completions": {
+      "durationMs": {
+        "count": 120,
+        "min": 8694.990683999999,
+        "mean": 9169.483366900005,
+        "p50": 9179.501249,
+        "p95": 9472.824491,
+        "p99": 9704.383925,
+        "max": 9728.147998
+      },
+      "firstChunkMs": {
+        "count": 120,
+        "min": 138.693218,
+        "mean": 263.1829520166666,
+        "p50": 267.11830699999996,
+        "p95": 364.100602,
+        "p99": 374.770792,
+        "max": 387.148934
+      }
+    },
+    "totals": {
+      "events": 44832,
+      "chunks": 42432,
+      "failedProviders": 0
+    },
+    "replay": [
+      {
+        "sessionId": "04781883-2b0a-427a-a43a-e29ad10943e9",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 369,
+        "expectedChars": 790,
+        "receivedChars": 790
+      },
+      {
+        "sessionId": "35802fad-85e5-42dd-a69c-2a55bbea44a8",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 784,
+        "receivedChars": 784
+      },
+      {
+        "sessionId": "a275a2ae-e198-4e1f-9b9b-c0f0aa4f9f5c",
+        "providerId": "anthropic",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 1130,
+        "receivedChars": 1130
+      },
+      {
+        "sessionId": "4faa5481-feb9-443b-9329-23f15dee9cf5",
+        "providerId": "openai",
+        "ok": true,
+        "replayed": 364,
+        "expectedChars": 1090,
+        "receivedChars": 1090
+      },
+      {
+        "sessionId": "d08dcaf5-999f-44b2-b9f8-964fbe71da3a",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 371,
+        "expectedChars": 782,
+        "receivedChars": 782
+      }
+    ],
+    "replayOk": true,
+    "statuses": {
+      "complete": 120
+    },
+    "sessionIds": [
+      "04781883-2b0a-427a-a43a-e29ad10943e9",
+      "35802fad-85e5-42dd-a69c-2a55bbea44a8",
+      "a275a2ae-e198-4e1f-9b9b-c0f0aa4f9f5c",
+      "4faa5481-feb9-443b-9329-23f15dee9cf5",
+      "d08dcaf5-999f-44b2-b9f8-964fbe71da3a",
+      "9c93702e-972e-4b59-8112-49a659b1a983",
+      "ef77cff2-f802-44d4-90c2-c466dd01feb8",
+      "cb6a5fc6-d441-4b21-b4c2-76de3be6feb5",
+      "5f78c0c4-4754-4227-9c43-eed3c28d9878",
+      "e02d4a70-8fc4-4361-b20f-76187cb19b0a",
+      "a950d83b-a90c-4ce0-9e41-4c6f653ea47d",
+      "5f23e12a-aedd-4d0c-bf9a-690b50d908d8",
+      "2bcc4269-a4c7-4be5-bce8-4108aecf13b4",
+      "d74f6171-e72b-413b-a755-a819a2dab4a6",
+      "80397175-a574-4565-a7f9-4e5a7211cfac",
+      "b052db51-9c56-4dda-8b2a-2609f013041f",
+      "26e4887a-8727-4798-a982-b056ba0e3b69",
+      "ada15692-eed1-4e00-bfab-921aaccda7c7",
+      "fe52808a-981f-42c4-b136-a03d10b9dc32",
+      "492d4a07-de30-430b-85e4-ef94e6659ad3",
+      "f495f0e8-67f3-4f3d-aeb8-5b6c261a76b0",
+      "d9d67e70-d967-426e-8c2b-b07fdd1aa737",
+      "e21c3c90-3936-42ac-abde-341ec754b3dc",
+      "eb46b7cc-cf0a-4df4-84ce-10e1fa5b955e",
+      "c0511015-2ee8-43fd-a98a-0950050846e0",
+      "9ce7cedc-5a26-40eb-b54f-43e65c7c6b8f",
+      "fc6e7334-ed53-48fa-aa32-6fbbd0757946",
+      "794b9fd2-f3a2-4500-932e-1283e1fe99dd",
+      "1d86cca8-49b2-4fdf-93e0-be3b2286a406",
+      "8940cb4e-b5de-4c08-b263-7ed71d6d3cac",
+      "f1c40ad9-5b00-4c37-9f38-c8425affbb70",
+      "f0b30588-9f32-48cf-8566-2fc43971a74e",
+      "dd971bf7-0056-4b55-8d95-3958df6adbb2",
+      "aa90a677-433e-4b4d-b947-929248d91a86",
+      "b8dd03cd-97b4-4500-8116-fb222b7c6e24",
+      "4c8b9dc1-db0d-4be3-9c3d-a5068e75ee0d",
+      "4aeee8f1-856d-4b7e-a172-8b86ab2b000f",
+      "a5caf616-0ac2-485d-8c26-e68af6c096f2",
+      "3714a6bb-6999-4565-9fb3-d3b13f9f7986",
+      "1cd37d9a-01ad-4781-b4e1-9cae9b16ee73",
+      "fe84d77d-5bb7-4f7f-b321-6d8def9812e8",
+      "d3e6259b-f178-469c-86f8-05a2b1c2fc0f",
+      "a7a164be-37c7-43a6-81ed-3d823f2236a3",
+      "b1ffaaab-e499-4b35-842c-74c4defa9b01",
+      "255b93c9-bd2a-4af5-b90d-ec7b902584a5",
+      "a007891f-2b88-4442-be6d-d02610af17f5",
+      "21c96481-f8b1-4ca7-ba0b-c98f86de2484",
+      "c39df7cb-8192-421d-ae43-40aeab162591",
+      "4a252820-0934-4af7-8b50-1aa94bac6362",
+      "9ce6d77d-d7e3-426b-8e07-aa9035ca7829",
+      "09602be9-5071-4dc6-b0e1-d2f3ba402655",
+      "d9853860-2091-436d-ad12-0609d19ce95c",
+      "8c0d97b5-f13e-4bce-9853-9d15621ce3e7",
+      "43f768ea-4ae0-46c1-97bd-593e458821af",
+      "180dfb91-90a7-4f90-9546-ccd64761d748",
+      "8850b3c7-f8b1-43b3-817d-64b4331dddcb",
+      "945072bc-7c31-41ff-97d3-5aa3acbb4f20",
+      "a2a77156-28ac-4433-beda-68a6a9d75005",
+      "9c20b5df-4201-4224-95ce-346348038514",
+      "5b17deb1-1170-4f08-a945-d6972da41cfc",
+      "358feda3-7f21-4335-996d-f4b3ca3ecd49",
+      "577d1c50-797a-4ce9-858b-951d06b2f1d7",
+      "65da16b5-53cb-4d22-af00-5f8e7b695927",
+      "3a3652be-1ac1-4fcf-ad52-4c5eac73d7db",
+      "34f937b0-dee1-4cec-b4dc-5fbbf70c21b5",
+      "840909b4-3d52-473d-a80b-27ba857c50bb",
+      "e5a8f622-8ed0-46c1-a67b-847cec0487b9",
+      "ee165cba-b137-49b1-80c2-c8d17157326c",
+      "14a64eea-9720-4092-9110-1f1850234d69",
+      "0c350785-7ade-430b-9cad-f52578e2e988",
+      "1dce8654-eb1a-49e1-95d9-1b33e90f69dd",
+      "f00cbeb9-ffab-4b46-b414-2d5bfd922853",
+      "2ff1cbeb-83cb-4a6a-8085-16bf7e82650e",
+      "b9825ea0-3458-4f40-a209-38daee20362b",
+      "9760ae04-1b60-4186-8c83-97ba2caa0117",
+      "d747b423-e3a3-4f42-b9c1-c6de997b3131",
+      "dd5cedb4-d949-4696-a004-a76c0ffcc272",
+      "93997493-8622-4245-a7bb-aee2f6f8a3cb",
+      "f4c4b893-e56d-4249-b993-ebb650f5078f",
+      "64c78539-0bc2-4d08-8248-4443dbbb12d6",
+      "eb309ac3-bf3a-4ba2-805b-45dca26a79f0",
+      "3c4655fb-78b1-4fb0-a7a3-dc23971c46bb",
+      "ff085724-da87-4347-b8e5-2d47d1290d12",
+      "e1a0a046-f1b7-4164-84d3-f5798c16cbae",
+      "2dddd2b1-fa71-40a0-be81-6d841d1ad5da",
+      "90b2b5c8-9cc3-4490-bdd9-bca816bc333b",
+      "f2090fa2-f0ae-45f9-b597-40ee5796a5b1",
+      "261b6386-99e9-4a01-8f72-5eab490fd198",
+      "93c7f6d6-c11b-42d6-afee-2b2b887680c5",
+      "1aabf8ae-3a80-4531-8663-c2a6bcf74128",
+      "79cdbc08-3d9f-4072-91e9-65d6f2d53c93",
+      "5c717c7c-f528-4600-84ac-1cfa54a2cad3",
+      "3d3581d9-5c29-4d00-83b3-bdd91c720367",
+      "fc808eeb-64ac-43d6-9b2e-1c74ca871106",
+      "ceb8800c-ad5d-4e2f-b636-40d3cdf2a655",
+      "ef226e3d-d9c8-47b1-ac96-5e0a915070f7",
+      "0159c111-563a-47a3-99ca-80e4144a688e",
+      "35a9e5cb-ee1f-4c04-980e-d4702347eb5c",
+      "d9fb29b3-4d71-4819-b868-e015196fb13e",
+      "cee2ad4a-28b2-4337-aa35-55a322edaa0f",
+      "a5d8ef3f-de4a-4b4b-8d73-0f038dc740c4",
+      "54a4ac68-f206-4821-994f-d3301da66d7f",
+      "dc48594c-7a78-4707-81d3-51ab557368d5",
+      "3a32ac12-0148-43a2-b63f-47de154fb66d",
+      "c2a8847b-14b7-4eb5-8016-c64f0e9e9ec6",
+      "44b71c58-1e7b-405e-be89-947b7b35090f",
+      "438fae58-be8a-424f-89fc-b5fca16bf9ed",
+      "66a10576-9e1d-4eb1-932c-feee619415ac",
+      "8ed2c234-bfe0-471a-bafb-4ae3b98e0938",
+      "9cef47ca-88f8-4965-acd4-4f312abc2731",
+      "fe30847c-21d0-48ed-a9bf-0f9273c3cfeb",
+      "9840519b-a806-4f76-92a2-496fd141dfd9",
+      "1339036c-fb38-4198-8b1e-bcaac5832025",
+      "a645aa9a-fd0f-415a-bdf9-519a5919422d",
+      "22fd819d-94fa-4afd-9fca-2a8451bb878b",
+      "5441d885-399a-4076-be1b-df0f9e47ddae",
+      "0f3c062d-e380-4fb0-ba09-9820f356d401",
+      "c0610575-b505-4cec-8b50-cf0aef5ba306",
+      "484f174b-d7c0-423a-ba48-14ccc3ad87b8",
+      "c963543b-0adf-4bf1-88ab-b891e7a99ed3"
+    ]
+  },
+  "collapse": {
+    "requests": 120,
+    "concurrency": 32,
+    "failed": 0,
+    "contributors": {
+      "count": 120,
+      "min": 4,
+      "mean": 4,
+      "p50": 4,
+      "p95": 4,
+      "p99": 4,
+      "max": 4
+    },
+    "tokens": {
+      "count": 120,
+      "min": 477,
+      "mean": 483.6,
+      "p50": 483,
+      "p95": 489,
+      "p99": 489,
+      "max": 489
+    },
+    "latencyMs": {
+      "count": 120,
+      "min": 7.169545000000653,
+      "mean": 18.90259437500005,
+      "p50": 18.70276400000148,
+      "p95": 26.370436999999583,
+      "p99": 34.72139299999981,
+      "max": 35.045961000001626
+    },
+    "throughputPerSecond": 52.9
+  },
+  "matrix": {
+    "optimized": [
+      {
+        "models": 4,
+        "pairs": 12,
+        "ms": 0.5,
+        "cpuMs": 0.48,
+        "usPerPair": 40
+      },
+      {
+        "models": 8,
+        "pairs": 56,
+        "ms": 0.418,
+        "cpuMs": 0.41,
+        "usPerPair": 7.32
+      },
+      {
+        "models": 16,
+        "pairs": 240,
+        "ms": 0.905,
+        "cpuMs": 0.893,
+        "usPerPair": 3.72
+      },
+      {
+        "models": 32,
+        "pairs": 992,
+        "ms": 2.696,
+        "cpuMs": 3.43,
+        "usPerPair": 3.46
+      },
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 11.796,
+        "cpuMs": 19.432,
+        "usPerPair": 4.82
+      },
+      {
+        "models": 128,
+        "pairs": 16256,
+        "ms": 14.849,
+        "cpuMs": 22.736,
+        "usPerPair": 1.4
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 49.047,
+        "cpuMs": 49.022,
+        "usPerPair": 0.75
+      }
+    ],
+    "naive": [
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 258.943
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 3904.094
+      }
+    ]
+  },
+  "combined": {
+    "sessionCount": 60,
+    "warmupMs": 2500,
+    "collapse": {
+      "requests": 120,
+      "concurrency": 32,
+      "failed": 0,
+      "contributors": {
+        "count": 120,
+        "min": 4,
+        "mean": 4,
+        "p50": 4,
+        "p95": 4,
+        "p99": 4,
+        "max": 4
+      },
+      "tokens": {
+        "count": 120,
+        "min": 233,
+        "mean": 245.74166666666667,
+        "p50": 246,
+        "p95": 254,
+        "p99": 256,
+        "max": 258
+      },
+      "latencyMs": {
+        "count": 120,
+        "min": 7.031705000001239,
+        "mean": 18.847480366666847,
+        "p50": 18.04091200000039,
+        "p95": 28.103148999998666,
+        "p99": 31.647123000002466,
+        "max": 32.156511000001046
+      },
+      "throughputPerSecond": 53.1
+    },
+    "streamsCompleted": 60,
+    "streamEvents": 22416
+  },
+  "http": {
+    "requests": 1000,
+    "concurrency": 50,
+    "failed": 0,
+    "wallMs": 404.52,
+    "requestsPerSecond": 2472.1,
+    "latencyMs": {
+      "count": 1000,
+      "min": 5.828064000001177,
+      "mean": 19.83960502000006,
+      "p50": 19.544560000002093,
+      "p95": 23.539448999999877,
+      "p99": 28.9265919999998,
+      "max": 43.85070099999939
+    }
+  },
+  "telemetry": {
+    "type": "telemetry",
+    "at": "2026-10-03T10:09:22.743Z",
+    "activeSessions": 200,
+    "activeSockets": 0,
+    "bufferedEvents": 73548,
+    "messagesPerSecond": 1441.4,
+    "totalMessages": 184300,
+    "avgLatencyMs": 6638,
+    "uptimeSec": 106,
+    "maxSessions": 200,
+    "memory": {
+      "rssMb": 123.8,
+      "heapUsedMb": 37.6
+    }
+  }
+}

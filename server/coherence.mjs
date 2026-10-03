@@ -26,17 +26,42 @@ export function calculateTextSimilarity(textA, textB) {
 
 /**
  * Kohärenzmatrix über alle Modellpaare. Der Vergleich eines Modells mit sich selbst ist 1.
+ *
+ * Die Wortmengen werden je Ausgabe genau einmal gebildet. Das ist rechnerisch dasselbe
+ * Ergebnis wie ein paarweiser Aufruf von `calculateTextSimilarity`, vermeidet aber, denselben
+ * Text quadratisch oft zu zerlegen — bei n Modellen spart das n² − n Zerlegungen.
  */
 export function buildCoherenceMatrix(outputs) {
+  const tokenSets = new Map()
+  for (const output of outputs) {
+    const words = new Set(
+      String(output.text ?? '')
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean),
+    )
+    tokenSets.set(output.modelId, words)
+  }
+
   const matrix = {}
   for (const first of outputs) {
-    matrix[first.modelId] = {}
+    const row = {}
+    const setA = tokenSets.get(first.modelId) ?? new Set()
     for (const second of outputs) {
-      matrix[first.modelId][second.modelId] =
-        first.modelId === second.modelId
-          ? 1
-          : calculateTextSimilarity(first.text, second.text)
+      if (first.modelId === second.modelId) {
+        row[second.modelId] = 1
+        continue
+      }
+      const setB = tokenSets.get(second.modelId) ?? new Set()
+      if (setA.size === 0 || setB.size === 0) {
+        row[second.modelId] = 0
+        continue
+      }
+      let intersection = 0
+      for (const word of setA) if (setB.has(word)) intersection += 1
+      row[second.modelId] = intersection / (setA.size + setB.size - intersection)
     }
+    matrix[first.modelId] = row
   }
   return matrix
 }

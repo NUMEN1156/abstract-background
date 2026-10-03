@@ -11,11 +11,20 @@ import { composeResponse } from './providers.mjs'
  */
 
 const SESSION_TTL_MS = 20 * 60 * 1000
-const MAX_SESSIONS = 40
+/** Obergrenze gleichzeitig gehaltener Sitzungen; für Lasttests über die Umgebung anpassbar. */
+const MAX_SESSIONS = Math.max(1, Number(process.env.ABSTRACT_MAX_SESSIONS ?? 120))
 const TELEMETRY_INTERVAL_MS = 2000
 
 const toTokenChunks = (text) => String(text).match(/\S+\s*/g) ?? []
 const jitter = (min, max) => min + Math.random() * (max - min)
+
+/** Wird ausgelöst, wenn die Sitzungsobergrenze erreicht ist und keine Sitzung freigegeben werden kann. */
+export class CapacityError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = 'CapacityError'
+  }
+}
 
 class Session {
   constructor({ id, prompt, providers, settings }) {
@@ -229,11 +238,23 @@ export class SuperpositionHub {
 
   createSession({ prompt, providers, settings }) {
     if (this.sessions.size >= MAX_SESSIONS) {
-      const oldest = [...this.sessions.values()].sort((a, b) => a.lastAccess - b.lastAccess)[0]
-      if (oldest) {
-        oldest.dispose()
-        this.sessions.delete(oldest.id)
+      const now = Date.now()
+      const freeable = [...this.sessions.values()]
+        .filter(
+          (session) =>
+            (session.completed || now - session.lastAccess > SESSION_TTL_MS) && session.sinks.size === 0,
+        )
+        .sort((a, b) => a.lastAccess - b.lastAccess)
+      const candidate = freeable[0]
+      if (!candidate) {
+        // Alle gehaltenen Sitzungen sind aktiv oder werden noch beobachtet. Statt eine laufende
+        // Sitzung stillschweigend zu verdrängen, wird der neue Auftrag sichtbar abgelehnt.
+        throw new CapacityError(
+          `Die Obergrenze von ${MAX_SESSIONS} gleichzeitigen Sitzungen ist erreicht und keine Sitzung ist abgeschlossen. Starten Sie den Auftrag später erneut.`,
+        )
       }
+      candidate.dispose()
+      this.sessions.delete(candidate.id)
     }
     const id = crypto.randomUUID()
     const session = new Session({ id, prompt, providers, settings })
@@ -275,15 +296,26 @@ export class SuperpositionHub {
       (sum, session) => sum + session.sinks.size,
       0,
     )
+    const memory = process.memoryUsage()
+    const bufferedEvents = [...this.sessions.values()].reduce(
+      (sum, session) => sum + session.events.length,
+      0,
+    )
     return {
       type: 'telemetry',
       at: new Date(now).toISOString(),
       activeSessions: this.sessions.size,
       activeSockets,
+      bufferedEvents,
       messagesPerSecond: Number((this.emittedWindow.length / 5).toFixed(1)),
       totalMessages: this.emitted,
       avgLatencyMs: Math.round(average),
       uptimeSec: Math.round((now - this.startedAt) / 1000),
+      maxSessions: MAX_SESSIONS,
+      memory: {
+        rssMb: Number((memory.rss / 1048576).toFixed(1)),
+        heapUsedMb: Number((memory.heapUsed / 1048576).toFixed(1)),
+      },
       ...extra,
     }
   }
