@@ -218,3 +218,4 @@ real provider endpoints with streaming · worker threads for very large model se
 ## License
 
 MIT — see [LICENSE](LICENSE).
+[German overview graphic](docs/overview-de.png)

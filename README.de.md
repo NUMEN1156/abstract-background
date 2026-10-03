@@ -251,3 +251,5 @@ breit verankert. Genau das ist die Aussage dieser Regel — und sie ist im Proto
 **Grenze:** Die Kurve ist an den simulierten Antworten gemessen. Deren Sätze sind formelhaft und
 teilen viele Begriffe, deshalb liegen die Ähnlichkeiten hoch. Bei echten Modelltexten ist mit
 niedrigeren Werten zu rechnen; die Schwelle ist dann neu zu kalibrieren.
+
+![Übersicht: Multi-LLM Superposition Kernel](docs/overview-de.png)
