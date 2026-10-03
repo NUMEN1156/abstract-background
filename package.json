@@ -3,7 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI-Superposition-Enterprise-Middleware mit gewichtetem Kollaps",
+  "description": "Enterprise middleware for AI superposition: query several models in parallel, weight their answers, and collapse them into one traceable result.",
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "llm",
+    "multi-model",
+    "ensemble",
+    "consensus",
+    "fastify",
+    "websocket",
+    "react",
+    "explainability",
+    "middleware"
+  ],
+  "homepage": "https://abstractbg-qehn8ouj.manus.space",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/"
+  },
   "packageManager": "pnpm@11.25.0",
   "engines": {
     "node": ">=20"
