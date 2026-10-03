@@ -20,12 +20,17 @@ interface OpenOptions {
  * Bevorzugt wird ein WebSocket. Kommt der Upgrade innerhalb des Zeitfensters nicht zustande,
  * wechselt der Transport auf Server-Sent-Events. Der Wechsel erfolgt ausschließlich vor dem
  * ersten erfolgreichen Öffnen, damit keine doppelte Ereignisfolge entsteht.
+ *
+ * Das Zeitfenster ist bewusst großzügig: Auf der veröffentlichten Adresse dauert der Aufbau
+ * über den vorgeschalteten Proxy gemessen 1,4 bis 3,3 Sekunden. Ein zu kurzes Fenster ließ die
+ * Oberfläche fälschlich auf den unkomprimierten SSE-Weg ausweichen. Echte Fehlschläge melden
+ * sich sofort über `onerror`/`onclose` und wechseln ohne Verzögerung.
  */
 export function openSessionStream({
   sessionId,
   onEvent,
   onMode,
-  fallbackDelayMs = 1600,
+  fallbackDelayMs = 5000,
 }: OpenOptions): StreamHandle {
   let socket: WebSocket | null = null
   let source: EventSource | null = null
