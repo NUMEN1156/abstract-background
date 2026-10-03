@@ -161,3 +161,60 @@ dominierende Anteil. Leck-Hinweise gab es keine — der Heap blieb zwischen den 
    Matrix während des Streamings.
 4. **Kompression prüfen.** Bei 42.000 Textblöcken je Lauf wäre `permessage-deflate` auf dem
    WebSocket-Kanal der nächste naheliegende Hebel, sobald Netzwerk statt CPU der Engpass ist.
+## 9. Nachtrag: Puffergrenze und Kanalkompression
+
+Beide Maßnahmen wurden nach dem Lasttest umgesetzt und mit denselben Verfahren nachgemessen.
+
+### 9.1 Puffer-Obergrenze je Sitzung
+
+Der Ereignispuffer einer Sitzung ist jetzt doppelt gedeckelt: `ABSTRACT_MAX_BUFFERED_EVENTS`
+(Standard 1500) und `ABSTRACT_MAX_BUFFERED_CHARS` (Standard 400 000). Überschreitet eine Sitzung
+eine der Grenzen, wird der **älteste** Verlaufsteil verworfen. Verworfen wird gezählt, und der
+Snapshot meldet die Kürzung ausdrücklich — ein später Empfänger erhält also kein unbemerkt
+unvollständiges Bild, sondern den Hinweis, dass der Anfang fehlt.
+
+Prüfung mit absichtlich kleiner Grenze (`ABSTRACT_MAX_BUFFERED_EVENTS=60`), eine Sitzung mit vier
+Kanälen:
+
+| Kennzahl | Wert |
+| --- | --- |
+| live empfangener Text | 3.784 Zeichen |
+| Puffer nach Abschluss | 60 Ereignisse, 470 Zeichen |
+| verworfene Ereignisse | 298 |
+| Snapshot für den späteren Empfänger | `truncated: true`, `droppedEvents: 298` |
+| rekonstruierter Text des späten Empfängers | 470 Zeichen (der jüngste Teil) |
+| Telemetrie | `droppedEvents: 298`, `truncatedSessions: 1`, `bufferedChars: 470` |
+
+Mit der Standardgrenze trat in keinem der Lastläufe eine Kürzung auf: Bei 60, 120 und 200
+gleichzeitigen Sitzungen meldeten alle geprüften Sitzungen `truncated: false`. Die Grenze greift
+also nur bei Langläufern oder ungewöhnlich großen Ausgaben und deckelt dann den Speicherbedarf
+statt ihn unbemerkt wachsen zu lassen.
+
+### 9.2 WebSocket-Kompression (permessage-deflate)
+
+Der Kanal komprimiert ab 256 Byte Nutzlast (`ABSTRACT_WS_DEFLATE=0` schaltet ab). Zwei identische
+Läufe mit 60 Sitzungen, derselbe Ereignisumfang von 22.416 Ereignissen:
+
+| Kennzahl | mit Kompression | ohne Kompression |
+| --- | --- | --- |
+| Serverangabe | permessage-deflate (Schwelle 256 Byte) | ungekomprimiert |
+| Nutzlast (Textblöcke) | 0,22 MB | 0,22 MB |
+| über die Leitung gelesen | **0,43 MB** | **1,98 MB** |
+| Verhältnis Leitung/Nutzlast | 1,90 | 8,83 |
+| Ereignisse | 22.416 / 22.416 | 22.416 / 22.416 |
+| abgeschlossene Sitzungen | 60 / 60 | 60 / 60 |
+| erster Textblock (P95) | 362 ms | 338 ms |
+| Kollaps-Latenz (P95) | 45,3 ms | 49,3 ms |
+| RSS am Ende | 119,2 MB | 98,5 MB |
+
+Befunde:
+
+- Auf der Leitung sinkt die Datenmenge von 1,98 MB auf 0,43 MB, also **rund 78 % weniger** oder
+  Faktor 4,6. Der Grund ist die Struktur des Stroms: 22.416 Ereignisse tragen jeweils ein
+  JSON-Gerüst mit denselben Schlüsseln und kurzen Texten — genau das, was Deflate gut verdichtet.
+- Ohne Kompression entfallen 1,98 MB auf nur 0,22 MB Text; das Verhältnis von 8,8 zeigt, wie stark
+  das Rahmenwerk pro Ereignis ins Gewicht fällt. Mit Kompression bleibt ein Restfaktor von 1,9.
+- Latenz und Vollständigkeit sind unverändert; die Pufferprüfung bestand in beiden Läufen.
+- Der Preis ist Speicher: rund 21 MB mehr RSS bei 60 Verbindungen, also etwa 0,35 MB je
+  Verbindung für die Kompressionskontexte. Bei sehr vielen gleichzeitigen Kanälen ist das der
+  Hebel, an dem gegebenenfalls nachzusteuern ist.

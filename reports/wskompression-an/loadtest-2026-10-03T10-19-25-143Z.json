@@ -1,0 +1,347 @@
+{
+  "at": "2026-10-03T10:19:25.143Z",
+  "durationMs": 24114.79,
+  "config": {
+    "base": "http://127.0.0.1:3500",
+    "sessions": 60,
+    "sessionConcurrency": 40,
+    "collapseRequests": 120,
+    "collapseConcurrency": 32,
+    "httpRequests": 200,
+    "httpConcurrency": 50,
+    "replaySamples": 5,
+    "timeoutMs": 90000,
+    "outDir": "reports/wskompression-an"
+  },
+  "streams": {
+    "requested": 60,
+    "accepted": 60,
+    "rejected": 0,
+    "rejectionReasons": [],
+    "completed": 60,
+    "completions": {
+      "durationMs": {
+        "count": 60,
+        "min": 8641.845726,
+        "mean": 9157.702560150003,
+        "p50": 9156.239359000001,
+        "p95": 9490.247939,
+        "p99": 9609.453646,
+        "max": 9609.453646
+      },
+      "firstChunkMs": {
+        "count": 60,
+        "min": 179.057266,
+        "mean": 286.9322881666667,
+        "p50": 292.699479,
+        "p95": 362.191457,
+        "p99": 395.71314900000004,
+        "max": 395.71314900000004
+      }
+    },
+    "totals": {
+      "events": 22416,
+      "chunks": 21216,
+      "failedProviders": 0
+    },
+    "bandwidth": {
+      "payloadChars": 235275,
+      "wireBytes": 446457,
+      "ratio": 1.898,
+      "truncatedSessions": 0,
+      "droppedEvents": 0
+    },
+    "replay": [
+      {
+        "sessionId": "de962d58-d6d2-494c-81e4-4fb77689c8fa",
+        "providerId": "openai",
+        "ok": true,
+        "replayed": 369,
+        "expectedChars": 1113,
+        "receivedChars": 1113
+      },
+      {
+        "sessionId": "8d757006-5364-4302-a1e6-adfceed02308",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 784,
+        "receivedChars": 784
+      },
+      {
+        "sessionId": "e431b41f-0f4f-4aac-83d2-039422c6226a",
+        "providerId": "anthropic",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 1130,
+        "receivedChars": 1130
+      },
+      {
+        "sessionId": "807b20a4-6b85-434d-9fb9-9095c96523c4",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 364,
+        "expectedChars": 767,
+        "receivedChars": 767
+      },
+      {
+        "sessionId": "10cfad88-ad69-499d-9860-d397dae90943",
+        "providerId": "openai",
+        "ok": true,
+        "replayed": 371,
+        "expectedChars": 1105,
+        "receivedChars": 1105
+      }
+    ],
+    "replayOk": true,
+    "statuses": {
+      "complete": 60
+    },
+    "sessionIds": [
+      "de962d58-d6d2-494c-81e4-4fb77689c8fa",
+      "8d757006-5364-4302-a1e6-adfceed02308",
+      "e431b41f-0f4f-4aac-83d2-039422c6226a",
+      "807b20a4-6b85-434d-9fb9-9095c96523c4",
+      "10cfad88-ad69-499d-9860-d397dae90943",
+      "875b21ed-dfe9-48d4-8671-26642851a747",
+      "a4b5b92f-8d46-4684-a469-aacb61422b37",
+      "63190a3e-f451-44dd-838b-49a052d479ce",
+      "836f1987-6521-4177-9649-891b3bd46058",
+      "2f017141-3836-44cc-b92e-c64a1c203158",
+      "ff07bbb5-5d71-4366-adc0-ee5fb42b3b38",
+      "644b680c-af9f-4293-bc78-c72ed86a99e7",
+      "cb2f9d6a-6eaf-4fda-b6ac-223d38e84218",
+      "5214554f-b1eb-45f2-93cd-24e89c9e342a",
+      "589ad691-04e3-4641-a007-0495738cd94d",
+      "850fe27d-1662-4db7-8b25-b766c7e679d6",
+      "ffaa5ade-91b9-48ff-83e6-8c38847d3584",
+      "2295ec1b-7db9-4059-ba50-4bdfefef51d5",
+      "0e8a1c64-4763-4534-a1ee-c9ad23aded75",
+      "7524cdbd-8e05-4169-a0d4-c77c023791f3",
+      "691f5fa9-acce-4f85-bdb7-d5efe68f08d5",
+      "f8715d1e-8366-4fb5-b0c5-8966de661eef",
+      "cbc81b7d-53d5-436c-9d9e-ca8996e66b6f",
+      "105be7bf-52fe-46de-ae35-69a19825c3bd",
+      "dfaeaa43-3684-463e-8675-1eb57dcb046a",
+      "214c5b8a-a217-485b-8416-fb08708e4203",
+      "09b27032-02ea-4859-9547-73ea2fab4067",
+      "41b84147-afc7-4a0b-afe4-829398c2d34b",
+      "a32bd9cd-938a-42c6-a9b8-d4ef36632aeb",
+      "0d3e2a4c-34f0-4643-9b9b-168768567c2e",
+      "045e3d96-b6a6-4a4e-818f-e727af146073",
+      "2e90a634-cbe1-411a-a529-7169dca8c647",
+      "cfd5e64e-18cf-4e83-96ea-5813bcce5930",
+      "a5abc577-af11-4f93-a930-37cbbc43e215",
+      "d1ccefd6-215f-4c07-b065-7fffedafdf43",
+      "af87c997-ba1c-4316-82df-2be5fd64a5b8",
+      "12ed2bca-7adb-4339-82bd-763755688a27",
+      "b5a4fbf8-6667-4ce9-a350-632aa5b7b8df",
+      "9b1a5b48-5996-4045-bf21-0847ad624382",
+      "f6e27390-4e14-458a-a654-fada4c4bfc99",
+      "e465e874-a2c3-4a72-9a92-7d890a894c4a",
+      "11e8c116-95b6-4043-a3ce-45926e68b2b6",
+      "28250467-0545-467b-8f5f-542594221010",
+      "9aac8daf-2528-43e7-b782-fa9674c6aa19",
+      "5d21f705-c4e2-4f59-bc10-7c651b24f781",
+      "969783d9-c44b-44e3-b6cc-ddc2c4f89d76",
+      "adfe75fb-6ec9-4ac5-a5d9-f4e87dc06ea5",
+      "9abb3b74-b6f6-43c7-aab9-1b5651b13840",
+      "25825054-6ddb-43d0-8d67-8f245941010c",
+      "b30db04c-8470-46a9-b61c-a64defc8e69e",
+      "83533996-4a8e-4059-86ec-33a5adb0318c",
+      "b4b146ba-e303-464a-bfd4-f8d48b725da3",
+      "27fef486-5350-4dd5-b9ba-c9f547c4d0a7",
+      "0a69c23a-288b-422f-a940-fd2890dfb58e",
+      "b8bd0dd7-5749-4fc1-bdc9-50c648562828",
+      "028c9ed2-2145-488e-a3cd-27e3cccca442",
+      "fdcd174c-f106-4789-b5c5-091c1af5f89c",
+      "8f6740fe-77ab-447b-a97a-575fe8dd614e",
+      "68760d9e-4f49-4059-906e-f31911430566",
+      "7014452b-72e7-4137-acb7-7bdfc2482ce3"
+    ]
+  },
+  "collapse": {
+    "requests": 120,
+    "concurrency": 32,
+    "failed": 0,
+    "contributors": {
+      "count": 120,
+      "min": 4,
+      "mean": 4,
+      "p50": 4,
+      "p95": 4,
+      "p99": 4,
+      "max": 4
+    },
+    "tokens": {
+      "count": 120,
+      "min": 477,
+      "mean": 483.6,
+      "p50": 483,
+      "p95": 489,
+      "p99": 489,
+      "max": 489
+    },
+    "latencyMs": {
+      "count": 120,
+      "min": 11.875739999999496,
+      "mean": 26.130189358333368,
+      "p50": 24.47656199999983,
+      "p95": 45.33702400000038,
+      "p99": 51.696922999999515,
+      "max": 51.709162999999535
+    },
+    "throughputPerSecond": 38.3
+  },
+  "matrix": {
+    "optimized": [
+      {
+        "models": 4,
+        "pairs": 12,
+        "ms": 0.661,
+        "cpuMs": 0.622,
+        "usPerPair": 51.83
+      },
+      {
+        "models": 8,
+        "pairs": 56,
+        "ms": 0.366,
+        "cpuMs": 0.361,
+        "usPerPair": 6.45
+      },
+      {
+        "models": 16,
+        "pairs": 240,
+        "ms": 0.941,
+        "cpuMs": 0.933,
+        "usPerPair": 3.89
+      },
+      {
+        "models": 32,
+        "pairs": 992,
+        "ms": 3.313,
+        "cpuMs": 4.22,
+        "usPerPair": 4.25
+      },
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 10.321,
+        "cpuMs": 15.685,
+        "usPerPair": 3.89
+      },
+      {
+        "models": 128,
+        "pairs": 16256,
+        "ms": 14.119,
+        "cpuMs": 22.314,
+        "usPerPair": 1.37
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 48.986,
+        "cpuMs": 49.991,
+        "usPerPair": 0.77
+      }
+    ],
+    "naive": [
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 254.242
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 4016.527
+      }
+    ]
+  },
+  "combined": {
+    "sessionCount": 20,
+    "warmupMs": 2500,
+    "collapse": {
+      "requests": 120,
+      "concurrency": 32,
+      "failed": 0,
+      "contributors": {
+        "count": 120,
+        "min": 4,
+        "mean": 4,
+        "p50": 4,
+        "p95": 4,
+        "p99": 4,
+        "max": 4
+      },
+      "tokens": {
+        "count": 120,
+        "min": 233,
+        "mean": 245.09166666666667,
+        "p50": 246,
+        "p95": 252,
+        "p99": 258,
+        "max": 258
+      },
+      "latencyMs": {
+        "count": 120,
+        "min": 9.783806999999797,
+        "mean": 20.5041138999999,
+        "p50": 17.03672799999913,
+        "p95": 31.693177000001015,
+        "p99": 31.902561999999307,
+        "max": 32.10899299999801
+      },
+      "throughputPerSecond": 48.8
+    },
+    "streamsCompleted": 20,
+    "streamEvents": 7472
+  },
+  "http": {
+    "requests": 200,
+    "concurrency": 50,
+    "failed": 0,
+    "wallMs": 110.62,
+    "requestsPerSecond": 1808.1,
+    "latencyMs": {
+      "count": 200,
+      "min": 8.388401000000158,
+      "mean": 25.017850854999924,
+      "p50": 24.227586000000883,
+      "p95": 46.800617999997485,
+      "p99": 49.926713999997446,
+      "max": 50.63606599999912
+    }
+  },
+  "serverInfo": {
+    "compression": "permessage-deflate (Schwelle 256 Byte)",
+    "bufferLimit": {
+      "events": 1500,
+      "chars": 400000,
+      "detail": "Bei Überschreitung wird der älteste Verlaufsteil verworfen; der Snapshot meldet die Kürzung ausdrücklich"
+    }
+  },
+  "telemetry": {
+    "type": "telemetry",
+    "at": "2026-10-03T10:19:25.142Z",
+    "activeSessions": 80,
+    "activeSockets": 0,
+    "bufferedEvents": 29408,
+    "bufferedChars": 313659,
+    "droppedEvents": 0,
+    "truncatedSessions": 0,
+    "bufferLimits": {
+      "events": 1500,
+      "chars": 400000
+    },
+    "messagesPerSecond": 510.2,
+    "totalMessages": 29488,
+    "avgLatencyMs": 7628,
+    "uptimeSec": 59,
+    "maxSessions": 120,
+    "memory": {
+      "rssMb": 119.2,
+      "heapUsedMb": 20.8
+    }
+  }
+}

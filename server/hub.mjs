@@ -13,6 +13,13 @@ import { composeResponse } from './providers.mjs'
 const SESSION_TTL_MS = 20 * 60 * 1000
 /** Obergrenze gleichzeitig gehaltener Sitzungen; für Lasttests über die Umgebung anpassbar. */
 const MAX_SESSIONS = Math.max(1, Number(process.env.ABSTRACT_MAX_SESSIONS ?? 120))
+/**
+ * Obergrenzen des Ereignispuffers je Sitzung. Sie deckeln den Speicherbedarf bei Langläufern.
+ * Wird gekürzt, meldet der Snapshot das ausdrücklich: späte Empfänger erhalten dann nur den
+ * jüngeren Teil des Verlaufs statt eines unbemerkt unvollständigen Bildes.
+ */
+const MAX_BUFFERED_EVENTS = Math.max(50, Number(process.env.ABSTRACT_MAX_BUFFERED_EVENTS ?? 1500))
+const MAX_BUFFERED_CHARS = Math.max(10000, Number(process.env.ABSTRACT_MAX_BUFFERED_CHARS ?? 400000))
 const TELEMETRY_INTERVAL_MS = 2000
 
 const toTokenChunks = (text) => String(text).match(/\S+\s*/g) ?? []
@@ -26,6 +33,14 @@ export class CapacityError extends Error {
   }
 }
 
+/** Größe eines gepufferten Ereignisses, gemessen an der Nutzlast in Zeichen. */
+function eventSize(event) {
+  if (!event) return 0
+  if (typeof event.delta === 'string') return event.delta.length
+  if (typeof event.text === 'string') return event.text.length
+  return 0
+}
+
 class Session {
   constructor({ id, prompt, providers, settings }) {
     this.id = id
@@ -35,6 +50,9 @@ class Session {
     this.createdAt = Date.now()
     this.lastAccess = Date.now()
     this.events = []
+    this.bufferedChars = 0
+    this.droppedEvents = 0
+    this.truncated = false
     this.sinks = new Set()
     this.timers = new Set()
     this.streams = new Map()
@@ -60,6 +78,8 @@ class Session {
 
   emit(event) {
     this.events.push(event)
+    this.bufferedChars += eventSize(event)
+    this.trimBuffer()
     this.lastAccess = Date.now()
     for (const sink of this.sinks) {
       try {
@@ -67,6 +87,30 @@ class Session {
       } catch {
         this.sinks.delete(sink)
       }
+    }
+  }
+
+  /**
+   * Hält den Puffer innerhalb der Obergrenzen. Verworfen wird immer der älteste Teil des
+   * Verlaufs; die Kürzung wird gezählt und im Snapshot offengelegt.
+   */
+  trimBuffer() {
+    if (this.events.length <= MAX_BUFFERED_EVENTS && this.bufferedChars <= MAX_BUFFERED_CHARS) {
+      return
+    }
+    let dropped = 0
+    while (
+      this.events.length > 1 &&
+      (this.events.length > MAX_BUFFERED_EVENTS || this.bufferedChars > MAX_BUFFERED_CHARS)
+    ) {
+      const removed = this.events.shift()
+      this.bufferedChars -= eventSize(removed)
+      dropped += 1
+    }
+    if (dropped > 0) {
+      this.bufferedChars = Math.max(0, this.bufferedChars)
+      this.droppedEvents += dropped
+      this.truncated = true
     }
   }
 
@@ -101,6 +145,8 @@ class Session {
       })),
       createdAt: new Date(this.createdAt).toISOString(),
       replayed: this.events.length,
+      truncated: this.truncated,
+      droppedEvents: this.droppedEvents,
     }
     sink.send(snapshot)
     for (const event of this.events) sink.send(event)
@@ -301,12 +347,27 @@ export class SuperpositionHub {
       (sum, session) => sum + session.events.length,
       0,
     )
+    const bufferedChars = [...this.sessions.values()].reduce(
+      (sum, session) => sum + session.bufferedChars,
+      0,
+    )
+    const droppedEvents = [...this.sessions.values()].reduce(
+      (sum, session) => sum + session.droppedEvents,
+      0,
+    )
+    const truncatedSessions = [...this.sessions.values()].filter(
+      (session) => session.truncated,
+    ).length
     return {
       type: 'telemetry',
       at: new Date(now).toISOString(),
       activeSessions: this.sessions.size,
       activeSockets,
       bufferedEvents,
+      bufferedChars,
+      droppedEvents,
+      truncatedSessions,
+      bufferLimits: { events: MAX_BUFFERED_EVENTS, chars: MAX_BUFFERED_CHARS },
       messagesPerSecond: Number((this.emittedWindow.length / 5).toFixed(1)),
       totalMessages: this.emitted,
       avgLatencyMs: Math.round(average),

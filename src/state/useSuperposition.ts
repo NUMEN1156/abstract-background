@@ -105,6 +105,12 @@ export function useSuperposition() {
             'info',
             `Sitzung ${String(event.sessionId).slice(0, 8)} verbunden · ${String(event.replayed ?? 0)} gepufferte Ereignisse nachgespielt`,
           )
+          if (event.truncated === true) {
+            pushLog(
+              'warn',
+              `Verlauf gekürzt: ${String(event.droppedEvents ?? 0)} frühe Ereignisse wurden wegen der Puffergrenze ausgelagert. Der Anfang dieser Sitzung lässt sich nicht mehr rekonstruieren.`,
+            )
+          }
           break
         }
         case 'session:start': {

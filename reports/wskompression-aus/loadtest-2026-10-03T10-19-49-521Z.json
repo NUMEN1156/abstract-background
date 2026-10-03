@@ -1,0 +1,347 @@
+{
+  "at": "2026-10-03T10:19:49.521Z",
+  "durationMs": 24183.65,
+  "config": {
+    "base": "http://127.0.0.1:3501",
+    "sessions": 60,
+    "sessionConcurrency": 40,
+    "collapseRequests": 120,
+    "collapseConcurrency": 32,
+    "httpRequests": 200,
+    "httpConcurrency": 50,
+    "replaySamples": 5,
+    "timeoutMs": 90000,
+    "outDir": "reports/wskompression-aus"
+  },
+  "streams": {
+    "requested": 60,
+    "accepted": 60,
+    "rejected": 0,
+    "rejectionReasons": [],
+    "completed": 60,
+    "completions": {
+      "durationMs": {
+        "count": 60,
+        "min": 8734.331359000002,
+        "mean": 9194.747261066668,
+        "p50": 9180.050911,
+        "p95": 9531.345523,
+        "p99": 9659.561633000001,
+        "max": 9659.561633000001
+      },
+      "firstChunkMs": {
+        "count": 60,
+        "min": 150.91721599999994,
+        "mean": 265.56259616666665,
+        "p50": 265.8018359999999,
+        "p95": 337.57830099999995,
+        "p99": 407.86297099999996,
+        "max": 407.86297099999996
+      }
+    },
+    "totals": {
+      "events": 22416,
+      "chunks": 21216,
+      "failedProviders": 0
+    },
+    "bandwidth": {
+      "payloadChars": 235275,
+      "wireBytes": 2076462,
+      "ratio": 8.826,
+      "truncatedSessions": 0,
+      "droppedEvents": 0
+    },
+    "replay": [
+      {
+        "sessionId": "28d4a4a4-84d0-4dc8-81d3-c1623dd300c0",
+        "providerId": "llama",
+        "ok": true,
+        "replayed": 369,
+        "expectedChars": 903,
+        "receivedChars": 903
+      },
+      {
+        "sessionId": "12069121-e971-4a3d-8bfc-ba84645d4455",
+        "providerId": "llama",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 910,
+        "receivedChars": 910
+      },
+      {
+        "sessionId": "006e1ba2-b30b-4838-99f6-1004f35c44ab",
+        "providerId": "llama",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 913,
+        "receivedChars": 913
+      },
+      {
+        "sessionId": "3c358fb5-ee3d-4971-87df-8fed98e857fd",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 364,
+        "expectedChars": 767,
+        "receivedChars": 767
+      },
+      {
+        "sessionId": "81244dc3-ebce-4b16-9c3b-739e26f05400",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 371,
+        "expectedChars": 782,
+        "receivedChars": 782
+      }
+    ],
+    "replayOk": true,
+    "statuses": {
+      "complete": 60
+    },
+    "sessionIds": [
+      "28d4a4a4-84d0-4dc8-81d3-c1623dd300c0",
+      "12069121-e971-4a3d-8bfc-ba84645d4455",
+      "006e1ba2-b30b-4838-99f6-1004f35c44ab",
+      "3c358fb5-ee3d-4971-87df-8fed98e857fd",
+      "81244dc3-ebce-4b16-9c3b-739e26f05400",
+      "9f7d1f26-d138-4642-9e07-da0294485986",
+      "f8fd2983-82ac-46f7-8d9a-8544afb628ea",
+      "d4c1299c-6858-420d-bb52-97f892b30cbe",
+      "9f95622a-3be4-448d-acb2-18cb7a5e853f",
+      "2ae4cb44-605f-4d03-b3a4-f6bbd50c6032",
+      "042ea75d-e7b8-4509-9c23-24bf996646e6",
+      "0820a031-c267-41c5-9256-01a6f0e6a76d",
+      "6289334c-d960-430c-b9e8-507b98b7f690",
+      "453af3b7-1619-467f-b554-cc1aabb57361",
+      "f74822ca-21e0-4d7c-b8ef-496443a6ccc9",
+      "13e04d7f-279b-43df-bca0-5c2139752dad",
+      "332f512e-ac74-4250-b7db-365bb6e36791",
+      "aaa05b46-9c79-4ae1-8d47-b4ebf31a83c1",
+      "38173a42-ce56-4a08-947b-e6b4039bc93a",
+      "484e764c-8b2f-4f73-9f55-0c148ee49497",
+      "7cfd4c78-d568-4be4-9266-701efc7f362c",
+      "c53cf76a-8ea7-4815-ab50-be98c06cdf84",
+      "c5899660-c3a7-4e20-afe4-856dad7dc4b5",
+      "71dc8f0b-fede-4a06-b7c4-5900fbe4d7b4",
+      "54acbf0a-86e4-4958-8f31-97137b4de2c2",
+      "b491fbc0-c503-4225-9f90-3d52ac5f46d1",
+      "0806c6e4-7a23-455b-b396-64550036058c",
+      "b587dfc4-322e-4d5e-92db-5af9c6a2df10",
+      "520cc1fc-3e3d-439b-9433-331c2b1804d3",
+      "fbc9e6ee-fcf3-4ad2-864e-f2ca5501a30b",
+      "1f0640fe-dc0b-41d8-9ebc-2463fe90c5b7",
+      "d2bd6da0-c9ba-4c33-9a3b-549dbeadac61",
+      "4e0cfd2b-54c9-43bf-9cfd-d98c307f49f0",
+      "789a5d6d-3160-4ec8-a24c-b4ef91f09bcf",
+      "16333f7f-82c9-4d57-8612-4123cd7402c7",
+      "351f3204-02d5-4dc9-b943-f9a9451c8430",
+      "1d7b46cc-893c-4580-8056-2ec1b448d79a",
+      "4e8a56fb-7040-4847-86df-1ce0e9853f0f",
+      "f6f4e0ca-21e2-4f61-8f4d-5ecb040997e8",
+      "aa8fa1d1-1d5d-429c-b7e3-ab2ef3e949b8",
+      "28a2cf1d-813f-40e4-b1be-108bea14b41d",
+      "059fbc86-3644-45cb-8902-4820ec022899",
+      "83894d63-145f-4fa9-b7b5-952556a3ee9a",
+      "d17fb2ea-4687-4055-9c36-64003255abb6",
+      "bbeca3ac-5413-4c33-af17-7c937b0e02e3",
+      "ec89f3df-8681-43f8-83ca-b9a7c28f4474",
+      "80a1bbb9-c4c8-4943-a8e5-f879acdee258",
+      "68015bdd-b6a1-4935-83aa-17f69333c42f",
+      "3d2d7027-6136-4fa1-a0d1-227a1bbcb379",
+      "46188fba-90a5-47cc-b7a6-33025b686298",
+      "e0cb63a8-6d7e-4648-aaa8-b57667a4f561",
+      "72fed930-04b7-41b8-a8cd-227a28ac4b5d",
+      "e9c5bad4-6849-4460-b708-b04eb15154c0",
+      "e0f88227-1bc8-4709-ac95-2096690282a1",
+      "4652c4cf-062f-4867-ae23-205cb8f16609",
+      "866f59f8-d31b-42fc-9cf0-c58e81d7d957",
+      "57dfadd0-3ef5-4553-b9c6-9e8078112d98",
+      "3bc96e12-a146-4c33-9cac-0a50eac7befd",
+      "9c1be8cc-a604-4ac5-bdb2-ecb12a14f7dc",
+      "21475f13-b581-4250-b9eb-6bcb49416940"
+    ]
+  },
+  "collapse": {
+    "requests": 120,
+    "concurrency": 32,
+    "failed": 0,
+    "contributors": {
+      "count": 120,
+      "min": 4,
+      "mean": 4,
+      "p50": 4,
+      "p95": 4,
+      "p99": 4,
+      "max": 4
+    },
+    "tokens": {
+      "count": 120,
+      "min": 477,
+      "mean": 483.6,
+      "p50": 483,
+      "p95": 489,
+      "p99": 489,
+      "max": 489
+    },
+    "latencyMs": {
+      "count": 120,
+      "min": 13.35931299999902,
+      "mean": 28.188722624999887,
+      "p50": 27.403661999998803,
+      "p95": 49.274530999999115,
+      "p99": 53.69088700000066,
+      "max": 54.60852899999918
+    },
+    "throughputPerSecond": 35.5
+  },
+  "matrix": {
+    "optimized": [
+      {
+        "models": 4,
+        "pairs": 12,
+        "ms": 0.746,
+        "cpuMs": 0.722,
+        "usPerPair": 60.17
+      },
+      {
+        "models": 8,
+        "pairs": 56,
+        "ms": 0.474,
+        "cpuMs": 0.466,
+        "usPerPair": 8.32
+      },
+      {
+        "models": 16,
+        "pairs": 240,
+        "ms": 1.35,
+        "cpuMs": 1.992,
+        "usPerPair": 8.3
+      },
+      {
+        "models": 32,
+        "pairs": 992,
+        "ms": 2.696,
+        "cpuMs": 2.677,
+        "usPerPair": 2.7
+      },
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 12.524,
+        "cpuMs": 21.368,
+        "usPerPair": 5.3
+      },
+      {
+        "models": 128,
+        "pairs": 16256,
+        "ms": 19.592,
+        "cpuMs": 31.958,
+        "usPerPair": 1.97
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 55.308,
+        "cpuMs": 55.658,
+        "usPerPair": 0.85
+      }
+    ],
+    "naive": [
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 288.975
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 3900.559
+      }
+    ]
+  },
+  "combined": {
+    "sessionCount": 20,
+    "warmupMs": 2500,
+    "collapse": {
+      "requests": 120,
+      "concurrency": 32,
+      "failed": 0,
+      "contributors": {
+        "count": 120,
+        "min": 4,
+        "mean": 4,
+        "p50": 4,
+        "p95": 4,
+        "p99": 4,
+        "max": 4
+      },
+      "tokens": {
+        "count": 120,
+        "min": 239,
+        "mean": 246.63333333333333,
+        "p50": 246,
+        "p95": 252,
+        "p99": 254,
+        "max": 254
+      },
+      "latencyMs": {
+        "count": 120,
+        "min": 7.7721459999993385,
+        "mean": 21.470009166666628,
+        "p50": 19.768138999999792,
+        "p95": 34.13960800000132,
+        "p99": 39.67655300000115,
+        "max": 39.91128799999933
+      },
+      "throughputPerSecond": 46.6
+    },
+    "streamsCompleted": 20,
+    "streamEvents": 7472
+  },
+  "http": {
+    "requests": 200,
+    "concurrency": 50,
+    "failed": 0,
+    "wallMs": 131.58,
+    "requestsPerSecond": 1520,
+    "latencyMs": {
+      "count": 200,
+      "min": 10.537603000000672,
+      "mean": 29.432588250000098,
+      "p50": 28.002619000002596,
+      "p95": 58.61176599999817,
+      "p99": 59.6830200000004,
+      "max": 60.070370000001276
+    }
+  },
+  "serverInfo": {
+    "compression": "ungekomprimiert",
+    "bufferLimit": {
+      "events": 1500,
+      "chars": 400000,
+      "detail": "Bei Überschreitung wird der älteste Verlaufsteil verworfen; der Snapshot meldet die Kürzung ausdrücklich"
+    }
+  },
+  "telemetry": {
+    "type": "telemetry",
+    "at": "2026-10-03T10:19:49.518Z",
+    "activeSessions": 80,
+    "activeSockets": 0,
+    "bufferedEvents": 29408,
+    "bufferedChars": 313659,
+    "droppedEvents": 0,
+    "truncatedSessions": 0,
+    "bufferLimits": {
+      "events": 1500,
+      "chars": 400000
+    },
+    "messagesPerSecond": 500.2,
+    "totalMessages": 29488,
+    "avgLatencyMs": 7644,
+    "uptimeSec": 84,
+    "maxSessions": 120,
+    "memory": {
+      "rssMb": 98.5,
+      "heapUsedMb": 22.5
+    }
+  }
+}

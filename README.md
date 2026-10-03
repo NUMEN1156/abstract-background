@@ -142,3 +142,31 @@ gehaltener Sitzung.
 Die Obergrenze gleichzeitiger Sitzungen steuert `ABSTRACT_MAX_SESSIONS` (Standard 120). Ist sie
 erreicht und keine Sitzung abgeschlossen, wird der neue Auftrag mit HTTP 429 abgelehnt, statt eine
 laufende Sitzung zu verdrängen. Die Telemetrie weist RSS, Heap und gepufferte Ereignisse aus.
+## Speicher- und Netzwerkgrenzen
+
+### Ereignispuffer je Sitzung
+
+Jede Sitzung hält ihren Verlauf, damit ein später hinzutretender Empfänger ihn nachgespielt bekommt.
+Dieser Puffer ist doppelt gedeckelt:
+
+| Umgebungsvariable | Standard | Wirkung |
+| --- | --- | --- |
+| `ABSTRACT_MAX_BUFFERED_EVENTS` | 1500 | Höchstzahl gepufferter Ereignisse je Sitzung |
+| `ABSTRACT_MAX_BUFFERED_CHARS` | 400000 | Höchstumfang der gepufferten Nutzlast je Sitzung |
+| `ABSTRACT_MAX_SESSIONS` | 120 | gleichzeitig gehaltene Sitzungen |
+
+Bei Überschreitung wird der **älteste** Verlaufsteil verworfen. Die Kürzung wird gezählt und im
+Snapshot als `truncated` mit `droppedEvents` gemeldet; die Oberfläche schreibt dazu einen Hinweis
+ins Protokoll, die Messleiste weist gekürzte Verläufe und ausgelagerte Ereignisse aus. Ein später
+Empfänger erhält damit nie ein unbemerkt unvollständiges Bild.
+
+### Streaming-Transport
+
+Der WebSocket-Kanal komprimiert Nutzlasten ab 256 Byte (`permessage-deflate`, Kontextübernahme
+aktiv). `ABSTRACT_WS_DEFLATE=0` schaltet die Kompression ab, etwa für Vergleichsmessungen. Der
+Rückfallweg über Server-Sent-Events bleibt unkomprimiert.
+
+Gemessen bei 60 gleichzeitigen Sitzungen und identischem Ereignisumfang: 1,98 MB über die Leitung
+ohne Kompression gegenüber 0,43 MB mit Kompression — rund 78 % weniger Datenverkehr, bei
+unveränderter Latenz und etwa 0,35 MB zusätzlichem Speicherbedarf je Verbindung. Der
+SSE-Rückfallweg bleibt davon unberührt; dort übernimmt ein vorgeschalteter Proxy die Kompression.

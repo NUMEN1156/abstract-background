@@ -144,8 +144,12 @@ function streamSession(sessionId) {
     let completedProviders = 0
     let failedProviders = 0
     let replayed = 0
+    let truncated = false
+    let droppedEvents = 0
+    let payloadChars = 0
     const texts = new Map()
     const socket = new WebSocket(`${wsBase}/ws?session=${encodeURIComponent(sessionId)}`)
+    let wireStart = 0
 
     const finish = (status, error) => {
       clearTimeout(timer)
@@ -159,9 +163,13 @@ function streamSession(sessionId) {
         error: error ?? null,
         events,
         chunks,
+        payloadChars,
+        truncated,
+        droppedEvents,
         completedProviders,
         failedProviders,
         replayed,
+        wireBytes: wireStart > 0 ? Math.max(0, (socket._socket?.bytesRead ?? 0) - wireStart) : 0,
         firstChunkMs: firstChunkAt === null ? null : firstChunkAt - started,
         durationMs: performance.now() - started,
         texts,
@@ -169,6 +177,11 @@ function streamSession(sessionId) {
     }
 
     const timer = setTimeout(() => finish('timeout', 'Zeitfenster überschritten'), config.timeoutMs)
+
+    socket.on('open', () => {
+      // Ab dem geöffneten Socket zählen die tatsächlich gelesenen TCP-Bytes.
+      wireStart = socket._socket?.bytesRead ?? 0
+    })
 
     socket.on('message', (raw) => {
       events += 1
@@ -181,6 +194,8 @@ function streamSession(sessionId) {
       switch (event.type) {
         case 'session:snapshot':
           replayed = Number(event.replayed ?? 0)
+          truncated = event.truncated === true
+          droppedEvents = Number(event.droppedEvents ?? 0)
           break
         case 'provider:chunk':
           chunks += 1
@@ -189,6 +204,7 @@ function streamSession(sessionId) {
             event.providerId,
             (texts.get(event.providerId) ?? '') + String(event.delta ?? ''),
           )
+          payloadChars += String(event.delta ?? '').length
           break
         case 'provider:done':
           completedProviders += 1
@@ -269,6 +285,10 @@ async function phaseStreams() {
   const chunks = outcomes.reduce((sum, outcome) => sum + outcome.chunks, 0)
   const events = outcomes.reduce((sum, outcome) => sum + outcome.events, 0)
   const failedProviders = outcomes.reduce((sum, outcome) => sum + outcome.failedProviders, 0)
+  const payloadChars = outcomes.reduce((sum, outcome) => sum + outcome.payloadChars, 0)
+  const wireBytes = outcomes.reduce((sum, outcome) => sum + outcome.wireBytes, 0)
+  const truncatedSessions = outcomes.filter((outcome) => outcome.truncated).length
+  const droppedEvents = outcomes.reduce((sum, outcome) => sum + outcome.droppedEvents, 0)
 
   const samples = accepted.slice(0, config.replaySamples)
   const replayResults = []
@@ -297,6 +317,13 @@ async function phaseStreams() {
       ),
     },
     totals: { events, chunks, failedProviders },
+    bandwidth: {
+      payloadChars,
+      wireBytes,
+      ratio: payloadChars > 0 ? Number((wireBytes / payloadChars).toFixed(3)) : null,
+      truncatedSessions,
+      droppedEvents,
+    },
     replay: replayResults,
     replayOk: replayResults.every((entry) => entry.ok),
     statuses: Object.fromEntries(
@@ -490,6 +517,8 @@ function toMarkdown(report) {
   lines.push(`| Dauer bis Abschluss (P95) | ${ms(report.streams.completions.durationMs.p95)} |`)
   lines.push(`| erster Textblock (P95) | ${ms(report.streams.completions.firstChunkMs.p95)} |`)
   lines.push(`| Nachspielen aus dem Puffer geprüft | ${report.streams.replay.length} Sitzungen, ${report.streams.replayOk ? 'alle identisch' : 'ABWEICHUNGEN'} |`)
+  lines.push(`| gekürzte Verläufe | ${report.streams.bandwidth.truncatedSessions} Sitzungen, ${report.streams.bandwidth.droppedEvents} ausgelagerte Ereignisse |`)
+  lines.push(`| Nutzlast / Leitung | ${(report.streams.bandwidth.payloadChars / 1048576).toFixed(2)} MB / ${(report.streams.bandwidth.wireBytes / 1048576).toFixed(2)} MB (Faktor ${report.streams.bandwidth.ratio}) |`)
   lines.push('')
   lines.push('## 2. Latenz der Kollaps-Synthese')
   lines.push('')
@@ -562,6 +591,10 @@ if (reachable.status !== 200) {
   console.error(`Ziel nicht erreichbar (HTTP ${reachable.status}). Läuft der Server auf ${config.base}?`)
   process.exit(1)
 }
+const architecture = (await jsonRequest(`${config.base}/api/architecture`)).payload
+console.log(
+  `Server: Kompression ${architecture?.transport?.compression ?? 'unbekannt'} · Puffergrenze ${architecture?.transport?.bufferLimit?.events ?? '?'} Ereignisse`,
+)
 
 const streams = await phaseStreams()
 console.log(
@@ -595,6 +628,10 @@ const report = {
   matrix,
   combined,
   http,
+  serverInfo: {
+    compression: architecture?.transport?.compression ?? null,
+    bufferLimit: architecture?.transport?.bufferLimit ?? null,
+  },
   telemetry,
 }
 

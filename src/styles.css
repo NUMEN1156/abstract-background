@@ -1655,3 +1655,8 @@ select {
   color: var(--dim);
   background: rgba(122, 172, 190, 0.08);
 }
+/* --------------------------------------------- Warnwerte in der Messleiste -- */
+
+.mono.warn {
+  color: var(--warn);
+}

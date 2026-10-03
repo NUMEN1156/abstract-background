@@ -20,8 +20,26 @@ const hub = new SuperpositionHub()
 seedVault(listAdapters())
 
 const app = Fastify({ logger: false, trustProxy: true, bodyLimit: 128 * 1024 })
-
-await app.register(websocket)
+/**
+ * Der Ereignisstrom besteht überwiegend aus kurzen, ähnlichen Textblöcken. Die
+ * WebSocket-Kompression senkt die übertragene Datenmenge deutlich; sie lässt sich über
+ * ABSTRACT_WS_DEFLATE=0 abschalten, etwa um den unkomprimierten Vergleich zu messen.
+ */
+const wsDeflateEnabled = process.env.ABSTRACT_WS_DEFLATE !== '0'
+await app.register(websocket, {
+  options: wsDeflateEnabled
+    ? {
+        perMessageDeflate: {
+          threshold: 256,
+          zlibDeflateOptions: { level: 6, memLevel: 8 },
+          zlibInflateOptions: { chunkSize: 16 * 1024 },
+          clientNoContextTakeover: false,
+          serverNoContextTakeover: false,
+          concurrencyLimit: 8,
+        },
+      }
+    : {},
+})
 
 /* ------------------------------------------------------------------ */
 /* Basisdaten                                                          */
@@ -49,6 +67,13 @@ app.get('/api/architecture', async () => ({
     fallback: 'Server-Sent-Events (/api/stream/:sessionId)',
     detail:
       'Ereignispuffer je Sitzung: ein nachgelagerter Empfänger erhält zuerst den Verlauf, danach live',
+    compression: wsDeflateEnabled ? 'permessage-deflate (Schwelle 256 Byte)' : 'ungekomprimiert',
+    bufferLimit: {
+      events: Number(process.env.ABSTRACT_MAX_BUFFERED_EVENTS ?? 1500),
+      chars: Number(process.env.ABSTRACT_MAX_BUFFERED_CHARS ?? 400000),
+      detail:
+        'Bei Überschreitung wird der älteste Verlaufsteil verworfen; der Snapshot meldet die Kürzung ausdrücklich',
+    },
   },
   adapters: {
     detail: 'Modulare Adapter-Registry mit Laufzeit-Anlage, Validierung und Persistenz in .data/',

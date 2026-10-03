@@ -42,6 +42,10 @@ export interface Telemetry {
   avgLatencyMs: number
   uptimeSec: number
   bufferedEvents?: number
+  bufferedChars?: number
+  droppedEvents?: number
+  truncatedSessions?: number
+  bufferLimits?: { events: number; chars: number }
   maxSessions?: number
   memory?: { rssMb: number; heapUsedMb: number }
 }

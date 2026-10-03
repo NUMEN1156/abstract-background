@@ -1,0 +1,307 @@
+{
+  "at": "2026-10-03T10:21:08.036Z",
+  "durationMs": 23677.82,
+  "config": {
+    "base": "http://127.0.0.1:3000",
+    "sessions": 20,
+    "sessionConcurrency": 40,
+    "collapseRequests": 120,
+    "collapseConcurrency": 32,
+    "httpRequests": 100,
+    "httpConcurrency": 50,
+    "replaySamples": 5,
+    "timeoutMs": 90000,
+    "outDir": "reports/abnahme"
+  },
+  "streams": {
+    "requested": 20,
+    "accepted": 20,
+    "rejected": 0,
+    "rejectionReasons": [],
+    "completed": 20,
+    "completions": {
+      "durationMs": {
+        "count": 20,
+        "min": 8911.527926,
+        "mean": 9233.35132855,
+        "p50": 9257.144352,
+        "p95": 9428.164909000001,
+        "p99": 9586.981304,
+        "max": 9586.981304
+      },
+      "firstChunkMs": {
+        "count": 20,
+        "min": 266.85882000000004,
+        "mean": 333.97331130000003,
+        "p50": 341.61327800000004,
+        "p95": 403.688847,
+        "p99": 410.10075399999994,
+        "max": 410.10075399999994
+      }
+    },
+    "totals": {
+      "events": 7465,
+      "chunks": 7072,
+      "failedProviders": 0
+    },
+    "bandwidth": {
+      "payloadChars": 78411,
+      "wireBytes": 147868,
+      "ratio": 1.886,
+      "truncatedSessions": 0,
+      "droppedEvents": 0
+    },
+    "replay": [
+      {
+        "sessionId": "0cb9d045-b129-4ddf-a5c5-e74649b46c6a",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 369,
+        "expectedChars": 790,
+        "receivedChars": 790
+      },
+      {
+        "sessionId": "fab3dd20-f36c-416b-89f2-831f0c04a3a7",
+        "providerId": "openai",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 1107,
+        "receivedChars": 1107
+      },
+      {
+        "sessionId": "765ee2e9-d366-4914-a2fd-23d38bda8ecb",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 367,
+        "expectedChars": 780,
+        "receivedChars": 780
+      },
+      {
+        "sessionId": "0ece7068-9d2c-4273-b22e-22403c2c0fb2",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 364,
+        "expectedChars": 767,
+        "receivedChars": 767
+      },
+      {
+        "sessionId": "657f3936-f819-47b7-8c23-655c40ae98f9",
+        "providerId": "mistral",
+        "ok": true,
+        "replayed": 371,
+        "expectedChars": 782,
+        "receivedChars": 782
+      }
+    ],
+    "replayOk": true,
+    "statuses": {
+      "complete": 20
+    },
+    "sessionIds": [
+      "0cb9d045-b129-4ddf-a5c5-e74649b46c6a",
+      "fab3dd20-f36c-416b-89f2-831f0c04a3a7",
+      "765ee2e9-d366-4914-a2fd-23d38bda8ecb",
+      "0ece7068-9d2c-4273-b22e-22403c2c0fb2",
+      "657f3936-f819-47b7-8c23-655c40ae98f9",
+      "e9c2e780-44a2-4259-9a14-3e7eb818581c",
+      "91024b48-1b9c-4e5f-8b6b-0dac57bfd7cf",
+      "190f3111-e760-4c2b-a9fe-c25771b65b4e",
+      "a6fdf527-8944-4095-8d2e-7e76803f90d7",
+      "89425bd5-3e52-4476-a26e-4030eea7d670",
+      "6d7b2223-cd43-4fd8-b735-3dd4059f0385",
+      "fdc50d3a-b9d8-4d14-b524-57cc5de18cfd",
+      "601b83bf-8ffd-492a-af2c-80fe8efdd33e",
+      "94380965-dbc8-43cf-a51b-cef79cc492e5",
+      "3eb096b2-14e0-4fa3-a52d-6ae249c8d4de",
+      "f8a58d5f-5f7a-48ec-9dd2-7871f858598e",
+      "8d2327fb-03c7-446b-addf-0bc3552e4dfa",
+      "22cb393e-f98e-4b2c-83fc-68d97a5fd5a4",
+      "ac034efb-58df-47d0-a5b3-96524f401c36",
+      "dad358db-62a4-49d6-b6ad-fe4702c4855c"
+    ]
+  },
+  "collapse": {
+    "requests": 120,
+    "concurrency": 32,
+    "failed": 0,
+    "contributors": {
+      "count": 120,
+      "min": 4,
+      "mean": 4,
+      "p50": 4,
+      "p95": 4,
+      "p99": 4,
+      "max": 4
+    },
+    "tokens": {
+      "count": 120,
+      "min": 477,
+      "mean": 483.6,
+      "p50": 483,
+      "p95": 489,
+      "p99": 489,
+      "max": 489
+    },
+    "latencyMs": {
+      "count": 120,
+      "min": 11.620539999999892,
+      "mean": 24.810017783333326,
+      "p50": 19.1438079999989,
+      "p95": 66.62342200000057,
+      "p99": 72.60420799999883,
+      "max": 74.95051400000011
+    },
+    "throughputPerSecond": 40.3
+  },
+  "matrix": {
+    "optimized": [
+      {
+        "models": 4,
+        "pairs": 12,
+        "ms": 0.617,
+        "cpuMs": 0.596,
+        "usPerPair": 49.67
+      },
+      {
+        "models": 8,
+        "pairs": 56,
+        "ms": 0.402,
+        "cpuMs": 0.395,
+        "usPerPair": 7.05
+      },
+      {
+        "models": 16,
+        "pairs": 240,
+        "ms": 1.083,
+        "cpuMs": 1.586,
+        "usPerPair": 6.61
+      },
+      {
+        "models": 32,
+        "pairs": 992,
+        "ms": 3.607,
+        "cpuMs": 3.581,
+        "usPerPair": 3.61
+      },
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 12.368,
+        "cpuMs": 18.882,
+        "usPerPair": 4.68
+      },
+      {
+        "models": 128,
+        "pairs": 16256,
+        "ms": 15.468,
+        "cpuMs": 27.078,
+        "usPerPair": 1.67
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 47.092,
+        "cpuMs": 47.314,
+        "usPerPair": 0.72
+      }
+    ],
+    "naive": [
+      {
+        "models": 64,
+        "pairs": 4032,
+        "ms": 255.747
+      },
+      {
+        "models": 256,
+        "pairs": 65280,
+        "ms": 3891.691
+      }
+    ]
+  },
+  "combined": {
+    "sessionCount": 10,
+    "warmupMs": 2500,
+    "collapse": {
+      "requests": 120,
+      "concurrency": 32,
+      "failed": 0,
+      "contributors": {
+        "count": 120,
+        "min": 4,
+        "mean": 4,
+        "p50": 4,
+        "p95": 4,
+        "p99": 4,
+        "max": 4
+      },
+      "tokens": {
+        "count": 120,
+        "min": 237,
+        "mean": 247.09166666666667,
+        "p50": 248,
+        "p95": 254,
+        "p99": 255,
+        "max": 255
+      },
+      "latencyMs": {
+        "count": 120,
+        "min": 11.956239999999525,
+        "mean": 26.979679250000057,
+        "p50": 27.98253300000215,
+        "p95": 35.880198999999266,
+        "p99": 38.40272999999797,
+        "max": 39.011319999997795
+      },
+      "throughputPerSecond": 37.1
+    },
+    "streamsCompleted": 10,
+    "streamEvents": 3733
+  },
+  "http": {
+    "requests": 100,
+    "concurrency": 50,
+    "failed": 0,
+    "wallMs": 56.38,
+    "requestsPerSecond": 1773.7,
+    "latencyMs": {
+      "count": 100,
+      "min": 8.36775199999829,
+      "mean": 21.998017020000006,
+      "p50": 21.81607299999814,
+      "p95": 35.78997299999901,
+      "p99": 36.99377000000095,
+      "max": 37.26631100000304
+    }
+  },
+  "serverInfo": {
+    "compression": "permessage-deflate (Schwelle 256 Byte)",
+    "bufferLimit": {
+      "events": 1500,
+      "chars": 400000,
+      "detail": "Bei Überschreitung wird der älteste Verlaufsteil verworfen; der Snapshot meldet die Kürzung ausdrücklich"
+    }
+  },
+  "telemetry": {
+    "type": "telemetry",
+    "at": "2026-10-03T10:21:08.034Z",
+    "activeSessions": 30,
+    "activeSockets": 0,
+    "bufferedEvents": 11028,
+    "bufferedChars": 117603,
+    "droppedEvents": 0,
+    "truncatedSessions": 0,
+    "bufferLimits": {
+      "events": 1500,
+      "chars": 400000
+    },
+    "messagesPerSecond": 267.6,
+    "totalMessages": 11058,
+    "avgLatencyMs": 5755,
+    "uptimeSec": 50,
+    "maxSessions": 120,
+    "memory": {
+      "rssMb": 126.2,
+      "heapUsedMb": 37.4
+    }
+  }
+}

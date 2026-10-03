@@ -44,6 +44,25 @@ export function TelemetryRail({ telemetry, history, log }: Props) {
                 ? formatNumber(telemetry.bufferedEvents)
                 : '—'}
             </dd>
+            {telemetry?.bufferLimits ? (
+              <span>
+                Ereignisse · Grenze {formatNumber(telemetry.bufferLimits.events)} je Sitzung
+                {telemetry.bufferedChars !== undefined
+                  ? ` · ${formatNumber(Math.round(telemetry.bufferedChars / 1024))} KB im Puffer`
+                  : ''}
+              </span>
+            ) : null}
+          </div>
+          <div>
+            <dt>Gekürzte Verläufe</dt>
+            <dd className={telemetry?.truncatedSessions ? 'mono warn' : 'mono'}>
+              {telemetry?.truncatedSessions !== undefined
+                ? formatNumber(telemetry.truncatedSessions)
+                : '—'}
+            </dd>
+            {telemetry?.droppedEvents ? (
+              <span>{formatNumber(telemetry.droppedEvents)} Ereignisse ausgelagert</span>
+            ) : null}
           </div>
           <div>
             <dt>Speicher</dt>
