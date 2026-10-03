@@ -170,3 +170,38 @@ Gemessen bei 60 gleichzeitigen Sitzungen und identischem Ereignisumfang: 1,98 MB
 ohne Kompression gegenüber 0,43 MB mit Kompression — rund 78 % weniger Datenverkehr, bei
 unveränderter Latenz und etwa 0,35 MB zusätzlichem Speicherbedarf je Verbindung. Der
 SSE-Rückfallweg bleibt davon unberührt; dort übernimmt ein vorgeschalteter Proxy die Kompression.
+## Zugangskontrolle
+
+Die verändernden Schnittstellen lassen sich mit einem Zugangsschlüssel schützen. Ohne gesetzten
+Schlüssel bleibt alles offen — die Voreinstellung ändert also nichts am bisherigen Verhalten.
+
+| Umgebungsvariable | Wirkung |
+| --- | --- |
+| `ABSTRACT_API_KEY` | nicht gesetzt: offen · gesetzt: schreibende Aufrufe verlangen diesen Schlüssel |
+
+Geschützt sind:
+
+- `POST /api/superposition` (Auftrag starten)
+- `POST /api/collapse` (Kollaps auslösen)
+- `POST`, `PATCH`, `DELETE /api/adapters` (Adapterverwaltung)
+
+Offen bleiben alle lesenden Endpunkte, der Live-Kanal (`/ws`, `/api/stream/:id`), die Telemetrie
+und die Oberfläche selbst. Eine geschützte Instanz bleibt damit vollständig ansehbar, ohne dass
+jemand Fremdes Aufträge starten oder Adapter anlegen kann.
+
+Der Nachweis wird im Kopf `X-Api-Key` oder als `Authorization: Bearer <Schlüssel>` übergeben und
+in konstanter Zeit verglichen (`crypto.timingSafeEqual`). `GET /api/access` meldet, ob die Instanz
+geschützt ist, und nennt die geschützten Pfade. In der Oberfläche erscheint bei geschützten
+Instanzen ein Feld für den Schlüssel; er wird lokal im Browser hinterlegt und mit jedem Aufruf
+mitgesendet.
+
+```sh
+ABSTRACT_API_KEY=<schlüssel> node server/index.mjs     # geschützte Instanz
+curl -X POST localhost:3000/api/superposition \
+  -H 'Content-Type: application/json' -H 'X-Api-Key: <schlüssel>' \
+  -d '{"prompt":"Beispielanfrage an die Superposition"}'
+```
+
+Dieser Schlüssel ist ein gemeinsames Geheimnis für eine Instanz, keine Benutzeridentität. Für
+echte Konten mit Rollen und nachvollziehbarer Zuordnung ist die Anmeldung über das Manus-Konto
+(OAuth) vorgesehen; sie ist in diesem Prototyp noch nicht umgesetzt.

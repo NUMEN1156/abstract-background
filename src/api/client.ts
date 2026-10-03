@@ -16,11 +16,26 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * Zugangsschlüssel für die schreibenden Aufrufe. Er wird nur gesetzt, wenn der Server einen
+ * Schlüssel verlangt; ohne gesetzten Wert bleiben die Aufrufe unverändert offen.
+ */
+let apiKey = ''
+
+export function setApiKey(value: string) {
+  apiKey = value.trim()
+}
+
+export function getApiKey() {
+  return apiKey
+}
+
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
+      ...(apiKey.length > 0 ? { 'X-Api-Key': apiKey } : {}),
       ...(init?.headers ?? {}),
     },
   })
@@ -41,6 +56,14 @@ async function request<T>(url: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   health: () => request<{ status: string; mode: string }>('/api/health'),
+
+  access: () =>
+    request<{
+      required: boolean
+      scheme: string
+      protectedPaths: string[]
+      detail: string
+    }>('/api/access'),
 
   architecture: () => request<ArchitectureReport>('/api/architecture'),
 

@@ -1660,3 +1660,59 @@ select {
 .mono.warn {
   color: var(--warn);
 }
+/* ------------------------------------------------------- Zugangsschutz ---- */
+
+.accessGate {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 24px;
+  background: linear-gradient(180deg, rgba(11, 16, 21, 0.92), rgba(6, 8, 11, 0.98));
+  border-top: 1px solid rgba(242, 193, 78, 0.4);
+  backdrop-filter: blur(6px);
+}
+
+.accessGate__text {
+  flex: 1 1 320px;
+  min-width: 260px;
+}
+
+.accessGate__text strong {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warn);
+  margin-bottom: 6px;
+}
+
+.accessGate__text p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 62ch;
+}
+
+.accessGate__form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+}
+
+.accessGate__form .field {
+  min-width: 240px;
+}
+
+.accessGate .console__error {
+  flex: 1 0 100%;
+  margin: 0;
+}

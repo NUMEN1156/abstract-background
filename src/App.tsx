@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { api } from './api/client'
+import { api, setApiKey } from './api/client'
+import AccessGate from './components/AccessGate'
 import { AdapterRegistry } from './components/AdapterRegistry'
 import { ArchitecturePanel } from './components/ArchitecturePanel'
 import { CollapseStage } from './components/CollapseStage'
@@ -16,12 +17,31 @@ import type { ArchitectureReport, StartSettings } from './types'
 export default function App() {
   const store = useSuperposition()
   const [architecture, setArchitecture] = useState<ArchitectureReport | null>(null)
+  const [accessRequired, setAccessRequired] = useState(false)
+  const [unlocked, setUnlocked] = useState(false)
 
   useEffect(() => {
     api
       .architecture()
       .then(setArchitecture)
       .catch(() => setArchitecture(null))
+  }, [])
+
+  useEffect(() => {
+    // Ein hinterlegter Schlüssel wird vor der Statusabfrage gesetzt, damit die Prüfung
+    // bereits mit Nachweis erfolgt.
+    const stored = localStorage.getItem('abstract-background.apiKey') ?? ''
+    if (stored.length > 0) {
+      setApiKey(stored)
+      setUnlocked(true)
+    }
+    api
+      .access()
+      .then((status) => {
+        setAccessRequired(status.required)
+        if (!status.required) setUnlocked(true)
+      })
+      .catch(() => setAccessRequired(false))
   }, [])
 
   const accentOf = useCallback(
@@ -132,6 +152,15 @@ export default function App() {
           />
         </aside>
       </div>
+
+      {accessRequired && !unlocked ? (
+        <AccessGate
+          onUnlocked={() => {
+            setUnlocked(true)
+            void store.refreshAdapters()
+          }}
+        />
+      ) : null}
 
       <footer className="footer">
         <span className="mono">

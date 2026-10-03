@@ -9,6 +9,7 @@ import { CapacityError, SuperpositionHub } from './hub.mjs'
 import { activeAdapters, addAdapter, AdapterError, listAdapters, removeAdapter, updateAdapter } from './adapters.mjs'
 import { collapse } from './synthesis.mjs'
 import { describeVault, seedVault } from './crypto.mjs'
+import { accessStatus, registerAccessGuard } from './access.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(here, '..')
@@ -20,6 +21,8 @@ const hub = new SuperpositionHub()
 seedVault(listAdapters())
 
 const app = Fastify({ logger: false, trustProxy: true, bodyLimit: 128 * 1024 })
+// Vor allen Routen registriert, damit der Schutz für jeden schreibenden Aufruf greift.
+registerAccessGuard(app)
 /**
  * Der Ereignisstrom besteht überwiegend aus kurzen, ähnlichen Textblöcken. Die
  * WebSocket-Kompression senkt die übertragene Datenmenge deutlich; sie lässt sich über
@@ -51,6 +54,8 @@ app.get('/api/health', async () => ({
   mode: isProduction ? 'produktion' : 'entwicklung',
   at: new Date().toISOString(),
 }))
+
+app.get('/api/access', async () => accessStatus())
 
 app.get('/api/architecture', async () => ({
   frontend: {
