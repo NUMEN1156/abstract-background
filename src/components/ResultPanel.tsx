@@ -54,8 +54,15 @@ export function ResultPanel({ result, accentOf }: Props) {
             <dl className="result__metrics">
               <div>
                 <dt>Konvergenz-Index</dt>
-                <dd className="mono">{metrics.convergence.toFixed(3)}</dd>
-                <span>Nähe zur Einigkeit der Gewichte (1 = ein Träger)</span>
+                <dd className="mono">{formatPercent(metrics.convergenceIndex, 1)}</dd>
+                <span>
+                  Mittlere paarweise Kohärenz der Ausgaben ({metrics.convergenceIndex.toFixed(3)})
+                </span>
+              </div>
+              <div>
+                <dt>Gewichtskonzentration</dt>
+                <dd className="mono">{metrics.weightConcentration.toFixed(3)}</dd>
+                <span>Summe der quadrierten Gewichtsanteile (1 = ein Träger)</span>
               </div>
               <div>
                 <dt>Modellgüte</dt>
@@ -117,9 +124,60 @@ export function ResultPanel({ result, accentOf }: Props) {
             </div>
           </div>
 
+          {result.coherenceMatrix && result.protocol.length > 1 ? (
+            <div className="result__block">
+              <h3>Kohärenzmatrix aller Modellpaare</h3>
+              <div className="tableWrap">
+                <table className="matrix">
+                  <thead>
+                    <tr>
+                      <th scope="col">Modell</th>
+                      {result.protocol.map((step) => (
+                        <th key={step.providerId} scope="col">
+                          {step.label}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.protocol.map((row) => (
+                      <tr key={row.providerId}>
+                        <th scope="row">{row.label}</th>
+                        {result.protocol.map((column) => {
+                          const value = result.coherenceMatrix?.[row.providerId]?.[column.providerId] ?? 0
+                          const diagonal = row.providerId === column.providerId
+                          return (
+                            <td
+                              key={column.providerId}
+                              className={diagonal ? 'matrix__cell matrix__cell--self' : 'matrix__cell'}
+                              style={
+                                diagonal
+                                  ? undefined
+                                  : {
+                                      background: `rgba(79, 227, 208, ${(0.06 + Math.min(1, value) * 0.62).toFixed(3)})`,
+                                    }
+                              }
+                              title={`${row.label} ↔ ${column.label}: ${formatPercent(value, 1)}`}
+                            >
+                              {value.toFixed(2)}
+                            </td>
+                          )
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="panel__hint">
+                Jaccard-Koeffizient über die Wortmengen je Ausgabenpaar; der Vergleich mit sich
+                selbst ist 1. Der Konvergenz-Index ist das Mittel aller Werte außerhalb der Diagonale.
+              </p>
+            </div>
+          ) : null}
+
           {result.coherence.length > 0 ? (
             <div className="result__block">
-              <h3>Kohärenz zwischen den Modellen</h3>
+              <h3>Größte Abweichungen</h3>
               <ul className="coherence">
                 {result.coherence.map((entry) => (
                   <li key={entry.pair.join('-')}>

@@ -1,11 +1,16 @@
 import { keywords, leadSentences } from './providers.mjs'
+import { buildCoherenceMatrix, coherencePairs, meanPairwiseCoherence } from './coherence.mjs'
 
 /**
  * Kollaps: führt die gewichteten Modellausgaben zu einem finalen Ergebnis zusammen.
  *
  * Der Algorithmus verändert die Einzeltexte nicht. Er bestimmt einen Träger, ordnet
- * Ergänzungen und Randnotizen zu, berechnet Konvergenz- und Kohärenzmaße und legt für
+ * Ergänzungen und Randnotizen zu, berechnet Kohärenz- und Konvergenzmaße und legt für
  * jeden Schritt ein nachvollziehbares Protokoll an. Drei Kollapsregeln stehen zur Wahl.
+ *
+ * Die Kohärenzanalyse stammt aus `coherence.mjs`: Ähnlichkeit als Jaccard-Koeffizient über
+ * die Wortmengen, vollständige Matrix über alle Modellpaare, Konvergenz-Index als Mittel
+ * über alle paarweisen Kohärenzen.
  */
 
 const DEFAULT_SUPPORT_THRESHOLD = 0.15
@@ -33,15 +38,6 @@ function normalizeWeights(entries) {
   return entries.map((entry) => ({ ...entry, share: Math.max(0, entry.weight) / sum }))
 }
 
-function jaccard(a, b) {
-  const setA = new Set(a)
-  const setB = new Set(b)
-  if (setA.size === 0 || setB.size === 0) return 0
-  let intersection = 0
-  for (const value of setA) if (setB.has(value)) intersection += 1
-  return intersection / (setA.size + setB.size - intersection)
-}
-
 /** Begriffe, die in mindestens `minCount` Ausgaben vorkommen. */
 function sharedKeywords(entries, minCount) {
   const counts = new Map()
@@ -63,10 +59,7 @@ function sentencesWith(text, terms) {
   return String(text)
     .split(/(?<=[.!?])\s+/)
     .map((sentence) => sentence.trim())
-    .filter((sentence) => {
-      const words = keywords(sentence, 40)
-      return words.some((word) => wanted.has(word))
-    })
+    .filter((sentence) => keywords(sentence, 40).some((word) => wanted.has(word)))
 }
 
 export function collapse({ prompt, streams, weights, rule }) {
@@ -87,24 +80,31 @@ export function collapse({ prompt, streams, weights, rule }) {
       protocol: [],
       metrics: null,
       coherence: [],
+      coherenceMatrix: {},
+      convergenceIndex: 1,
     }
   }
 
   const weighted = normalizeWeights(usable).sort((a, b) => b.share - a.share)
   const primary = weighted[0]
-  const convergence = weighted.reduce((acc, entry) => acc + entry.share ** 2, 0)
+
+  /* Phase 1 und 2 der Vorlage: Gewichte normalisieren, Kohärenzmatrix über alle Paare bilden. */
+  const coherenceOutputs = weighted.map((entry) => ({
+    modelId: entry.id,
+    label: entry.label,
+    text: entry.text,
+    weight: entry.share,
+  }))
+  const coherenceMatrix = buildCoherenceMatrix(coherenceOutputs)
+
+  /* Phase 3: Konvergenz-Index als Mittel über alle paarweisen Kohärenzen. */
+  const convergenceIndex = meanPairwiseCoherence(coherenceMatrix)
+  const weightConcentration = weighted.reduce((acc, entry) => acc + entry.share ** 2, 0)
   const confidence = weighted.reduce((acc, entry) => acc + entry.share * (entry.confidence ?? 0.7), 0)
   const tokens = weighted.reduce((acc, entry) => acc + (entry.tokens ?? 0), 0)
   const latency = weighted.reduce((acc, entry) => acc + entry.share * (entry.latencyMs ?? 0), 0) || 0
 
-  const divergences = weighted
-    .flatMap((entry, index) =>
-      weighted.slice(index + 1).map((other) => ({
-        pair: [entry.label, other.label],
-        score: jaccard(keywords(entry.text), keywords(other.text)),
-      })),
-    )
-    .sort((a, b) => a.score - b.score)
+  const divergences = coherencePairs(coherenceMatrix, coherenceOutputs)
 
   const sections = []
   let supporters = []
@@ -168,17 +168,18 @@ export function collapse({ prompt, streams, weights, rule }) {
     )
   }
 
-  const safeConvergence = Number.isFinite(convergence) ? convergence : 0
+  const safeConvergence = Number.isFinite(convergenceIndex) ? convergenceIndex : 0
+  const safeConcentration = Number.isFinite(weightConcentration) ? weightConcentration : 0
   const safeConfidence = Number.isFinite(confidence) ? confidence : 0
 
   sections.push(
-    `Ablage: Konvergenz-Index ${safeConvergence.toFixed(3)} · Modellgüte ${(safeConfidence * 100).toFixed(1)} % · ${tokens} Token · mittlere Laufzeit ${Math.round(latency)} ms.`,
+    `Ablage: Konvergenz-Index ${(safeConvergence * 100).toFixed(1)} % (mittlere paarweise Kohärenz) · Gewichtskonzentration ${safeConcentration.toFixed(3)} · Modellgüte ${(safeConfidence * 100).toFixed(1)} % · ${tokens} Token · mittlere Laufzeit ${Math.round(latency)} ms.`,
   )
   sections.push(ruleNote)
   const divergence = divergences[0]
   if (divergence) {
     sections.push(
-      `Divergenzhinweis: Die stärkste Abweichung liegt zwischen ${divergence.pair[0]} und ${divergence.pair[1]} (Überlappung ${(divergence.score * 100).toFixed(0)} %). Diese Stellen sind vor einer Entscheidung einzeln zu prüfen.`,
+      `Divergenzhinweis: Die stärkste Abweichung liegt zwischen ${divergence.pair[0]} und ${divergence.pair[1]} (Kohärenz ${(divergence.overlap * 100).toFixed(0)} %). Diese Stellen sind vor einer Entscheidung einzeln zu prüfen.`,
     )
   }
 
@@ -191,11 +192,7 @@ export function collapse({ prompt, streams, weights, rule }) {
     share: Number(entry.share.toFixed(4)),
     sharePct: Number((entry.share * 100).toFixed(1)),
     contribution:
-      entry === primary
-        ? 'Träger'
-        : supporters.includes(entry)
-          ? 'Ergänzung'
-          : 'Randnotiz',
+      entry === primary ? 'Träger' : supporters.includes(entry) ? 'Ergänzung' : 'Randnotiz',
     tokens: entry.tokens ?? 0,
     latencyMs: entry.latencyMs ?? 0,
     confidence: entry.confidence ?? null,
@@ -215,7 +212,8 @@ export function collapse({ prompt, streams, weights, rule }) {
     },
     protocol,
     metrics: {
-      convergence: Number(safeConvergence.toFixed(4)),
+      convergenceIndex: Number(safeConvergence.toFixed(4)),
+      weightConcentration: Number(safeConcentration.toFixed(4)),
       confidence: Number(safeConfidence.toFixed(4)),
       tokens,
       latencyMs: Math.round(latency),
@@ -223,9 +221,12 @@ export function collapse({ prompt, streams, weights, rule }) {
       supporters: supporters.length,
       notes: notes.length,
     },
+    convergenceIndex: Number(safeConvergence.toFixed(4)),
+    coherenceMatrix,
     coherence: divergences.slice(0, 6).map((entry) => ({
+      ids: entry.ids,
       pair: entry.pair,
-      overlap: Number(entry.score.toFixed(3)),
+      overlap: Number(entry.overlap.toFixed(4)),
     })),
   }
 }

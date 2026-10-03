@@ -40,7 +40,8 @@ abstractbg/
 │   ├── hub.mjs          Session-Hub, Event-Puffer, WebSocket- und SSE-Transport
 │   ├── providers.mjs    Basisadapter, Persona-Templates, Prompt-Auswertung
 │   ├── adapters.mjs     Adapter-Registry inkl. Persistenz und Validierung
-│   ├── synthesis.mjs    Kollaps-Algorithmus und Kollaps-Protokoll
+│   ├── coherence.mjs    Kohärenzanalyse: Jaccard-Ähnlichkeit, Matrix, Konvergenz-Index
+│   ├── synthesis.mjs    Kollaps-Algorithmus, Kollapsregeln und Kollaps-Protokoll
 │   └── crypto.mjs       AES-256-GCM-Demo-Tresor und Maskierung
 ├── src/
 │   ├── main.tsx, App.tsx, styles.css, types.ts

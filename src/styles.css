@@ -1618,3 +1618,40 @@ select {
   border-radius: 999px;
   padding: 4px 10px;
 }
+/* ------------------------------------------------------- Kohärenzmatrix -- */
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.matrix th {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-align: center;
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--line-strong);
+  white-space: nowrap;
+}
+
+.matrix th[scope='row'] {
+  text-align: left;
+}
+
+.matrix__cell {
+  text-align: center;
+  padding: 7px 8px;
+  border: 1px solid rgba(122, 172, 190, 0.12);
+  color: var(--text);
+  transition: background 260ms ease;
+}
+
+.matrix__cell--self {
+  color: var(--dim);
+  background: rgba(122, 172, 190, 0.08);
+}

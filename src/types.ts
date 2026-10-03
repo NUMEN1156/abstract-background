@@ -58,7 +58,8 @@ export interface ProtocolStep {
 }
 
 export interface CollapseMetrics {
-  convergence: number
+  convergenceIndex: number
+  weightConcentration: number
   confidence: number
   tokens: number
   latencyMs: number
@@ -76,7 +77,9 @@ export interface CollapseResult {
   primary?: { providerId: string; label: string; model: string; share: number }
   protocol: ProtocolStep[]
   metrics: CollapseMetrics | null
-  coherence: { pair: string[]; overlap: number }[]
+  convergenceIndex?: number
+  coherenceMatrix?: Record<string, Record<string, number>>
+  coherence: { ids?: string[]; pair: string[]; overlap: number }[]
 }
 
 export interface SecurityReport {

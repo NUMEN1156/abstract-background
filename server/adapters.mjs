@@ -47,7 +47,12 @@ function restore() {
       if (adapter?.id) custom.set(adapter.id, adapter)
     }
     for (const [id, state] of Object.entries(parsed?.builtInState ?? {})) {
-      builtInState.set(id, Boolean(state?.enabled))
+      // Gesichert wird eine einfache Zuordnung Kennung → Schaltzustand; die Objektform
+      // älterer Stände bleibt lesbar.
+      builtInState.set(
+        id,
+        typeof state === 'boolean' ? state : Boolean(state?.enabled),
+      )
     }
   } catch {
     /* Kein gespeicherter Stand vorhanden. */

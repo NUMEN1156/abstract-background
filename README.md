@@ -99,3 +99,24 @@ vorgesehene Feld. Der Adapterkatalog enthält daher niemals Rohgeheimnisse.
 - Die verändernden Schnittstellen (`POST/PATCH/DELETE /api/adapters`, Start und Kollaps) besitzen
   keine Zugangskontrolle. Für den Produktivbetrieb ist eine Authentifizierung vorzuschalten; der
   Prototyp ist auf die interne Vorschau ausgelegt.
+## Kohärenz und Konvergenz
+
+`server/coherence.mjs` setzt die gelieferte Ausarbeitung zur Kollapslogik um (dort als TypeScript
+skizziert, hier als ESM-Modul des Fastify-Prozesses, damit kein zusätzlicher Übersetzungsschritt
+nötig ist). Die Namen der Vorlage bleiben erhalten: `calculateTextSimilarity`,
+`buildCoherenceMatrix`, `executeSuperpositionCollapse`, `CollapseResult`.
+
+1. **Normalisierung**: Die Gewichte der aktiven Kanäle werden auf die Summe 1 bezogen;
+   bei Gesamtsumme 0 erhält jedes Modell den gleichen Anteil.
+2. **Kohärenzmatrix**: Für jedes geordnete Modellpaar wird die lexikalische Ähnlichkeit als
+   Jaccard-Koeffizient über die Wortmengen der beiden Ausgaben bestimmt. Der Vergleich eines
+   Modells mit sich selbst ergibt 1.
+3. **Konvergenz-Index**: Mittel über alle Werte außerhalb der Diagonalen, also die durchschnittliche
+   paarweise Kohärenz. Hohe Werte bedeuten ähnliche Aussagen, niedrige Werte starke Streuung.
+4. **Kollaps**: Das Modell mit dem höchsten normalisierten Gewicht trägt die Kernaussage; die
+   gewählte Kollapsregel bestimmt, was zusätzlich einfließt.
+
+Zusätzlich weist das Ergebnis die **Gewichtskonzentration** aus (Summe der quadrierten
+Gewichtsanteile, 1 = ein einziger Träger) und die **Modellgüte** als gewichtetes Mittel der
+Selbstbewertungen. Die vollständige Matrix wird im Ergebnisbereich als Heatmap dargestellt, die
+größten Abweichungen zusätzlich als Liste.

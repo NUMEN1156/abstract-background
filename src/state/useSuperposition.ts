@@ -293,7 +293,9 @@ export function useSuperposition() {
         setPhase('kollabiert')
         pushLog(
           'ok',
-          `Kollaps abgeschlossen · Träger ${response.result.primary?.label ?? '—'} · Konvergenz ${response.result.metrics?.convergence ?? 0}`,
+          `Kollaps abgeschlossen · Träger ${response.result.primary?.label ?? '—'} · Konvergenz-Index ${(
+            (response.result.metrics?.convergenceIndex ?? 0) * 100
+          ).toFixed(1)} %`,
         )
       }, remaining)
     } catch (cause) {
