@@ -2,6 +2,8 @@
 
 [English version](README.md)
 
+**Live-Demo:** https://abstractbg-qehn8ouj.manus.space — ohne Anmeldung.
+
 Prototyp einer Enterprise-Middleware für **AI-Superposition**. Eine Anfrage wird gleichzeitig an
 mehrere Modelle gestellt, deren Antworten parallel einlaufen, einzeln gewichtet und über einen
 visuellen Kollaps zu einem finalen Ergebnis zusammengeführt werden.
