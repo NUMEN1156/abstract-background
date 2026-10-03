@@ -81,6 +81,19 @@ export function ResultPanel({ result, accentOf }: Props) {
                 <dd className="mono">{formatNumber(metrics.tokens)}</dd>
                 <span>Token · mittlere Laufzeit {formatMs(metrics.latencyMs)}</span>
               </div>
+              {result.consensus ? (
+                <div>
+                  <dt>Konsens</dt>
+                  <dd className="mono">
+                    {result.consensus.supportedCount}/{result.consensus.sentenceCount}
+                  </dd>
+                  <span>
+                    Aussagen gestützt · {result.consensus.isolateCount} Isolate verworfen
+                    (Schwelle {result.consensus.threshold.toFixed(2)}, mindestens{' '}
+                    {result.consensus.minAgreeingModels} Modelle)
+                  </span>
+                </div>
+              ) : null}
             </dl>
           ) : null}
 
@@ -97,6 +110,8 @@ export function ResultPanel({ result, accentOf }: Props) {
                     <th scope="col">Anteil</th>
                     <th scope="col">Token</th>
                     <th scope="col">Laufzeit</th>
+                    <th scope="col">Getragen</th>
+                    <th scope="col">Isolate</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,6 +132,8 @@ export function ResultPanel({ result, accentOf }: Props) {
                       <td className="mono">{formatPercent(step.share, 1)}</td>
                       <td className="mono">{formatNumber(step.tokens)}</td>
                       <td className="mono">{formatMs(step.latencyMs)}</td>
+                      <td className="mono">{step.sentences ?? 0}</td>
+                      <td className="mono">{step.isolates ?? 0}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -172,6 +189,77 @@ export function ResultPanel({ result, accentOf }: Props) {
                 Jaccard-Koeffizient über die Wortmengen je Ausgabenpaar; der Vergleich mit sich
                 selbst ist 1. Der Konvergenz-Index ist das Mittel aller Werte außerhalb der Diagonale.
               </p>
+            </div>
+          ) : null}
+
+          {result.consensus ? (
+            <div className="result__block">
+              <h3>Konsensprüfung</h3>
+              <p className="panel__hint">
+                Eine Aussage trägt das Ergebnis nur, wenn sie gegenüber mindestens{' '}
+                {result.consensus.minAgreeingModels} Modellen eine Jaccard-Ähnlichkeit von{' '}
+                {result.consensus.threshold.toFixed(2)} erreicht. Jede andere Aussage ist ein Isolat:
+                sie beeinflusst das Ergebnis nicht und wird hier vollständig benannt.
+              </p>
+
+              <h4 className="result__subhead">
+                Getragene Aussagen — {result.consensus.carried.length} von{' '}
+                {result.consensus.supportedCount} in Rangfolge
+              </h4>
+              <ul className="consensus">
+                {result.consensus.carried.length === 0 ? (
+                  <li className="consensus__empty">
+                    Keine Aussage erreicht diese Schwelle. Das Ergebnis bleibt bewusst leer.
+                  </li>
+                ) : (
+                  result.consensus.carried.map((entry) => (
+                    <li key={`${entry.providerId}-${entry.sentence.slice(0, 24)}`}>
+                      <span className="consensus__head">
+                        <span
+                          className="swatch"
+                          style={{ background: accentOf(entry.label) }}
+                          aria-hidden="true"
+                        />
+                        {entry.label}
+                        <span className="mono">Score {entry.score.toFixed(3)}</span>
+                        <span className="mono">
+                          Stützung {entry.supportCount}/{result.protocol.length}
+                        </span>
+                      </span>
+                      <span className="consensus__text">{entry.sentence}</span>
+                    </li>
+                  ))
+                )}
+              </ul>
+
+              <h4 className="result__subhead">
+                Verworfene Isolate — {result.consensus.isolateCount}
+              </h4>
+              <ul className="consensus consensus--isolate">
+                {result.consensus.isolates.length === 0 ? (
+                  <li className="consensus__empty">
+                    Keine Isolate: jede Aussage ist im Modellverbund verankert.
+                  </li>
+                ) : (
+                  result.consensus.isolates.map((entry) => (
+                    <li key={`${entry.providerId}-${entry.sentence.slice(0, 24)}`}>
+                      <span className="consensus__head">
+                        <span
+                          className="swatch"
+                          style={{ background: accentOf(entry.label) }}
+                          aria-hidden="true"
+                        />
+                        {entry.label}
+                        <span className="mono">
+                          beste Ähnlichkeit {formatPercent(entry.bestOverlap, 0)}
+                        </span>
+                        <span className="mono">Stützung {entry.supportCount}</span>
+                      </span>
+                      <span className="consensus__text">{entry.sentence}</span>
+                    </li>
+                  ))
+                )}
+              </ul>
             </div>
           ) : null}
 

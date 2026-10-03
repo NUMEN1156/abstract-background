@@ -1716,3 +1716,66 @@ select {
   flex: 1 0 100%;
   margin: 0;
 }
+/* ---------------------------------------------------- Konsensprüfung ---- */
+
+.result__subhead {
+  margin: 18px 0 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.consensus {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.consensus li {
+  padding: 10px 12px;
+  border: 1px solid rgba(79, 227, 208, 0.18);
+  border-left: 2px solid var(--accent, #4fe3d0);
+  border-radius: 6px;
+  background: rgba(79, 227, 208, 0.04);
+}
+
+.consensus--isolate li {
+  border-color: rgba(242, 193, 78, 0.22);
+  border-left-color: var(--warn);
+  background: rgba(242, 193, 78, 0.05);
+}
+
+.consensus__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.consensus__head .mono {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--dim);
+}
+
+.consensus__text {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-dim, #b6c6cf);
+}
+
+.consensus__empty {
+  border-style: dashed !important;
+  background: transparent !important;
+  font-size: 12px;
+  color: var(--dim);
+}

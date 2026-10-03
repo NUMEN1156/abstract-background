@@ -42,6 +42,8 @@ export function useSuperposition() {
     collapseRule: 'gewichtete-synthese',
     injectFailure: false,
     temperature: 0.4,
+    jaccardThreshold: 0.1,
+    minAgreeingModels: 2,
   })
   const [providers, setProviders] = useState<ProviderSummary[]>([])
   const [channels, setChannels] = useState<Record<string, ChannelState>>({})
@@ -290,7 +292,10 @@ export function useSuperposition() {
 
     const began = Date.now()
     try {
-      const response = await api.collapse(session.id, weights)
+      const response = await api.collapse(session.id, weights, {
+        jaccardThreshold: settings.jaccardThreshold,
+        minAgreeingModels: settings.minAgreeingModels,
+      })
       const elapsed = Date.now() - began
       const remaining = Math.max(0, 1900 - elapsed)
       later(() => {
@@ -303,6 +308,13 @@ export function useSuperposition() {
             (response.result.metrics?.convergenceIndex ?? 0) * 100
           ).toFixed(1)} %`,
         )
+        const consensus = response.result.consensus
+        if (consensus) {
+          pushLog(
+            consensus.isolateCount > 0 ? 'warn' : 'info',
+            `Konsensprüfung: ${consensus.supportedCount} von ${consensus.sentenceCount} Aussagen gestützt · ${consensus.isolateCount} Isolate verworfen · Schwelle ${consensus.threshold.toFixed(2)}, mindestens ${consensus.minAgreeingModels} Modelle`,
+          )
+        }
       }, remaining)
     } catch (cause) {
       const message = cause instanceof ApiError ? cause.message : 'Der Kollaps ist fehlgeschlagen.'
@@ -311,7 +323,7 @@ export function useSuperposition() {
       setCollapseStage(0)
       pushLog('error', message)
     }
-  }, [later, pushLog, session, weights])
+  }, [later, pushLog, session, settings.jaccardThreshold, settings.minAgreeingModels, weights])
 
   const reset = useCallback(() => {
     handleRef.current?.close()

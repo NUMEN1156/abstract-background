@@ -112,9 +112,22 @@ export const api = {
       ssePath: string
     }>('/api/superposition', { method: 'POST', body: JSON.stringify(input) }),
 
-  collapse: (sessionId: string, weights: Record<string, number>) =>
+  collapse: (
+    sessionId: string,
+    weights: Record<string, number>,
+    consensus?: { jaccardThreshold: number; minAgreeingModels: number },
+  ) =>
     request<{ ok: boolean; sessionId: string; result: CollapseResult }>('/api/collapse', {
       method: 'POST',
-      body: JSON.stringify({ sessionId, weights }),
+      body: JSON.stringify({
+        sessionId,
+        weights,
+        ...(consensus
+          ? {
+              jaccardThreshold: consensus.jaccardThreshold,
+              minAgreeingModels: consensus.minAgreeingModels,
+            }
+          : {}),
+      }),
     }),
 }

@@ -205,3 +205,46 @@ curl -X POST localhost:3000/api/superposition \
 Dieser Schlüssel ist ein gemeinsames Geheimnis für eine Instanz, keine Benutzeridentität. Für
 echte Konten mit Rollen und nachvollziehbarer Zuordnung ist die Anmeldung über das Manus-Konto
 (OAuth) vorgesehen; sie ist in diesem Prototyp noch nicht umgesetzt.
+## Konsensfilterung
+
+Der Kollaps bewertet nicht nur, wer etwas gesagt hat, sondern auch, wie stark eine Aussage im
+Modellverbund verankert ist. Dafür läuft über alle Ausgaben eine satzweise Konsensprüfung
+(`server/consensus.mjs`): Für jeden Satz wird die größte Jaccard-Ähnlichkeit zu den Sätzen der
+anderen Modelle bestimmt. Erreicht sie die Schwelle, gilt das andere Modell als zustimmend.
+
+| Einstellung | Bereich | Standard | Wirkung |
+| --- | --- | --- | --- |
+| `jaccardThreshold` | 0.05–0.50 | 0.10 | ab welcher Ähnlichkeit zwei Aussagen als übereinstimmend gelten |
+| `minAgreeingModels` | 1–6 | 2 | so viele Modelle müssen eine Aussage mindestens stützen |
+
+Aussagen unterhalb der Mindeststützung werden zu **Isolaten**: Sie tragen das Ergebnis nicht mehr,
+werden aber vollständig protokolliert. Der Rang getragener Aussagen verbindet Modellgewicht und
+Verankerung: `Score = Gewichtsanteil × (0,5 + 0,5 × Zustimmungsanteil)`. Beide Werte sind auch je
+Kollapsaufruf überschreibbar — eine Ausgabe lässt sich also mit mehreren Schwellen prüfen, ohne die
+Sitzung neu zu starten:
+
+```sh
+curl -X POST localhost:3000/api/collapse -H 'Content-Type: application/json' \
+  -d '{"sessionId":"…","weights":{},"jaccardThreshold":0.25,"minAgreeingModels":3}'
+```
+
+### Gemessene Wirkung der Schwelle
+
+An einer Sitzung mit vier Modellen und 41 erkannten Aussagen (simulierte Anbieterantworten):
+
+| Schwelle | Mindeststützung | gestützte Aussagen | Isolate |
+| --- | --- | --- | --- |
+| 0.05 | 2 | 39 von 41 | 2 |
+| 0.10 | 2 | 27 von 41 | 14 |
+| 0.15 | 2 | 9 von 41 | 32 |
+| 0.20 | 2 | 3 von 41 | 38 |
+| 0.25 | 2 | 2 von 41 | 39 |
+| 0.25 | 3 | 0 von 41 | 41 |
+| 0.25 | 4 | 0 von 41 | 41 |
+
+Bei 0.25 mit mindestens drei Modellen bleibt das Ergebnis also bewusst leer: keine Aussage ist so
+breit verankert. Genau das ist die Aussage dieser Regel — und sie ist im Protokoll nachlesbar.
+
+**Grenze:** Die Kurve ist an den simulierten Antworten gemessen. Deren Sätze sind formelhaft und
+teilen viele Begriffe, deshalb liegen die Ähnlichkeiten hoch. Bei echten Modelltexten ist mit
+niedrigeren Werten zu rechnen; die Schwelle ist dann neu zu kalibrieren.

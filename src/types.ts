@@ -62,6 +62,10 @@ export interface ProtocolStep {
   tokens: number
   latencyMs: number
   confidence: number | null
+  /** Getragene Aussagen dieses Modells nach der Konsensprüfung. */
+  sentences?: number
+  /** Als Isolat verworfene Aussagen dieses Modells. */
+  isolates?: number
 }
 
 export interface CollapseMetrics {
@@ -73,6 +77,11 @@ export interface CollapseMetrics {
   contributors: number
   supporters: number
   notes: number
+  jaccardThreshold?: number
+  minAgreeingModels?: number
+  sentenceCount?: number
+  supportedSentences?: number
+  isolates?: number
 }
 
 export interface CollapseResult {
@@ -84,9 +93,41 @@ export interface CollapseResult {
   primary?: { providerId: string; label: string; model: string; share: number }
   protocol: ProtocolStep[]
   metrics: CollapseMetrics | null
+  consensus?: ConsensusReport | null
   convergenceIndex?: number
   coherenceMatrix?: Record<string, Record<string, number>>
   coherence: { ids?: string[]; pair: string[]; overlap: number }[]
+}
+
+export interface ConsensusAssessment {
+  providerId: string
+  label: string
+  sentence: string
+  supportCount: number
+  supportLabels: string[]
+  bestOverlap: number
+  consensusScore: number
+  share: number
+  score: number
+}
+
+/** Ergebnis der satzweisen Konsensprüfung: was das Ergebnis trägt und was verworfen wurde. */
+export interface ConsensusReport {
+  threshold: number
+  minAgreeingModels: number
+  sentenceCount: number
+  supportedCount: number
+  isolateCount: number
+  byModel: Record<string, { supported: number; isolates: number }>
+  topSupported: ConsensusAssessment[]
+  isolates: {
+    providerId: string
+    label: string
+    sentence: string
+    supportCount: number
+    bestOverlap: number
+  }[]
+  carried: ConsensusAssessment[]
 }
 
 export interface SecurityReport {
@@ -123,6 +164,10 @@ export interface StartSettings {
   collapseRule: string
   injectFailure: boolean
   temperature: number
+  /** Ab dieser Jaccard-Ähnlichkeit gelten zwei Aussagen als übereinstimmend (0,05–0,5). */
+  jaccardThreshold: number
+  /** So viele Modelle müssen eine Aussage mindestens stützen (1–6). */
+  minAgreeingModels: number
 }
 
 export interface SessionMeta {

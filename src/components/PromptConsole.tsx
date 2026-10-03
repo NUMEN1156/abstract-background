@@ -134,6 +134,41 @@ export function PromptConsole({
             onChange={(event) => onSettings({ temperature: Number(event.target.value) })}
           />
         </label>
+
+        <label className="field">
+          <span className="label">Konsensschwelle {settings.jaccardThreshold.toFixed(2)}</span>
+          <input
+            type="range"
+            className="slider"
+            min={0.05}
+            max={0.5}
+            step={0.01}
+            value={settings.jaccardThreshold}
+            onChange={(event) => onSettings({ jaccardThreshold: Number(event.target.value) })}
+          />
+          <span className="field__note">
+            Ab dieser Jaccard-Ähnlichkeit gelten zwei Aussagen als übereinstimmend. Strenger
+            (0.25) lässt nur echte Überschneidungen zu, milder (0.10) erkennt auch lose verwandte
+            Formulierungen.
+          </span>
+        </label>
+
+        <label className="field">
+          <span className="label">Mindestens zustimmende Modelle {settings.minAgreeingModels}</span>
+          <input
+            type="range"
+            className="slider"
+            min={1}
+            max={6}
+            step={1}
+            value={settings.minAgreeingModels}
+            onChange={(event) => onSettings({ minAgreeingModels: Number(event.target.value) })}
+          />
+          <span className="field__note">
+            Aussagen unterhalb dieser Stützung werden als Isolat verworfen und nur noch im
+            Protokoll geführt.
+          </span>
+        </label>
       </div>
 
       {error ? <p className="console__error">{error}</p> : null}

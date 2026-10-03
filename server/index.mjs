@@ -10,6 +10,7 @@ import { activeAdapters, addAdapter, AdapterError, listAdapters, removeAdapter, 
 import { collapse } from './synthesis.mjs'
 import { describeVault, seedVault } from './crypto.mjs'
 import { accessStatus, registerAccessGuard } from './access.mjs'
+import { clampMinAgreeing, clampThreshold } from './consensus.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(here, '..')
@@ -183,6 +184,8 @@ app.post('/api/superposition', async (request, reply) => {
     injectFailure: Boolean(body.injectFailure),
     transport: 'websocket',
     temperature: Number(body.temperature ?? 0.4),
+    jaccardThreshold: clampThreshold(body.jaccardThreshold),
+    minAgreeingModels: clampMinAgreeing(body.minAgreeingModels),
   }
 
   let session
@@ -265,6 +268,16 @@ app.post('/api/collapse', async (request, reply) => {
   const result = collapse({
     prompt: session.prompt,
     rule: session.settings.collapseRule,
+    // Der Kollaps darf die Konsenseinstellungen überschreiben; so lässt sich eine Ausgabe mit
+    // mehreren Schwellen prüfen, ohne die Sitzung neu zu starten.
+    threshold:
+      body.jaccardThreshold === undefined
+        ? session.settings.jaccardThreshold
+        : clampThreshold(body.jaccardThreshold),
+    minAgreeingModels:
+      body.minAgreeingModels === undefined
+        ? session.settings.minAgreeingModels
+        : clampMinAgreeing(body.minAgreeingModels),
     streams: [...session.streams.values()].map((stream) => ({
       id: stream.id,
       label: stream.label,
