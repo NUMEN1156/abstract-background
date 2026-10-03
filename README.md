@@ -7,6 +7,7 @@ every step logged and every sentence traceable back to the model that produced i
 **Live demo:** https://abstractbg-qehn8ouj.manus.space — no login required.
 
 [Deutsche Fassung](README.de.md) · [Lasttest-Bericht](reports/LOADTEST.md)
+[German overview graphic](docs/overview-de.png)
 
 ![License](https://img.shields.io/badge/license-MIT-4fe3d0)
 ![Node](https://img.shields.io/badge/node-%3E%3D20-4fe3d0)
@@ -218,4 +219,3 @@ real provider endpoints with streaming · worker threads for very large model se
 ## License
 
 MIT — see [LICENSE](LICENSE).
-[German overview graphic](docs/overview-de.png)
