@@ -8,8 +8,6 @@ every step logged and every sentence traceable back to the model that produced i
 
 [Deutsche Fassung](README.de.md) · [Lasttest-Bericht](reports/LOADTEST.md)
 
-[Deutsche Fassung](README.de.md) · [Lasttest-Bericht](reports/LOADTEST.md)
-
 ![License](https://img.shields.io/badge/license-MIT-4fe3d0)
 ![Node](https://img.shields.io/badge/node-%3E%3D20-4fe3d0)
 ![Status](https://img.shields.io/badge/status-prototype-f2c14e)
