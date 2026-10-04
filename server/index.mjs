@@ -18,6 +18,62 @@ const isProduction = process.env.NODE_ENV === 'production'
 const port = Number(process.env.PORT ?? 3000)
 const promptLimit = 1200
 
+/**
+ * Vorschau eines Auftrags für Antworten.
+ *
+ * Der volle Auftrag wird nicht zurückgespiegelt: Er ist Nutzereingabe und hat in Antworten
+ * nichts verloren. Die Vorschau ist gekürzt und von Steuerzeichen befreit.
+ */
+function promptPreview(prompt, limit = 120) {
+  const flat = String(prompt ?? '')
+    .replace(/[\u0000-\u001f\u007f]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return flat.length <= limit ? flat : `${flat.slice(0, limit - 1).trimEnd()}…`
+}
+
+
+/**
+ * Strikte Zahlenprüfung für Konsenseinstellungen.
+ *
+ * Werte außerhalb des Bereichs oder vom falschen Typ werden abgewiesen, statt sie stillschweigend
+ * auf den gültigen Bereich zu ziehen: Eine Anfrage soll genau das tun, was sie beschreibt.
+ */
+function rangeProblem(value, min, max, field, label) {
+  if (value === undefined || value === null) return null
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max) {
+    return { ok: false, error: `${label} muss eine Zahl zwischen ${min} und ${max} sein.`, field }
+  }
+  return null
+}
+
+function countProblem(value, min, max, field, label) {
+  if (value === undefined || value === null) return null
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < min || value > max) {
+    return { ok: false, error: `${label} muss eine ganze Zahl zwischen ${min} und ${max} sein.`, field }
+  }
+  return null
+}
+
+/**
+ * Antwort für eine unbekannte Sitzung: Verdrängte Sitzungen werden von nie existierenden
+ * unterschieden, damit ein Client den Unterschied zwischen „zu spät" und „falsch" erkennt.
+ */
+function sessionMissingReply(hub, id) {
+  if (hub.wasEvicted(String(id ?? ''))) {
+    return {
+      status: 410,
+      body: {
+        ok: false,
+        error:
+          'Diese Sitzung wurde wegen der Kapazitätsgrenze verdrängt. Starten Sie den Auftrag erneut.',
+        field: 'capacity',
+      },
+    }
+  }
+  return { status: 404, body: { ok: false, error: 'Sitzung nicht gefunden oder abgelaufen.' } }
+}
+
 const hub = new SuperpositionHub()
 seedVault(listAdapters())
 
@@ -168,6 +224,20 @@ app.post('/api/superposition', async (request, reply) => {
       .send({ ok: false, error: `Die Anfrage ist auf ${promptLimit} Zeichen begrenzt.` })
   }
 
+  // Die Adapterauswahl muss eine Liste sein. Eine einzelne Zeichenkette wurde zuvor stillschweigend
+  // als „keine Auswahl" gedeutet und startete dann den gesamten Verbund statt des gewünschten Modells.
+  if (body.providerIds !== undefined && !Array.isArray(body.providerIds)) {
+    return reply
+      .code(400)
+      .send({ ok: false, error: 'Die Adapterauswahl muss eine Liste von Kennungen sein.', field: 'providerIds' })
+  }
+  for (const invalid of [
+    rangeProblem(body.jaccardThreshold, 0, 1, 'jaccardThreshold', 'Die Konsensschwelle'),
+    countProblem(body.minAgreeingModels, 1, 12, 'minAgreeingModels', 'Die Mindestanzahl zustimmender Modelle'),
+  ]) {
+    if (invalid) return reply.code(400).send(invalid)
+  }
+
   const requestedIds = Array.isArray(body.providerIds) ? body.providerIds.map(String) : []
   let providers
   try {
@@ -184,8 +254,8 @@ app.post('/api/superposition', async (request, reply) => {
     injectFailure: Boolean(body.injectFailure),
     transport: 'websocket',
     temperature: Number(body.temperature ?? 0.4),
-    jaccardThreshold: clampThreshold(body.jaccardThreshold),
-    minAgreeingModels: clampMinAgreeing(body.minAgreeingModels),
+    jaccardThreshold: body.jaccardThreshold ?? clampThreshold(undefined),
+    minAgreeingModels: body.minAgreeingModels ?? clampMinAgreeing(undefined),
   }
 
   let session
@@ -206,7 +276,8 @@ app.post('/api/superposition', async (request, reply) => {
   return {
     ok: true,
     sessionId: session.id,
-    prompt,
+    promptPreview: promptPreview(prompt),
+    promptChars: String(prompt ?? '').length,
     providers: providers.map((provider) => ({
       id: provider.id,
       label: provider.label,
@@ -224,7 +295,8 @@ app.post('/api/superposition', async (request, reply) => {
 app.get('/api/session/:id', async (request, reply) => {
   const session = hub.get(request.params.id)
   if (!session) {
-    return reply.code(404).send({ ok: false, error: 'Sitzung nicht gefunden oder abgelaufen.' })
+    const missing = sessionMissingReply(hub, request.params.id)
+    return reply.code(missing.status).send(missing.body)
   }
   return {
     ok: true,
@@ -245,7 +317,15 @@ app.post('/api/collapse', async (request, reply) => {
   const body = request.body ?? {}
   const session = hub.get(String(body.sessionId ?? ''))
   if (!session) {
-    return reply.code(404).send({ ok: false, error: 'Sitzung nicht gefunden oder abgelaufen.' })
+    const missing = sessionMissingReply(hub, body.sessionId)
+    return reply.code(missing.status).send(missing.body)
+  }
+
+  for (const invalid of [
+    rangeProblem(body.jaccardThreshold, 0, 1, 'jaccardThreshold', 'Die Konsensschwelle'),
+    countProblem(body.minAgreeingModels, 1, 12, 'minAgreeingModels', 'Die Mindestanzahl zustimmender Modelle'),
+  ]) {
+    if (invalid) return reply.code(400).send(invalid)
   }
 
   const rawWeights =
@@ -254,15 +334,16 @@ app.post('/api/collapse', async (request, reply) => {
       : {}
   const weights = {}
   for (const [key, value] of Object.entries(rawWeights)) {
-    const numeric = Number(value)
-    if (!Number.isFinite(numeric)) {
+    // Gewichte werden strikt geprüft: Zeichenketten, negative Werte und Werte außerhalb des
+    // dokumentierten Bereichs verändern sonst stillschweigend die Bedeutung des Kollapses.
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value > 100) {
       return reply.code(400).send({
         ok: false,
-        error: `Das Gewicht für „${key}“ ist keine endliche Zahl.`,
+        error: `Das Gewicht für „${key}“ muss eine Zahl zwischen 0 und 100 sein.`,
         field: key,
       })
     }
-    weights[key] = Math.min(100, Math.max(0, numeric))
+    weights[key] = value
   }
 
   const result = collapse({
@@ -273,11 +354,11 @@ app.post('/api/collapse', async (request, reply) => {
     threshold:
       body.jaccardThreshold === undefined
         ? session.settings.jaccardThreshold
-        : clampThreshold(body.jaccardThreshold),
+        : body.jaccardThreshold,
     minAgreeingModels:
       body.minAgreeingModels === undefined
         ? session.settings.minAgreeingModels
-        : clampMinAgreeing(body.minAgreeingModels),
+        : body.minAgreeingModels,
     streams: [...session.streams.values()].map((stream) => ({
       id: stream.id,
       label: stream.label,
@@ -304,8 +385,9 @@ app.get('/ws', { websocket: true }, (socket, request) => {
   const sessionId = String(request.query?.session ?? '')
   const session = hub.get(sessionId)
   if (!session) {
-    socket.send(JSON.stringify({ type: 'fatal', message: 'Sitzung nicht gefunden oder abgelaufen.' }))
-    socket.close(4404, 'session-missing')
+    const missing = sessionMissingReply(hub, sessionId)
+    socket.send(JSON.stringify({ type: 'fatal', message: missing.body.error }))
+    socket.close(missing.status === 410 ? 4410 : 4404, missing.status === 410 ? 'session-evicted' : 'session-missing')
     return
   }
 
@@ -327,7 +409,8 @@ app.get('/ws', { websocket: true }, (socket, request) => {
 app.get('/api/stream/:id', (request, reply) => {
   const session = hub.get(request.params.id)
   if (!session) {
-    return reply.code(404).send({ ok: false, error: 'Sitzung nicht gefunden oder abgelaufen.' })
+    const missing = sessionMissingReply(hub, request.params.id)
+    return reply.code(missing.status).send(missing.body)
   }
 
   session.settings.transport = 'server-sent-events'

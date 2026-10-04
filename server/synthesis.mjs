@@ -4,6 +4,8 @@ import {
   analyseSentenceSupport,
   clampMinAgreeing,
   clampThreshold,
+  firstVerdictLine,
+  normalizeVerdict,
   summarizeConsensus,
 } from './consensus.mjs'
 
@@ -107,6 +109,33 @@ export function collapse({ prompt, streams, weights, rule, threshold, minAgreein
   const latency = weighted.reduce((acc, entry) => acc + entry.share * (entry.latencyMs ?? 0), 0) || 0
   const divergences = coherencePairs(coherenceMatrix, coherenceOutputs)
 
+  /**
+   * Antwortzeilen auswerten.
+   *
+   * Die entscheidungstragende Zeile jeder Ausgabe („ANSWER: …") wird gesondert geführt: Sie ist
+   * die kürzeste Zeile und fällt deshalb aus jeder Ähnlichkeitsbetrachtung heraus. Genau sie muss
+   * das Ergebnis benennen — sonst trägt der Kollaps die ähnlichste Prosa statt der Entscheidung.
+   */
+  const verdicts = weighted
+    .map((entry) => ({ entry, line: firstVerdictLine(entry.text) }))
+    .filter((item) => item.line !== null)
+  const verdictGroups = new Map()
+  for (const item of verdicts) {
+    const key = normalizeVerdict(item.line)
+    const bucket = verdictGroups.get(key) ?? { line: item.line, supporters: 0, share: 0, channels: [] }
+    bucket.supporters += 1
+    bucket.share += item.entry.share ?? 0
+    bucket.channels.push(item.entry.label)
+    verdictGroups.set(key, bucket)
+  }
+  const decision =
+    [...verdictGroups.values()].sort(
+      (a, b) => b.supporters - a.supporters || b.share - a.share || a.line.localeCompare(b.line),
+    )[0] ?? null
+  const decisionBlock = decision
+    ? `Entscheidung: ${decision.line}\nGetragen von ${decision.supporters} von ${verdicts.length} ausgewerteten Antwortzeilen (${decision.channels.join(', ')}). Bei Gleichstand entscheidet der Gewichtsanteil.`
+    : null
+
   /* Satzweiser Konsens über alle Ausgaben. */
   const analysis = analyseSentenceSupport(weighted, {
     threshold: effectiveThreshold,
@@ -127,6 +156,9 @@ export function collapse({ prompt, streams, weights, rule, threshold, minAgreein
   let supporters = []
   let notes = []
   let ruleNote = ''
+
+  // Die Entscheidung steht am Anfang des Berichts: Sie ist das Ergebnis, alles Weitere ist Nachweis.
+  if (decisionBlock) sections.push(decisionBlock)
 
   if (collapseRule === 'bester-traeger') {
     notes = weighted.slice(1)
@@ -212,6 +244,14 @@ export function collapse({ prompt, streams, weights, rule, threshold, minAgreein
     )
   }
 
+  if (verdicts.length > 0) {
+    sections.push(
+      `Antwortzeilen (wörtlich, nach Gewichtsanteil):\n${verdicts
+        .map((item) => `• ${item.entry.label} (${percent(item.entry.share)} %): ${item.line}`)
+        .join('\n')}`,
+    )
+  }
+
   const safeConvergence = Number.isFinite(convergenceIndex) ? convergenceIndex : 0
   const safeConcentration = Number.isFinite(weightConcentration) ? weightConcentration : 0
   const safeConfidence = Number.isFinite(confidence) ? confidence : 0
@@ -254,6 +294,16 @@ export function collapse({ prompt, streams, weights, rule, threshold, minAgreein
     prompt,
     collapsedAt: new Date().toISOString(),
     finalText: sections.join('\n\n'),
+    decision: decision
+      ? {
+          line: decision.line,
+          value: normalizeVerdict(decision.line),
+          supporters: decision.supporters,
+          evaluatedVerdicts: verdicts.length,
+          channels: decision.channels,
+          tieBreak: decision.supporters * 2 === verdicts.length && verdicts.length > 0,
+        }
+      : null,
     primary: {
       providerId: primary.id,
       label: primary.label,

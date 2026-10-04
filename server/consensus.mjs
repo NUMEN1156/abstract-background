@@ -40,12 +40,48 @@ export function clampMinAgreeing(value) {
   return Math.min(MAX_AGREEING_LIMIT, Math.max(MIN_AGREEING_LIMIT, Math.round(numeric)))
 }
 
-/** Zerlegt einen Text in Sätze und behält nur solche mit verwertbarem Inhalt. */
-export function splitSentences(text) {
+/**
+ * Entscheidungstragende Zeilen.
+ *
+ * Eine abgesetzte Antwortzeile („ANSWER: 20.0 %") ist die kürzeste und zugleich wichtigste Zeile
+ * einer Modellausgabe. Ein reiner Wortzahl-Filter verwirft genau sie — dann trägt der Kollaps die
+ * ähnlichste Prosa statt der Entscheidung. Solche Zeilen werden deshalb unabhängig von ihrer Länge
+ * als Satz geführt.
+ */
+const VERDICT_PATTERN = /^\s*(answer|antwort|ergebnis|result|verdict|schlussfolgerung|conclusion)\b\s*[:\-–]/i
+
+export function isVerdictLine(sentence) {
+  return VERDICT_PATTERN.test(String(sentence ?? ''))
+}
+
+/** Zerlegt einen Text in Sätze, ohne Längenfilterung. */
+export function splitSentencesRaw(text) {
   return String(text ?? '')
     .split(/(?<=[.!?])\s+/)
     .map((sentence) => sentence.trim())
-    .filter((sentence) => sentence.split(/\s+/).filter(Boolean).length >= 4)
+    .filter(Boolean)
+}
+
+/** Erste abgesetzte Antwortzeile einer Ausgabe, oder null. */
+export function firstVerdictLine(text) {
+  return splitSentencesRaw(text).find(isVerdictLine) ?? null
+}
+
+/** Vergleichsform einer Antwortzeile: Marke, Schreibweise und Satzzeichen entfallen. */
+export function normalizeVerdict(line) {
+  return String(line ?? '')
+    .replace(VERDICT_PATTERN, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9äöüß%,.]/g, '')
+    .replace(/[.,]$/, '')
+    .trim()
+}
+
+/** Zerlegt einen Text in Sätze und behält nur solche mit verwertbarem Inhalt. */
+export function splitSentences(text) {
+  return splitSentencesRaw(text).filter(
+    (sentence) => sentence.split(/\s+/).filter(Boolean).length >= 4 || isVerdictLine(sentence),
+  )
 }
 
 function truncate(sentence, limit = 180) {

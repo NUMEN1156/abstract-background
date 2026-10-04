@@ -14,6 +14,15 @@ const SESSION_TTL_MS = 20 * 60 * 1000
 /** Obergrenze gleichzeitig gehaltener Sitzungen; für Lasttests über die Umgebung anpassbar. */
 const MAX_SESSIONS = Math.max(1, Number(process.env.ABSTRACT_MAX_SESSIONS ?? 120))
 /**
+ * Schonfrist für abgeschlossene Sitzungen.
+ *
+ * Sind die Ströme durchgelaufen, wird eine Sitzung nicht sofort verdrängt: Ein gerade
+ * angenommener Auftrag muss seinen Verlauf abholen und den Kollaps auslösen können. Ohne diese
+ * Frist verschwindet die Sitzung genau in dem Moment, in dem sie gebraucht wird — der Client
+ * erhält dann 404 auf einen Auftrag, den der Dienst zuvor mit 200 angenommen hat.
+ */
+const EVICTION_GRACE_MS = Math.max(0, Number(process.env.ABSTRACT_EVICTION_GRACE_MS ?? 90_000))
+/**
  * Obergrenzen des Ereignispuffers je Sitzung. Sie deckeln den Speicherbedarf bei Langläufern.
  * Wird gekürzt, meldet der Snapshot das ausdrücklich: späte Empfänger erhalten dann nur den
  * jüngeren Teil des Verlaufs statt eines unbemerkt unvollständigen Bildes.
@@ -58,6 +67,7 @@ class Session {
     this.streams = new Map()
     this.state = 'ready'
     this.completed = false
+    this.completedAt = null
 
     for (const provider of providers) {
       this.streams.set(provider.id, {
@@ -252,6 +262,7 @@ class Session {
     )
     if (pending.length > 0 || this.completed) return
     this.completed = true
+    this.completedAt = Date.now()
     this.state = 'settled'
     this.emit({
       type: 'session:done',
@@ -272,6 +283,9 @@ class Session {
 export class SuperpositionHub {
   constructor() {
     this.sessions = new Map()
+    // Kurzlebiger Nachweis verdrängter Sitzungen: Ein später Kollaps soll „verdrängt“ von
+    // „unbekannt“ unterscheiden können, statt beide Fälle als 404 zu melden.
+    this.evicted = new Map()
     this.startedAt = Date.now()
     this.emitted = 0
     this.emittedWindow = []
@@ -288,19 +302,27 @@ export class SuperpositionHub {
       const freeable = [...this.sessions.values()]
         .filter(
           (session) =>
-            (session.completed || now - session.lastAccess > SESSION_TTL_MS) && session.sinks.size === 0,
+            session.sinks.size === 0 &&
+            now - (session.completedAt ?? session.lastAccess) > EVICTION_GRACE_MS &&
+            (session.completed || now - session.lastAccess > SESSION_TTL_MS),
         )
         .sort((a, b) => a.lastAccess - b.lastAccess)
       const candidate = freeable[0]
       if (!candidate) {
-        // Alle gehaltenen Sitzungen sind aktiv oder werden noch beobachtet. Statt eine laufende
-        // Sitzung stillschweigend zu verdrängen, wird der neue Auftrag sichtbar abgelehnt.
+        // Alle gehaltenen Sitzungen sind aktiv, werden noch beobachtet oder befinden sich in der
+        // Schonfrist. Statt eine laufende Sitzung stillschweigend zu verdrängen, wird der neue
+        // Auftrag sichtbar abgelehnt.
         throw new CapacityError(
-          `Die Obergrenze von ${MAX_SESSIONS} gleichzeitigen Sitzungen ist erreicht und keine Sitzung ist abgeschlossen. Starten Sie den Auftrag später erneut.`,
+          `Die Obergrenze von ${MAX_SESSIONS} gleichzeitigen Sitzungen ist erreicht und keine Sitzung kann derzeit freigegeben werden. Starten Sie den Auftrag später erneut.`,
         )
       }
       candidate.dispose()
       this.sessions.delete(candidate.id)
+      this.evicted.set(candidate.id, Date.now())
+      if (this.evicted.size > 500) {
+        const cutoff = Date.now() - SESSION_TTL_MS
+        for (const [id, at] of this.evicted) if (at < cutoff) this.evicted.delete(id)
+      }
     }
     const id = crypto.randomUUID()
     const session = new Session({ id, prompt, providers, settings })
@@ -319,6 +341,11 @@ export class SuperpositionHub {
     const session = this.sessions.get(id)
     if (session) session.lastAccess = Date.now()
     return session ?? null
+  }
+
+  /** Wurde die Sitzung wegen der Kapazitätsgrenze verdrängt (statt nie zu existieren)? */
+  wasEvicted(id) {
+    return this.evicted.has(String(id ?? ''))
   }
 
   recordEmit() {
@@ -398,9 +425,10 @@ export class SuperpositionHub {
   reap() {
     const now = Date.now()
     for (const [id, session] of this.sessions) {
-      if (now - session.lastAccess > SESSION_TTL_MS) {
+      if (session.sinks.size === 0 && now - session.lastAccess > SESSION_TTL_MS) {
         session.dispose()
         this.sessions.delete(id)
+        this.evicted.set(id, Date.now())
       }
     }
   }
@@ -410,5 +438,6 @@ export class SuperpositionHub {
     clearInterval(this.reaper)
     for (const session of this.sessions.values()) session.dispose()
     this.sessions.clear()
+    this.evicted.clear()
   }
 }
