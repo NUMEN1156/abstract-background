@@ -219,3 +219,36 @@ real provider endpoints with streaming · worker threads for very large model se
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Verification
+
+Two independent checks ship with the repository; raw output is committed.
+
+- **Blinded pressure test** — [`reports/PRESSURE-TEST.md`](reports/PRESSURE-TEST.md): capacity
+  limit (fail-closed HTTP 429), channel replay fidelity for late receivers, input abuse, write
+  protection. Scripts: `scripts/pressure-blackbox.mjs`, `scripts/system-probe.mjs`,
+  `scripts/verify-hardening.mjs`.
+- **Arbitration ablation** — [`evaluation/REPORT.md`](evaluation/REPORT.md): three arbitration
+  lanes (this system's collapse, a deterministic rule arbiter, an independent LLM judge) over a
+  pre-registered corpus of 24 traps and four real models from three vendors. Frozen channel
+  outputs and hashes are in `evaluation/frozen/`.
+  Run it with `node evaluation/generate.mjs && node evaluation/run-lanes.mjs`.
+
+Result, stated plainly: the ablation shows **no demonstrable ensemble advantage** on a corpus the
+channels nearly solve on their own. What it did show is a real defect — the sentence filter dropped
+the short `ANSWER:` line of every output, so the collapse carried the most similar prose instead of
+the decision. That is fixed, and the collapse now declares its decision and quotes every answer line
+verbatim. See the reports for numbers and open questions.
+
+## Environment variables
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `PORT` | `3000` | listener port |
+| `ABSTRACT_MAX_SESSIONS` | `200` | session cap; overload is rejected with HTTP 429 |
+| `ABSTRACT_EVICTION_GRACE_MS` | `5000` | grace before a finished session may be evicted |
+| `ABSTRACT_MAX_BUFFERED_EVENTS` | `1500` | per-session event buffer cap |
+| `ABSTRACT_MAX_BUFFERED_CHARS` | `400000` | per-session character cap |
+| `ABSTRACT_API_KEY` | unset | protects writing endpoints when set |
+| `ABSTRACT_ADAPTER_WRITES` | `locked` in production | `key`, `open` or `locked` for the adapter registry |
+| `ABSTRACT_WS_COMPRESSION` | `on` | permessage-deflate for WebSocket streams |

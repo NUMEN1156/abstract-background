@@ -252,3 +252,35 @@ breit verankert. Genau das ist die Aussage dieser Regel — und sie ist im Proto
 **Grenze:** Die Kurve ist an den simulierten Antworten gemessen. Deren Sätze sind formelhaft und
 teilen viele Begriffe, deshalb liegen die Ähnlichkeiten hoch. Bei echten Modelltexten ist mit
 niedrigeren Werten zu rechnen; die Schwelle ist dann neu zu kalibrieren.
+
+## Nachweise
+
+Zwei unabhängige Prüfungen liegen mit Rohdaten im Repository.
+
+- **Blinder Drucktest** — [`reports/PRESSURE-TEST.md`](reports/PRESSURE-TEST.md): Kapazitätsgrenze
+  (fail-closed HTTP 429), Kanaltreue später Empfänger, Eingabemißbrauch, Schreibschutz.
+  Skripte: `scripts/pressure-blackbox.mjs`, `scripts/system-probe.mjs`, `scripts/verify-hardening.mjs`.
+- **Arbitrierungs-Ablation** — [`evaluation/REPORT.md`](evaluation/REPORT.md): drei
+  Arbitrierungs-Lanes (Kollaps des Systems, deterministische Regeln, unabhängiger LLM-Richter) über
+  ein vorab registriertes Korpus aus 24 Fallen und vier echten Modellen aus drei Anbieterfamilien.
+  Eingefrorene Kanalantworten und Prüfsummen liegen in `evaluation/frozen/`.
+  Aufruf: `node evaluation/generate.mjs && node evaluation/run-lanes.mjs`.
+
+Ergebnis, klar benannt: Die Ablation zeigt **keinen belegbaren Verbundvorteil** auf einem Korpus,
+das die Kanäle fast allein lösen. Sie zeigt aber einen echten Fehler — der Satzfilter verwarf die
+kurze `ANSWER:`-Zeile jeder Ausgabe, sodass der Kollaps die ähnlichste Prosa statt der Entscheidung
+trug. Das ist behoben; der Kollaps weist seine Entscheidung aus und führt alle Antwortzeilen wörtlich
+auf. Zahlen und offene Fragen stehen in den Berichten.
+
+## Umgebungsvariablen
+
+| Variable | Vorgabe | Zweck |
+| --- | --- | --- |
+| `PORT` | `3000` | Listener-Port |
+| `ABSTRACT_MAX_SESSIONS` | `200` | Sitzungsobergrenze; Überlast wird mit HTTP 429 abgewiesen |
+| `ABSTRACT_EVICTION_GRACE_MS` | `5000` | Schonfrist, bevor eine beendete Sitzung verdrängt wird |
+| `ABSTRACT_MAX_BUFFERED_EVENTS` | `1500` | Puffergrenze je Sitzung (Ereignisse) |
+| `ABSTRACT_MAX_BUFFERED_CHARS` | `400000` | Puffergrenze je Sitzung (Zeichen) |
+| `ABSTRACT_API_KEY` | nicht gesetzt | schützt schreibende Endpunkte, wenn gesetzt |
+| `ABSTRACT_ADAPTER_WRITES` | `locked` in Produktion | `key`, `open` oder `locked` für die Adapter-Registry |
+| `ABSTRACT_WS_COMPRESSION` | `on` | permessage-deflate für WebSocket-Streams |
