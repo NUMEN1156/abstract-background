@@ -48,6 +48,17 @@ export function ResultPanel({ result, accentOf }: Props) {
             <span className="mono">{formatPercent(result.primary?.share ?? 0, 1)}</span>
           </div>
 
+          {result.decision ? (
+            <div className="result__decision">
+              <span className="label">Entscheidung</span>
+              <strong className="result__decisionLine">{result.decision.line}</strong>
+              <span className="mono result__decisionMeta">
+                {result.decision.supporters}/{result.decision.evaluatedVerdicts} Antwortzeilen
+                {result.decision.tieBreak ? ' · Gleichstand über Gewicht entschieden' : ''}
+              </span>
+            </div>
+          ) : null}
+
           <pre className="result__text">{result.finalText}</pre>
 
           {metrics ? (

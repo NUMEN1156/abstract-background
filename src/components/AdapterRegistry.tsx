@@ -9,6 +9,7 @@ interface Props {
   onCreate: (input: Record<string, unknown>) => Promise<AdapterRecord>
   onToggleEnabled: (id: string, enabled: boolean) => Promise<void>
   onDelete: (id: string) => Promise<void>
+  adapterWrites: 'open' | 'key' | 'locked'
 }
 
 const PERSONAS = [
@@ -36,13 +37,14 @@ export function AdapterRegistry({
   onCreate,
   onToggleEnabled,
   onDelete,
+  adapterWrites,
 }: Props) {
   const [open, setOpen] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [listError, setListError] = useState<string | null>(null)
   const [form, setForm] = useState({ ...EMPTY_FORM })
-
+  const locked = adapterWrites === 'locked'
   const submit = async () => {
     setBusy(true)
     setError(null)
@@ -63,11 +65,25 @@ export function AdapterRegistry({
         <h2 id="registry-title">Adapter-Verzeichnis</h2>
         <div className="panel__headActions">
           <span className="mono panel__value">{adapters.length} registriert</span>
-          <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen((v) => !v)}>
+          <button
+            type="button"
+            className="btn btn--ghost btn--small"
+            disabled={locked}
+            title={locked ? 'Diese Instanz ist schreibgeschützt.' : undefined}
+            onClick={() => setOpen((v) => !v)}
+          >
             {open ? 'Dialog schließen' : 'Adapter hinzufügen'}
           </button>
         </div>
       </header>
+
+      {locked ? (
+        <p className="field__note">
+          Diese Instanz ist schreibgeschützt: Adapter sind gemeinsamer Zustand und werden von außen
+          nicht verändert. Betreiber geben die Verwaltung am Server über <code>ABSTRACT_ADAPTER_WRITES</code>{' '}
+          frei.
+        </p>
+      ) : null}
 
       {open ? (
         <form
@@ -233,6 +249,7 @@ export function AdapterRegistry({
               <label className="switch switch--compact">
                 <input
                   type="checkbox"
+                  disabled={locked}
                   checked={adapter.enabled}
                   onChange={(event) =>
                     void onToggleEnabled(adapter.id, event.target.checked).catch((cause: unknown) => {
@@ -248,6 +265,7 @@ export function AdapterRegistry({
                 <button
                   type="button"
                   className="btn btn--danger btn--small"
+                  disabled={locked}
                   onClick={() =>
                     void onDelete(adapter.id).catch((cause: unknown) => {
                       setListError(
