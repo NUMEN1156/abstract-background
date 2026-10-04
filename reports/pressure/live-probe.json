@@ -1,0 +1,168 @@
+{
+  "base": "https://abstractbg-qehn8ouj.manus.space",
+  "at": "2026-10-03T23:36:07.355Z",
+  "destructive": false,
+  "results": {
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "abstract-background",
+        "mode": "produktion",
+        "at": "2026-10-03T23:36:10.029Z"
+      }
+    },
+    "functional": {
+      "startStatus": 200,
+      "wsHandshakeMs": 3593,
+      "collapseStatus": 200,
+      "collapseMs": 4829,
+      "resultKeys": [
+        "status",
+        "rule",
+        "prompt",
+        "collapsedAt",
+        "finalText",
+        "primary",
+        "protocol",
+        "metrics",
+        "consensus",
+        "convergenceIndex",
+        "coherenceMatrix",
+        "coherence"
+      ],
+      "metricsKeys": [
+        "convergenceIndex",
+        "weightConcentration",
+        "confidence",
+        "tokens",
+        "latencyMs",
+        "contributors",
+        "supporters",
+        "notes",
+        "jaccardThreshold",
+        "minAgreeingModels",
+        "sentenceCount",
+        "supportedSentences",
+        "isolates"
+      ],
+      "hasConsensus": true,
+      "consensusSuppported": null,
+      "consensusIsolated": null,
+      "matrixSize": 6,
+      "protocolSteps": 4
+    },
+    "access": {
+      "status": 200,
+      "body": {
+        "required": false,
+        "scheme": "offen",
+        "protectedPaths": [],
+        "detail": "Kein Zugangsschlüssel gesetzt: Die Schnittstellen sind offen. Setzen Sie ABSTRACT_API_KEY, um die schreibenden Aufrufe zu schützen."
+      }
+    },
+    "adaptersBefore": {
+      "status": 200,
+      "count": 4,
+      "builtIns": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "llama"
+      ],
+      "vaultKeys": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "writeProbe": {
+      "createStatus": 400,
+      "createdId": null,
+      "body": "{\"ok\":false,\"error\":\"Die Modellkennung muss zwischen 2 und 96 Zeichen lang sein.\",\"field\":\"model\"}"
+    },
+    "bundle": {
+      "asset": "/assets/index-DkEsnwpI.js",
+      "kb": 188,
+      "hits": {}
+    },
+    "latency": {
+      "/api/health": [
+        967,
+        900,
+        1702
+      ],
+      "/api/adapters": [
+        690,
+        1118,
+        1036
+      ],
+      "/api/telemetry": [
+        1057,
+        947,
+        1078
+      ],
+      "/api/architecture": [
+        1200,
+        895,
+        1728
+      ]
+    },
+    "telemetry": {
+      "samples": [
+        {
+          "status": 200,
+          "ms": 651
+        },
+        {
+          "status": 200,
+          "ms": 1030
+        },
+        {
+          "status": 200,
+          "ms": 903
+        },
+        {
+          "status": 200,
+          "ms": 705
+        },
+        {
+          "status": 200,
+          "ms": 885
+        }
+      ],
+      "body": {
+        "type": "telemetry",
+        "at": "2026-10-03T23:37:03.763Z",
+        "activeSessions": 5,
+        "activeSockets": 1,
+        "bufferedEvents": 1769,
+        "bufferedChars": 18831,
+        "droppedEvents": 0,
+        "truncatedSessions": 0,
+        "bufferLimits": {
+          "events": 1500,
+          "chars": 400000
+        },
+        "messagesPerSecond": 0,
+        "totalMessages": 2597,
+        "avgLatencyMs": 6206,
+        "uptimeSec": 39592,
+        "maxSessions": 120,
+        "memory": {
+          "rssMb": 87.8,
+          "heapUsedMb": 15.3
+        }
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "P5",
+      "severity": "medium",
+      "title": "Telemetrieendpunkt antwortet langsam",
+      "evidence": "max 1030 ms über 5 Messungen"
+    }
+  ]
+}

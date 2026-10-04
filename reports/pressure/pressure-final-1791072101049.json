@@ -1,0 +1,612 @@
+{
+  "base": "http://127.0.0.1:3700",
+  "label": "final",
+  "at": "2026-10-03T23:59:09.188Z",
+  "phases": {
+    "state": [
+      {
+        "path": "/",
+        "status": 200,
+        "ms": 5,
+        "contentType": "text/html; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": null
+      },
+      {
+        "path": "/manus-routes.json",
+        "status": 200,
+        "ms": 3,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "routes"
+        ]
+      },
+      {
+        "path": "/api/health",
+        "status": 200,
+        "ms": 1,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "status",
+          "service",
+          "mode",
+          "at"
+        ]
+      },
+      {
+        "path": "/api/access",
+        "status": 200,
+        "ms": 2,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "required",
+          "adapterWrites",
+          "scheme",
+          "protectedPaths",
+          "adapterWriteDetail",
+          "detail"
+        ]
+      },
+      {
+        "path": "/api/architecture",
+        "status": 200,
+        "ms": 2,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "frontend",
+          "backend",
+          "transport",
+          "adapters",
+          "security",
+          "simulation"
+        ]
+      },
+      {
+        "path": "/api/telemetry",
+        "status": 200,
+        "ms": 2,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "type",
+          "at",
+          "activeSessions",
+          "activeSockets",
+          "bufferedEvents",
+          "bufferedChars",
+          "droppedEvents",
+          "truncatedSessions",
+          "bufferLimits",
+          "messagesPerSecond",
+          "totalMessages",
+          "avgLatencyMs"
+        ]
+      },
+      {
+        "path": "/api/adapters",
+        "status": 200,
+        "ms": 1,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "adapters"
+        ]
+      },
+      {
+        "path": "/api/nonexistent-probe",
+        "status": 404,
+        "ms": 4,
+        "contentType": "application/json; charset=utf-8",
+        "csp": null,
+        "xcto": null,
+        "snapshotKeys": [
+          "ok",
+          "error"
+        ]
+      }
+    ],
+    "baselineTelemetry": {
+      "type": "telemetry",
+      "at": "2026-10-03T23:59:09.264Z",
+      "activeSessions": 1,
+      "activeSockets": 0,
+      "bufferedEvents": 353,
+      "bufferedChars": 3753,
+      "droppedEvents": 0,
+      "truncatedSessions": 0,
+      "bufferLimits": {
+        "events": 1500,
+        "chars": 400000
+      },
+      "messagesPerSecond": 0,
+      "totalMessages": 354,
+      "avgLatencyMs": 5632,
+      "uptimeSec": 27,
+      "maxSessions": 120,
+      "memory": {
+        "rssMb": 73.6,
+        "heapUsedMb": 13.1
+      }
+    },
+    "access": {
+      "required": false,
+      "adapterWrites": "locked",
+      "scheme": "offen",
+      "protectedPaths": [],
+      "adapterWriteDetail": "Die Adapter-Registry dieses Systems ist schreibgeschützt: Sie ist gemeinsamer Zustand und wird von außen nicht verändert. Betreiber setzen am Server ABSTRACT_ADAPTER_WRITES=key (mit ABSTRACT_API_KEY) oder =open, um die Verwaltung freizugeben.",
+      "detail": "Kein Zugangsschlüssel gesetzt. Die Adapter-Registry dieses Systems ist schreibgeschützt: Sie ist gemeinsamer Zustand und wird von außen nicht verändert. Betreiber setzen am Server ABSTRACT_ADAPTER_WRITES=key (mit ABSTRACT_API_KEY) oder =open, um die Verwaltung freizugeben."
+    },
+    "bundle": {
+      "asset": "/assets/index-BJDZ462L.js",
+      "sizeKb": 189,
+      "suspiciousStrings": [
+        "apiKey",
+        "secret"
+      ]
+    },
+    "capacity": {
+      "requested": 130,
+      "byStatus": {
+        "200": 119,
+        "429": 11
+      },
+      "acceptMs": {
+        "p50": 88.5,
+        "p95": 98.4
+      },
+      "wallMs": 141,
+      "accepted": 119
+    },
+    "capacityTelemetry": {
+      "type": "telemetry",
+      "at": "2026-10-03T23:59:09.417Z",
+      "activeSessions": 120,
+      "activeSockets": 0,
+      "bufferedEvents": 472,
+      "bufferedChars": 3753,
+      "droppedEvents": 0,
+      "truncatedSessions": 0,
+      "bufferLimits": {
+        "events": 1500,
+        "chars": 400000
+      },
+      "messagesPerSecond": 47.6,
+      "totalMessages": 592,
+      "avgLatencyMs": 5632,
+      "uptimeSec": 27,
+      "maxSessions": 120,
+      "memory": {
+        "rssMb": 74.8,
+        "heapUsedMb": 14.1
+      }
+    },
+    "recovery": {
+      "status": 200,
+      "drainedAfterMs": 80158,
+      "sampleSessionId": "41b829d9-43b7-4977-82e4-ca4d38a1fedd"
+    },
+    "channels": {
+      "sessions": 16,
+      "earlyErrors": 0,
+      "lateErrors": 0,
+      "comparisons": [
+        {
+          "index": 0,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "25464cdc73c9c4af",
+          "earlyHash": "7c434294190bf5ce",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 1,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "c53e82b1f4004161",
+          "earlyHash": "0fddf3f8fc9cb893",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 2,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "d1059e0c132c6b0f",
+          "earlyHash": "9e2c325c06628939",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 3,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "3f2a8d9bd0e5b281",
+          "earlyHash": "f2bac6c2b3394e06",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 4,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "604fc33f4829fc0b",
+          "earlyHash": "15c211bf66393fcc",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 5,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "1978c0e7549871ec",
+          "earlyHash": "ebb885acd1e9912c",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 6,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "6cb925efddb1984f",
+          "earlyHash": "706ae9b902a8b738",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        },
+        {
+          "index": 7,
+          "earlyEvents": 356,
+          "lateEvents": 355,
+          "earlyContent": 348,
+          "lateContent": 348,
+          "telemetryOnlyEarly": 8,
+          "telemetryOnlyLate": 7,
+          "identical": false,
+          "lateHash": "caf28f11b90ba0eb",
+          "earlyHash": "a66aa13467282896",
+          "lateMissingFromEarlySet": 1,
+          "earlyMissingFromLateSet": 0,
+          "earlyError": null,
+          "lateError": null
+        }
+      ],
+      "identicalCount": 0
+    },
+    "sse": {
+      "status": 200,
+      "events": 348,
+      "bytes": 33042,
+      "hasEnd": false
+    },
+    "collapse": {
+      "requests": 20,
+      "p50": 30.5,
+      "p95": 57.7,
+      "p99": 62.4,
+      "max": 62,
+      "failures": [],
+      "wallMs": 252
+    },
+    "malicious": [
+      {
+        "name": "ungültiges JSON",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 3,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "falscher Content-Type",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 4,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "leerer Body",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "fehlender Prompt",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "Prompt als Zahl",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "Prompt als Objekt",
+        "target": "/api/superposition",
+        "status": 200,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":true,\"sessionId\":\"6f4bed80-0fd6-416f-861b-5739cc703f9f\",\"promptPreview\":\"[object Object]\",\"promptChars\":15,\"providers\":[{\"id\":\"openai\""
+      },
+      {
+        "name": "Prompt als Array",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "riesiger Prompt (2 MB)",
+        "target": "/api/superposition",
+        "status": 413,
+        "ms": 8,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"statusCode\":413,\"code\":\"FST_ERR_CTP_BODY_TOO_LARGE\",\"error\":\"Payload Too Large\",\"message\":\"Request body is too large\"}"
+      },
+      {
+        "name": "Prototype-Pollution",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 2,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"statusCode\":400,\"code\":\"FST_ERR_CTP_INVALID_JSON_BODY\",\"error\":\"Bad Request\",\"message\":\"Body is not valid JSON but content-type is set to "
+      },
+      {
+        "name": "unbekannte Adapter",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 2,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "Gewichte negativ/riesig",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "Steuerzeichen und NUL",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      },
+      {
+        "name": "Emoji-Flut",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 2,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage ist auf 1200 Zeichen begrenzt.\"}"
+      },
+      {
+        "name": "XSS-Vektor",
+        "target": "/api/superposition",
+        "status": 200,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": true,
+        "snippet": "{\"ok\":true,\"sessionId\":\"fe67fd8f-3b3b-40ba-bf39-6db6bb9766ff\",\"promptPreview\":\"<script>alert(1)</script><img src=x onerror=alert(1)>\",\"promp"
+      },
+      {
+        "name": "SQL/NoSQL-Vektor",
+        "target": "/api/superposition",
+        "status": 200,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":true,\"sessionId\":\"a5233490-26e4-4202-af2b-591353aa68dd\",\"promptPreview\":\"' OR 1=1 -- {\\\"$ne\\\":null}\",\"promptChars\":24,\"providers\":[{\"i"
+      },
+      {
+        "name": "Kollaps ohne Sitzung",
+        "target": "/api/collapse",
+        "status": 404,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Sitzung nicht gefunden oder abgelaufen.\"}"
+      },
+      {
+        "name": "Kollaps unbekannte Sitzung",
+        "target": "/api/collapse",
+        "status": 404,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Sitzung nicht gefunden oder abgelaufen.\"}"
+      },
+      {
+        "name": "Kollaps falsche Sitzung",
+        "target": "/api/collapse",
+        "status": 404,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Sitzung nicht gefunden oder abgelaufen.\"}"
+      },
+      {
+        "name": "Kopfzeilen-Umgehung",
+        "target": "/api/superposition",
+        "status": 400,
+        "ms": 1,
+        "leakLike": false,
+        "reflected": false,
+        "snippet": "{\"ok\":false,\"error\":\"Die Anfrage muss mindestens 8 Zeichen enthalten.\"}"
+      }
+    ],
+    "maliciousAccepted": [
+      "Prompt als Objekt → 200",
+      "XSS-Vektor → 200",
+      "SQL/NoSQL-Vektor → 200"
+    ],
+    "stateLogic": {
+      "sessionId": "0ffc4d2e-129b-4be0-819c-6551a6fc5596",
+      "raceStatus": [
+        200,
+        200
+      ],
+      "raceIdentical": true,
+      "firstMetrics": null,
+      "resultKeys": [
+        "status",
+        "rule",
+        "message",
+        "finalText",
+        "protocol",
+        "metrics",
+        "coherence",
+        "coherenceMatrix",
+        "convergenceIndex",
+        "consensus"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "high",
+      "title": "Schreibende Endpunkte sind ohne Schlüssel erreichbar (Zugangsschutz inaktiv)",
+      "evidence": "{\"required\":false,\"adapterWrites\":\"locked\",\"scheme\":\"offen\",\"protectedPaths\":[],\"adapterWriteDetail\":\"Die Adapter-Registry dieses Systems ist schreibgeschützt: Sie ist gemeinsamer Zustand und wird von außen nicht verändert. Betreiber setzen am Server ABSTRACT_ADAPTER_WRITES=key (mit ABSTRACT_API_KEY) oder =open, um die Verwaltung freizugeben.\",\"detail\":\"Kein Zugangsschlüssel gesetzt. Die Adapter-Registry dieses Systems ist schreibgeschützt: Sie ist gemeinsamer Zustand und wird von außen nicht verändert. Betreiber setzen am Server ABSTRACT_ADAPTER_WRITES=key (mit ABSTRACT_API_KEY) oder =open, um die Verwaltung freizugeben.\"}"
+    },
+    {
+      "id": "F2",
+      "severity": "high",
+      "title": "Verdächtige Zeichenketten im Frontend-Bundle",
+      "evidence": "{\"asset\":\"/assets/index-BJDZ462L.js\",\"sizeKb\":189,\"suspiciousStrings\":[\"apiKey\",\"secret\"]}"
+    },
+    {
+      "id": "C1",
+      "severity": "high",
+      "title": "Später hinzutretende Empfänger erhalten einen abweichenden Inhaltsverlauf",
+      "evidence": "[{\"index\":0,\"earlyEvents\":356,\"lateEvents\":355,\"earlyContent\":348,\"lateContent\":348,\"telemetryOnlyEarly\":8,\"telemetryOnlyLate\":7,\"identical\":false,\"lateHash\":\"25464cdc73c9c4af\",\"earlyHash\":\"7c434294190bf5ce\",\"lateMissingFromEarlySet\":1,\"earlyMissingFromLateSet\":0,\"earlyError\":null,\"lateError\":null},{\"index\":1,\"earlyEvents\":356,\"lateEvents\":355,\"earlyContent\":348,\"lateContent\":348,\"telemetryOnlyEarly\":8,\"telemetryOnlyLate\":7,\"identical\":false,\"lateHash\":\"c53e82b1f4004161\",\"earlyHash\":\"0fddf3f8fc9cb893\",\"lateMissingFromEarlySet\":1,\"earlyMissingFromLateSet\":0,\"earlyError\":null,\"lateError\":null},{\"index\":2,\"earlyEvents\":356,\"lateEvents\":355,\"earlyContent\":348,\"lateContent\":348,\"telemetryOnlyEarly\":8,\"telemetryOnlyLate\":7,\"identical\":false,\"lateHash\":\"d1059e0c132c6b0f\",\"earlyHash\":\"9e2c325c06628939\",\"lateMissingFromEarlySet\":1,\"earlyMissingFromLateSet\":0,\"earlyError\":null,\"lateError\":null}]"
+    },
+    {
+      "id": "C5",
+      "severity": "info",
+      "title": "Telemetrieereignisse gehören nicht zum nachgespielten Verlauf",
+      "evidence": "[{\"index\":0,\"earlyEvents\":356,\"lateEvents\":355,\"earlyContent\":348,\"lateContent\":348,\"telemetryOnlyEarly\":8,\"telemetryOnlyLate\":7,\"identical\":false,\"lateHash\":\"25464cdc73c9c4af\",\"earlyHash\":\"7c434294190bf5ce\",\"lateMissingFromEarlySet\":1,\"earlyMissingFromLateSet\":0,\"earlyError\":null,\"lateError\":null},{\"index\":1,\"earlyEvents\":356,\"lateEvents\":355,\"earlyContent\":348,\"lateContent\":348,\"telemetryOnlyEarly\":8,\"telemetryOnlyLate\":7,\"identical\":false,\"lateHash\":\"c53e82b1f4004161\",\"earlyHash\":\"0fddf3f8fc9cb893\",\"lateMissingFromEarlySet\":1,\"earlyMissingFromLateSet\":0,\"earlyError\":null,\"lateError\":null}]"
+    },
+    {
+      "id": "E3",
+      "severity": "medium",
+      "title": "Eingabe wird ungefiltert zurückgespiegelt",
+      "evidence": "[{\"name\":\"XSS-Vektor\",\"target\":\"/api/superposition\",\"status\":200,\"ms\":1,\"leakLike\":false,\"reflected\":true,\"snippet\":\"{\\\"ok\\\":true,\\\"sessionId\\\":\\\"fe67fd8f-3b3b-40ba-bf39-6db6bb9766ff\\\",\\\"promptPreview\\\":\\\"<script>alert(1)</script><img src=x onerror=alert(1)>\\\",\\\"promp\"}]"
+    },
+    {
+      "id": "G1",
+      "severity": "info",
+      "title": "Kollaps liefert keinen Konsensblock (Funktionsstand der laufenden Instanz)",
+      "evidence": "[\"status\",\"rule\",\"message\",\"finalText\",\"protocol\",\"metrics\",\"coherence\",\"coherenceMatrix\",\"convergenceIndex\",\"consensus\"]"
+    }
+  ],
+  "reachable": true,
+  "finalTelemetry": {
+    "type": "telemetry",
+    "at": "2026-10-04T00:01:41.048Z",
+    "activeSessions": 120,
+    "activeSockets": 0,
+    "bufferedEvents": 40652,
+    "bufferedChars": 428185,
+    "droppedEvents": 0,
+    "truncatedSessions": 0,
+    "bufferLimits": {
+      "events": 1500,
+      "chars": 400000
+    },
+    "messagesPerSecond": 1.6,
+    "totalMessages": 48166,
+    "avgLatencyMs": 7613,
+    "uptimeSec": 179,
+    "maxSessions": 120,
+    "memory": {
+      "rssMb": 89.5,
+      "heapUsedMb": 23
+    }
+  }
+}
