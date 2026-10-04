@@ -1,0 +1,1105 @@
+{
+  "evaluatedAt": "2026-10-03T23:56:53.415Z",
+  "hashes": {
+    "preregistration": "1862853104051d7a03d6abc1c8188e31d39574575617f2bebbff845cedfca5cb",
+    "corpus": "76f45f840c134a43249b6f272b1a7d8592c6e5528d9c6d18b5a7fbb4fbd14445",
+    "channelOutputs": "be2e7be385329656278d62e08833f6986c6ea70054d760aec6db475e63cd7138",
+    "judgeRuns": "eccf3a36645b0a5d5be0e7f504fd6a2b4e10b2878c521fddeea8abbb31e66afa"
+  },
+  "channels": [
+    {
+      "id": "K1",
+      "model": "gpt-5-mini",
+      "family": "openai",
+      "label": "Kanal A"
+    },
+    {
+      "id": "K2",
+      "model": "gpt-5.5",
+      "family": "openai",
+      "label": "Kanal B"
+    },
+    {
+      "id": "K3",
+      "model": "claude-haiku-4-5",
+      "family": "anthropic",
+      "label": "Kanal C"
+    },
+    {
+      "id": "K4",
+      "model": "gemini-3-flash-preview",
+      "family": "google",
+      "label": "Kanal D"
+    }
+  ],
+  "judgeModel": "claude-opus-4-7",
+  "channelStats": [
+    {
+      "channel": "K1",
+      "model": "gpt-5-mini",
+      "family": "openai",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    {
+      "channel": "K2",
+      "model": "gpt-5.5",
+      "family": "openai",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    {
+      "channel": "K3",
+      "model": "claude-haiku-4-5",
+      "family": "anthropic",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    {
+      "channel": "K4",
+      "model": "gemini-3-flash-preview",
+      "family": "google",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 23,
+      "wrong": 1,
+      "accuracy": 0.9583333333333334,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    }
+  ],
+  "laneMetrics": {
+    "A": {
+      "label": "Lane A — Konsens/Kollaps (gleiche Gewichte)",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    "AStated": {
+      "label": "Lane A′ — Konsens/Kollaps (gesetzte Gewichte)",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    "B": {
+      "label": "Lane B — deterministische Regeln",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    "C": {
+      "label": "Lane C — unabhängiger LLM-Richter",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    },
+    "bestChannel": {
+      "label": "Beste Einzelstimme — K1 (gpt-5-mini)",
+      "channel": "K1",
+      "model": "gpt-5-mini",
+      "family": "openai",
+      "items": 24,
+      "answered": 24,
+      "abstained": 0,
+      "correct": 24,
+      "wrong": 0,
+      "accuracy": 1,
+      "abstentionRate": 0,
+      "falseConsensusRate": 0
+    }
+  },
+  "measurementVariants": {
+    "R1_frozen_rule": {
+      "A": {
+        "items": 24,
+        "answered": 24,
+        "abstained": 0,
+        "correct": 24,
+        "wrong": 0,
+        "accuracy": 1,
+        "abstentionRate": 0,
+        "falseConsensusRate": 0
+      },
+      "AStated": {
+        "items": 24,
+        "answered": 24,
+        "abstained": 0,
+        "correct": 24,
+        "wrong": 0,
+        "accuracy": 1,
+        "abstentionRate": 0,
+        "falseConsensusRate": 0
+      }
+    },
+    "R1b_declared_decision": {
+      "A": {
+        "items": 24,
+        "answered": 24,
+        "abstained": 0,
+        "correct": 24,
+        "wrong": 0,
+        "accuracy": 1,
+        "abstentionRate": 0,
+        "falseConsensusRate": 0
+      },
+      "AStated": {
+        "items": 24,
+        "answered": 24,
+        "abstained": 0,
+        "correct": 24,
+        "wrong": 0,
+        "accuracy": 1,
+        "abstentionRate": 0,
+        "falseConsensusRate": 0
+      }
+    },
+    "R2_containment": {
+      "A": {
+        "items": 24,
+        "correct": 24,
+        "accuracy": 1
+      },
+      "AStated": {
+        "items": 24,
+        "correct": 24,
+        "accuracy": 1
+      }
+    }
+  },
+  "reproducibility": {
+    "laneA_runsIdentical": 1,
+    "laneB_runsIdentical": 1,
+    "laneC_runsAgreement": 1
+  },
+  "nullTests": {
+    "N1_identityChangeRate_A": 0,
+    "N1_identityChangeRate_AStated": 0,
+    "N2_weightChangeRate": 0,
+    "N3_majoritySize": {
+      "NEG-1": 4,
+      "NEG-2": 4,
+      "NEG-3": 4,
+      "NUM-1": 3,
+      "NUM-2": 4,
+      "NUM-3": 4,
+      "ENT-1": 4,
+      "ENT-2": 4,
+      "ENT-3": 4,
+      "CAU-1": 4,
+      "CAU-2": 4,
+      "CAU-3": 4,
+      "PAR-1": 4,
+      "PAR-2": 4,
+      "PAR-3": 4,
+      "FAL-1": 4,
+      "FAL-2": 4,
+      "FAL-3": 4,
+      "MIN-1": 4,
+      "MIN-2": 4,
+      "MIN-3": 4,
+      "VRB-1": 4,
+      "VRB-2": 4,
+      "VRB-3": 4
+    }
+  },
+  "minority": {
+    "A": {
+      "relevant": 0,
+      "rescued": 0,
+      "ids": []
+    },
+    "AStated": {
+      "relevant": 0,
+      "rescued": 0,
+      "ids": []
+    },
+    "B": {
+      "relevant": 0,
+      "rescued": 0,
+      "ids": []
+    },
+    "C": {
+      "relevant": 0,
+      "rescued": 0,
+      "ids": []
+    }
+  },
+  "byCategory": {
+    "negation": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "numeric": {
+      "items": 3,
+      "channelsCorrect": 11,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "entity_swap": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "causal": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "paraphrase": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "false_premise": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "correct_minority": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    },
+    "verbosity": {
+      "items": 3,
+      "channelsCorrect": 12,
+      "channelsAnswered": 12,
+      "A": 3,
+      "B": 3,
+      "C": 3
+    }
+  },
+  "laneAProtocol": {
+    "threshold": 0.1,
+    "minAgreeingModels": 2,
+    "equalWeights": {
+      "K1": 25,
+      "K2": 25,
+      "K3": 25,
+      "K4": 25
+    },
+    "statedWeights": {
+      "K1": 40,
+      "K2": 30,
+      "K3": 20,
+      "K4": 10
+    },
+    "channelConfidence": 0.7
+  },
+  "detail": {
+    "channels": {
+      "NEG-1": {
+        "K1": "no",
+        "K2": "no",
+        "K3": "no",
+        "K4": "no"
+      },
+      "NEG-2": {
+        "K1": "a",
+        "K2": "a",
+        "K3": "a",
+        "K4": "a"
+      },
+      "NEG-3": {
+        "K1": "no",
+        "K2": "no",
+        "K3": "no",
+        "K4": "no"
+      },
+      "NUM-1": {
+        "K1": "20",
+        "K2": "20",
+        "K3": "20",
+        "K4": "100"
+      },
+      "NUM-2": {
+        "K1": "126",
+        "K2": "126",
+        "K3": "126",
+        "K4": "126"
+      },
+      "NUM-3": {
+        "K1": "1020",
+        "K2": "1020",
+        "K3": "1020",
+        "K4": "1020"
+      },
+      "ENT-1": {
+        "K1": "2018",
+        "K2": "2018",
+        "K3": "2018",
+        "K4": "2018"
+      },
+      "ENT-2": {
+        "K1": "stockholm",
+        "K2": "stockholm",
+        "K3": "stockholm",
+        "K4": "stockholm"
+      },
+      "ENT-3": {
+        "K1": "b",
+        "K2": "b",
+        "K3": "b",
+        "K4": "b"
+      },
+      "CAU-1": {
+        "K1": "no",
+        "K2": "no",
+        "K3": "no",
+        "K4": "no"
+      },
+      "CAU-2": {
+        "K1": "no",
+        "K2": "no",
+        "K3": "no",
+        "K4": "no"
+      },
+      "CAU-3": {
+        "K1": "no",
+        "K2": "no",
+        "K3": "no",
+        "K4": "no"
+      },
+      "PAR-1": {
+        "K1": "canberra",
+        "K2": "canberra",
+        "K3": "canberra",
+        "K4": "canberra"
+      },
+      "PAR-2": {
+        "K1": "210",
+        "K2": "210",
+        "K3": "210",
+        "K4": "210"
+      },
+      "PAR-3": {
+        "K1": "mercury",
+        "K2": "mercury",
+        "K3": "mercury",
+        "K4": "mercury"
+      },
+      "FAL-1": {
+        "K1": "none",
+        "K2": "none",
+        "K3": "none",
+        "K4": "none"
+      },
+      "FAL-2": {
+        "K1": "none",
+        "K2": "none",
+        "K3": "none",
+        "K4": "none"
+      },
+      "FAL-3": {
+        "K1": "none",
+        "K2": "none",
+        "K3": "none",
+        "K4": "none"
+      },
+      "MIN-1": {
+        "K1": "100",
+        "K2": "100",
+        "K3": "100",
+        "K4": "100"
+      },
+      "MIN-2": {
+        "K1": "3",
+        "K2": "3",
+        "K3": "3",
+        "K4": "3"
+      },
+      "MIN-3": {
+        "K1": "5",
+        "K2": "5",
+        "K3": "5",
+        "K4": "5"
+      },
+      "VRB-1": {
+        "K1": "6",
+        "K2": "6",
+        "K3": "6",
+        "K4": "6"
+      },
+      "VRB-2": {
+        "K1": "100",
+        "K2": "100",
+        "K3": "100",
+        "K4": "100"
+      },
+      "VRB-3": {
+        "K1": "nitrogen",
+        "K2": "nitrogen",
+        "K3": "nitrogen",
+        "K4": "nitrogen"
+      }
+    },
+    "laneA": [
+      {
+        "itemId": "NEG-1",
+        "value": "no",
+        "declaredValue": "no",
+        "decisionLine": "ANSWER: No.",
+        "supported": 6,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "NEG-2",
+        "value": "a",
+        "declaredValue": "a",
+        "decisionLine": "ANSWER: A",
+        "supported": 4,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "NEG-3",
+        "value": "no",
+        "declaredValue": "no",
+        "decisionLine": "ANSWER: No",
+        "supported": 8,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "NUM-1",
+        "value": "20",
+        "declaredValue": "20",
+        "decisionLine": "ANSWER: 20.0%",
+        "supported": 8,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "NUM-2",
+        "value": "126",
+        "declaredValue": "126",
+        "decisionLine": "ANSWER: 126 kilometres per hour",
+        "supported": 5,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "NUM-3",
+        "value": "1020",
+        "declaredValue": "1020",
+        "decisionLine": "ANSWER: 1020",
+        "supported": 8,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "ENT-1",
+        "value": "2018",
+        "declaredValue": "2018",
+        "decisionLine": "ANSWER: 2018",
+        "supported": 5,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "ENT-2",
+        "value": "stockholm",
+        "declaredValue": "stockholm",
+        "decisionLine": "ANSWER: Stockholm",
+        "supported": 5,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "ENT-3",
+        "value": "b",
+        "declaredValue": "b",
+        "decisionLine": "ANSWER: B",
+        "supported": 4,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "CAU-1",
+        "value": "no",
+        "declaredValue": "no",
+        "decisionLine": "ANSWER: No.",
+        "supported": 8,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "CAU-2",
+        "value": "no",
+        "declaredValue": "no",
+        "decisionLine": "ANSWER: No.",
+        "supported": 7,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "CAU-3",
+        "value": "no",
+        "declaredValue": "no",
+        "decisionLine": "ANSWER: No",
+        "supported": 9,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "PAR-1",
+        "value": "canberra",
+        "declaredValue": "canberra",
+        "decisionLine": "ANSWER: Canberra",
+        "supported": 3,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "PAR-2",
+        "value": "210",
+        "declaredValue": "210",
+        "decisionLine": "ANSWER: 210",
+        "supported": 13,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "PAR-3",
+        "value": "mercury",
+        "declaredValue": "mercury",
+        "decisionLine": "ANSWER: Mercury",
+        "supported": 5,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "FAL-1",
+        "value": "none",
+        "declaredValue": "none",
+        "decisionLine": "ANSWER: none",
+        "supported": 7,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "FAL-2",
+        "value": "none",
+        "declaredValue": "none",
+        "decisionLine": "ANSWER: none",
+        "supported": 6,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "FAL-3",
+        "value": "none",
+        "declaredValue": "none",
+        "decisionLine": "ANSWER: none",
+        "supported": 4,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "MIN-1",
+        "value": "100",
+        "declaredValue": "100",
+        "decisionLine": "ANSWER: 100",
+        "supported": 12,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "MIN-2",
+        "value": "3",
+        "declaredValue": "3",
+        "decisionLine": "ANSWER: 3",
+        "supported": 7,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "MIN-3",
+        "value": "5",
+        "declaredValue": "5",
+        "decisionLine": "ANSWER: 5 minutes",
+        "supported": 10,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "VRB-1",
+        "value": "6",
+        "declaredValue": "6",
+        "decisionLine": "ANSWER: 6",
+        "supported": 7,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "VRB-2",
+        "value": "100",
+        "declaredValue": "100",
+        "decisionLine": "ANSWER: 100°C",
+        "supported": 7,
+        "primary": null,
+        "confidence": 0.7
+      },
+      {
+        "itemId": "VRB-3",
+        "value": "nitrogen",
+        "declaredValue": "nitrogen",
+        "decisionLine": "ANSWER: Nitrogen",
+        "supported": 3,
+        "primary": null,
+        "confidence": 0.7
+      }
+    ],
+    "laneAStated": [
+      {
+        "itemId": "NEG-1",
+        "value": "no",
+        "supported": 6,
+        "primary": null
+      },
+      {
+        "itemId": "NEG-2",
+        "value": "a",
+        "supported": 4,
+        "primary": null
+      },
+      {
+        "itemId": "NEG-3",
+        "value": "no",
+        "supported": 8,
+        "primary": null
+      },
+      {
+        "itemId": "NUM-1",
+        "value": "20",
+        "supported": 8,
+        "primary": null
+      },
+      {
+        "itemId": "NUM-2",
+        "value": "126",
+        "supported": 5,
+        "primary": null
+      },
+      {
+        "itemId": "NUM-3",
+        "value": "1020",
+        "supported": 8,
+        "primary": null
+      },
+      {
+        "itemId": "ENT-1",
+        "value": "2018",
+        "supported": 5,
+        "primary": null
+      },
+      {
+        "itemId": "ENT-2",
+        "value": "stockholm",
+        "supported": 5,
+        "primary": null
+      },
+      {
+        "itemId": "ENT-3",
+        "value": "b",
+        "supported": 4,
+        "primary": null
+      },
+      {
+        "itemId": "CAU-1",
+        "value": "no",
+        "supported": 8,
+        "primary": null
+      },
+      {
+        "itemId": "CAU-2",
+        "value": "no",
+        "supported": 7,
+        "primary": null
+      },
+      {
+        "itemId": "CAU-3",
+        "value": "no",
+        "supported": 9,
+        "primary": null
+      },
+      {
+        "itemId": "PAR-1",
+        "value": "canberra",
+        "supported": 3,
+        "primary": null
+      },
+      {
+        "itemId": "PAR-2",
+        "value": "210",
+        "supported": 13,
+        "primary": null
+      },
+      {
+        "itemId": "PAR-3",
+        "value": "mercury",
+        "supported": 5,
+        "primary": null
+      },
+      {
+        "itemId": "FAL-1",
+        "value": "none",
+        "supported": 7,
+        "primary": null
+      },
+      {
+        "itemId": "FAL-2",
+        "value": "none",
+        "supported": 6,
+        "primary": null
+      },
+      {
+        "itemId": "FAL-3",
+        "value": "none",
+        "supported": 4,
+        "primary": null
+      },
+      {
+        "itemId": "MIN-1",
+        "value": "100",
+        "supported": 12,
+        "primary": null
+      },
+      {
+        "itemId": "MIN-2",
+        "value": "3",
+        "supported": 7,
+        "primary": null
+      },
+      {
+        "itemId": "MIN-3",
+        "value": "5",
+        "supported": 10,
+        "primary": null
+      },
+      {
+        "itemId": "VRB-1",
+        "value": "6",
+        "supported": 7,
+        "primary": null
+      },
+      {
+        "itemId": "VRB-2",
+        "value": "100",
+        "supported": 7,
+        "primary": null
+      },
+      {
+        "itemId": "VRB-3",
+        "value": "nitrogen",
+        "supported": 3,
+        "primary": null
+      }
+    ],
+    "laneB": [
+      {
+        "itemId": "NEG-1",
+        "value": "no",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "NEG-2",
+        "value": "a",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "NEG-3",
+        "value": "no",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "NUM-1",
+        "value": "20",
+        "majoritySize": 3
+      },
+      {
+        "itemId": "NUM-2",
+        "value": "126",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "NUM-3",
+        "value": "1020",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "ENT-1",
+        "value": "2018",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "ENT-2",
+        "value": "stockholm",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "ENT-3",
+        "value": "b",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "CAU-1",
+        "value": "no",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "CAU-2",
+        "value": "no",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "CAU-3",
+        "value": "no",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "PAR-1",
+        "value": "canberra",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "PAR-2",
+        "value": "210",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "PAR-3",
+        "value": "mercury",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "FAL-1",
+        "value": "none",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "FAL-2",
+        "value": "none",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "FAL-3",
+        "value": "none",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "MIN-1",
+        "value": "100",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "MIN-2",
+        "value": "3",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "MIN-3",
+        "value": "5",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "VRB-1",
+        "value": "6",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "VRB-2",
+        "value": "100",
+        "majoritySize": 4
+      },
+      {
+        "itemId": "VRB-3",
+        "value": "nitrogen",
+        "majoritySize": 4
+      }
+    ],
+    "laneC": [
+      {
+        "itemId": "NEG-1",
+        "value": "no",
+        "confidence": 1
+      },
+      {
+        "itemId": "NEG-2",
+        "value": "a",
+        "confidence": 1
+      },
+      {
+        "itemId": "NEG-3",
+        "value": "no",
+        "confidence": 1
+      },
+      {
+        "itemId": "NUM-1",
+        "value": "20",
+        "confidence": 1
+      },
+      {
+        "itemId": "NUM-2",
+        "value": "126",
+        "confidence": 1
+      },
+      {
+        "itemId": "NUM-3",
+        "value": "1020",
+        "confidence": 1
+      },
+      {
+        "itemId": "ENT-1",
+        "value": "2018",
+        "confidence": 1
+      },
+      {
+        "itemId": "ENT-2",
+        "value": "stockholm",
+        "confidence": 1
+      },
+      {
+        "itemId": "ENT-3",
+        "value": "b",
+        "confidence": 1
+      },
+      {
+        "itemId": "CAU-1",
+        "value": "no",
+        "confidence": 1
+      },
+      {
+        "itemId": "CAU-2",
+        "value": "no",
+        "confidence": 1
+      },
+      {
+        "itemId": "CAU-3",
+        "value": "no",
+        "confidence": 1
+      },
+      {
+        "itemId": "PAR-1",
+        "value": "canberra",
+        "confidence": 1
+      },
+      {
+        "itemId": "PAR-2",
+        "value": "210",
+        "confidence": 1
+      },
+      {
+        "itemId": "PAR-3",
+        "value": "mercury",
+        "confidence": 1
+      },
+      {
+        "itemId": "FAL-1",
+        "value": "none",
+        "confidence": 1
+      },
+      {
+        "itemId": "FAL-2",
+        "value": "none",
+        "confidence": 1
+      },
+      {
+        "itemId": "FAL-3",
+        "value": "none",
+        "confidence": 1
+      },
+      {
+        "itemId": "MIN-1",
+        "value": "100",
+        "confidence": 1
+      },
+      {
+        "itemId": "MIN-2",
+        "value": "3",
+        "confidence": 1
+      },
+      {
+        "itemId": "MIN-3",
+        "value": "5",
+        "confidence": 1
+      },
+      {
+        "itemId": "VRB-1",
+        "value": "6",
+        "confidence": 1
+      },
+      {
+        "itemId": "VRB-2",
+        "value": "100",
+        "confidence": 1
+      },
+      {
+        "itemId": "VRB-3",
+        "value": "nitrogen",
+        "confidence": 1
+      }
+    ]
+  }
+}

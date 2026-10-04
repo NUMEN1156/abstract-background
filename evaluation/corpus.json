@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "frozen": "2026-10-04",
+  "items": [
+    {
+      "id": "NEG-1",
+      "category": "negation",
+      "answer_type": "boolean",
+      "prompt": "Passage: In the XR-19 trial, the drug did not reduce mortality; it reduced median hospital stay by two days.\nQuestion: Did XR-19 reduce mortality in this trial?",
+      "ground_truth": "no",
+      "accepted": ["no"]
+    },
+    {
+      "id": "NEG-2",
+      "category": "negation",
+      "answer_type": "entity",
+      "prompt": "Passage: In 2024, the revenue of company A fell, while the revenue of company B rose.\nQuestion: Whose revenue fell in 2024, company A or company B? Answer with the letter A or B.",
+      "ground_truth": "A",
+      "accepted": ["a", "company a"]
+    },
+    {
+      "id": "NEG-3",
+      "category": "negation",
+      "answer_type": "boolean",
+      "prompt": "Passage: The rule applies to all employees, except contractors who work fewer than 20 hours per week.\nQuestion: Is a contractor working 10 hours per week covered by the rule?",
+      "ground_truth": "no",
+      "accepted": ["no"]
+    },
+    {
+      "id": "NUM-1",
+      "category": "numeric",
+      "answer_type": "number",
+      "prompt": "Question: A price rises from 250 to 300. What is the percentage increase, in percent? Round to one decimal place.",
+      "ground_truth": "20",
+      "accepted": ["20", "20.0"]
+    },
+    {
+      "id": "NUM-2",
+      "category": "numeric",
+      "answer_type": "number",
+      "prompt": "Question: A train travels 315 kilometres in 2.5 hours. What is its average speed in kilometres per hour?",
+      "ground_truth": "126",
+      "accepted": ["126", "126.0"]
+    },
+    {
+      "id": "NUM-3",
+      "category": "numeric",
+      "answer_type": "number",
+      "prompt": "Passage: A dataset has 1200 rows.\nQuestion: 15 percent of the rows are dropped. How many rows remain?",
+      "ground_truth": "1020",
+      "accepted": ["1020", "1020.0"]
+    },
+    {
+      "id": "ENT-1",
+      "category": "entity_swap",
+      "answer_type": "number",
+      "prompt": "Passage: The 2019 report by the RAND Corporation projected a three percent cost increase. The 2018 report by the same organisation projected an eight percent cost increase.\nQuestion: Which year's report projected eight percent? Answer with the year.",
+      "ground_truth": "2018",
+      "accepted": ["2018"]
+    },
+    {
+      "id": "ENT-2",
+      "category": "entity_swap",
+      "answer_type": "entity",
+      "prompt": "Passage: Oslo is the capital of Norway. Stockholm is the capital of Sweden.\nQuestion: Which of the two cities is the capital of Sweden? Answer with the city name.",
+      "ground_truth": "Stockholm",
+      "accepted": ["stockholm"]
+    },
+    {
+      "id": "ENT-3",
+      "category": "entity_swap",
+      "answer_type": "entity",
+      "prompt": "Passage: Adapter A is configured with the model 'phi-4-14b'. Adapter B is configured with the model 'phi-4-mini'.\nQuestion: Which adapter is configured with 'phi-4-mini'? Answer with the letter A or B.",
+      "ground_truth": "B",
+      "accepted": ["b", "adapter b"]
+    },
+    {
+      "id": "CAU-1",
+      "category": "causal",
+      "answer_type": "boolean",
+      "prompt": "Passage: Ice cream sales and drowning incidents both rise in summer. Researchers attribute both to warmer weather.\nQuestion: According to the passage, does eating ice cream cause drowning?",
+      "ground_truth": "no",
+      "accepted": ["no"]
+    },
+    {
+      "id": "CAU-2",
+      "category": "causal",
+      "answer_type": "boolean",
+      "prompt": "Passage: The drug lowered blood pressure, and a drop in headaches was observed afterwards, but the study could not establish that the drop in blood pressure caused it.\nQuestion: Did the study establish that the headache reduction was caused by the drop in blood pressure?",
+      "ground_truth": "no",
+      "accepted": ["no"]
+    },
+    {
+      "id": "CAU-3",
+      "category": "causal",
+      "answer_type": "boolean",
+      "prompt": "Passage: In region X, higher rainfall was followed by higher crop yields. In the same year, fertiliser use also increased.\nQuestion: Based on the passage alone, can the yield increase be attributed to rainfall alone?",
+      "ground_truth": "no",
+      "accepted": ["no"]
+    },
+    {
+      "id": "PAR-1",
+      "category": "paraphrase",
+      "answer_type": "entity",
+      "prompt": "Question: What is the capital city of Australia? Answer with the city name only.",
+      "ground_truth": "Canberra",
+      "accepted": ["canberra"]
+    },
+    {
+      "id": "PAR-2",
+      "category": "paraphrase",
+      "answer_type": "number",
+      "prompt": "Question: How many minutes are there in three and a half hours?",
+      "ground_truth": "210",
+      "accepted": ["210", "210.0"]
+    },
+    {
+      "id": "PAR-3",
+      "category": "paraphrase",
+      "answer_type": "entity",
+      "prompt": "Question: Which planet orbits closest to the Sun? Answer with the planet name only.",
+      "ground_truth": "Mercury",
+      "accepted": ["mercury"]
+    },
+    {
+      "id": "FAL-1",
+      "category": "false_premise",
+      "answer_type": "entity",
+      "prompt": "Question: In which year was the Einstein-Szilard letter awarded the Nobel Prize in Physics? If no such award exists, answer exactly: none.",
+      "ground_truth": "none",
+      "accepted": ["none", "no such award", "never", "no"]
+    },
+    {
+      "id": "FAL-2",
+      "category": "false_premise",
+      "answer_type": "entity",
+      "prompt": "Question: What is the ISO 4217 currency code of the sovereign state named Sylvania? If it cannot be determined, answer exactly: none.",
+      "ground_truth": "none",
+      "accepted": ["none", "unknown", "no such currency"]
+    },
+    {
+      "id": "FAL-3",
+      "category": "false_premise",
+      "answer_type": "entity",
+      "prompt": "Question: In which year did the Treaty of Westphalia establish the European Union? If the premise is false, answer exactly: none.",
+      "ground_truth": "none",
+      "accepted": ["none", "never", "false premise"]
+    },
+    {
+      "id": "MIN-1",
+      "category": "correct_minority",
+      "answer_type": "number",
+      "prompt": "Question: A shirt costs 80 after a 20 percent discount. What was the original price?",
+      "ground_truth": "100",
+      "accepted": ["100", "100.0"]
+    },
+    {
+      "id": "MIN-2",
+      "category": "correct_minority",
+      "answer_type": "number",
+      "prompt": "Question: How many times does the letter r appear in the word strawberry?",
+      "ground_truth": "3",
+      "accepted": ["3", "3.0"]
+    },
+    {
+      "id": "MIN-3",
+      "category": "correct_minority",
+      "answer_type": "number",
+      "prompt": "Question: If five machines take five minutes to make five widgets, how many minutes do one hundred machines take to make one hundred widgets?",
+      "ground_truth": "5",
+      "accepted": ["5", "5.0"]
+    },
+    {
+      "id": "VRB-1",
+      "category": "verbosity",
+      "answer_type": "number",
+      "prompt": "Question: How many sides does a hexagon have?",
+      "ground_truth": "6",
+      "accepted": ["6", "6.0"]
+    },
+    {
+      "id": "VRB-2",
+      "category": "verbosity",
+      "answer_type": "number",
+      "prompt": "Question: At sea level, what is the boiling point of water in degrees Celsius?",
+      "ground_truth": "100",
+      "accepted": ["100", "100.0"]
+    },
+    {
+      "id": "VRB-3",
+      "category": "verbosity",
+      "answer_type": "entity",
+      "prompt": "Question: Which gas makes up the largest share of Earth's atmosphere? Answer with the gas name only.",
+      "ground_truth": "nitrogen",
+      "accepted": ["nitrogen", "n2"]
+    }
+  ]
+}
