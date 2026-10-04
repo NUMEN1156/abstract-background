@@ -89,6 +89,19 @@ export interface CollapseResult {
   rule?: string
   message?: string
   finalText: string
+  /**
+   * Vom Kollaps ausgewiesene Entscheidung: die am stärksten gestützte Antwortzeile der Kanäle.
+   * Kurze Antwortzeilen sind die kürzesten und wichtigsten Zeilen einer Ausgabe; ohne diese
+   * Ausweisung trägt der Bericht nur die ähnlichste Prosa.
+   */
+  decision?: {
+    line: string
+    value: string
+    supporters: number
+    evaluatedVerdicts: number
+    channels: string[]
+    tieBreak: boolean
+  } | null
   collapsedAt?: string
   primary?: { providerId: string; label: string; model: string; share: number }
   protocol: ProtocolStep[]

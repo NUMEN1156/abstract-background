@@ -18,6 +18,7 @@ export default function App() {
   const store = useSuperposition()
   const [architecture, setArchitecture] = useState<ArchitectureReport | null>(null)
   const [accessRequired, setAccessRequired] = useState(false)
+  const [adapterWrites, setAdapterWrites] = useState<'open' | 'key' | 'locked'>('open')
   const [unlocked, setUnlocked] = useState(false)
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export default function App() {
       .access()
       .then((status) => {
         setAccessRequired(status.required)
+        setAdapterWrites(status.adapterWrites ?? 'open')
         if (!status.required) setUnlocked(true)
       })
       .catch(() => setAccessRequired(false))
@@ -120,6 +122,7 @@ export default function App() {
             onCreate={store.createAdapter}
             onToggleEnabled={store.setAdapterEnabled}
             onDelete={store.deleteAdapter}
+            adapterWrites={adapterWrites}
           />
 
           <ArchitecturePanel architecture={architecture} security={store.security} />
