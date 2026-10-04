@@ -1,0 +1,750 @@
+{
+  "generatedAt": "2026-10-03T23:51:23.953Z",
+  "judgeModel": "claude-opus-4-7",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "answer": {
+        "type": "string"
+      },
+      "confidence": {
+        "type": "number"
+      },
+      "abstain": {
+        "type": "boolean"
+      },
+      "rationale": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "answer",
+      "confidence",
+      "abstain",
+      "rationale"
+    ],
+    "additionalProperties": false
+  },
+  "runs": [
+    {
+      "itemId": "NEG-2",
+      "run": 1,
+      "order": [
+        "K1",
+        "K3",
+        "K4",
+        "K2"
+      ],
+      "answer": "A",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that company A's revenue fell in 2024, while company B's rose.",
+      "error": null
+    },
+    {
+      "itemId": "NUM-1",
+      "run": 1,
+      "order": [
+        "K1",
+        "K3",
+        "K2",
+        "K4"
+      ],
+      "answer": "20.0%",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The increase is 300 − 250 = 50. Dividing by the original price gives 50/250 = 0.2, or 20.0%.",
+      "error": null
+    },
+    {
+      "itemId": "NEG-1",
+      "run": 1,
+      "order": [
+        "K3",
+        "K2",
+        "K4",
+        "K1"
+      ],
+      "answer": "No, XR-19 did not reduce mortality in the trial.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that the drug did not reduce mortality; it only reduced median hospital stay by two days.",
+      "error": null
+    },
+    {
+      "itemId": "NEG-3",
+      "run": 1,
+      "order": [
+        "K2",
+        "K3",
+        "K4",
+        "K1"
+      ],
+      "answer": "No",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly excludes contractors who work fewer than 20 hours per week. A contractor working 10 hours per week therefore is not covered by the rule.",
+      "error": null
+    },
+    {
+      "itemId": "NUM-3",
+      "run": 1,
+      "order": [
+        "K4",
+        "K2",
+        "K1",
+        "K3"
+      ],
+      "answer": "1020",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly calculate that 15% of 1200 is 180, leaving 1200 - 180 = 1020 rows.",
+      "error": null
+    },
+    {
+      "itemId": "ENT-2",
+      "run": 1,
+      "order": [
+        "K4",
+        "K2",
+        "K3",
+        "K1"
+      ],
+      "answer": "Stockholm",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that Stockholm is the capital of Sweden.",
+      "error": null
+    },
+    {
+      "itemId": "NUM-2",
+      "run": 1,
+      "order": [
+        "K1",
+        "K2",
+        "K4",
+        "K3"
+      ],
+      "answer": "126 km/h",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "Average speed is distance divided by time: 315 ÷ 2.5 = 126 km/h. All candidate answers are correct.",
+      "error": null
+    },
+    {
+      "itemId": "ENT-1",
+      "run": 1,
+      "order": [
+        "K3",
+        "K2",
+        "K1",
+        "K4"
+      ],
+      "answer": "2018",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that the 2018 report projected an eight percent cost increase.",
+      "error": null
+    },
+    {
+      "itemId": "ENT-3",
+      "run": 1,
+      "order": [
+        "K1",
+        "K3",
+        "K4",
+        "K2"
+      ],
+      "answer": "B",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that Adapter B is configured with 'phi-4-mini'.",
+      "error": null
+    },
+    {
+      "itemId": "CAU-3",
+      "run": 1,
+      "order": [
+        "K4",
+        "K1",
+        "K2",
+        "K3"
+      ],
+      "answer": "No. The passage does not allow the yield increase to be attributed to rainfall alone because fertiliser use also increased, providing a possible alternative explanation.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All four candidate answers are consistent with the passage: it reports an association between rainfall and yield but also identifies increased fertiliser use, so rainfall's independent causal effect cannot be established.",
+      "error": null
+    },
+    {
+      "itemId": "CAU-1",
+      "run": 1,
+      "order": [
+        "K4",
+        "K3",
+        "K1",
+        "K2"
+      ],
+      "answer": "No. The passage attributes both increased ice cream sales and increased drowning incidents to warmer weather, not to ice cream consumption causing drowning.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All four candidate answers correctly identify warmer weather as the common cause described in the passage.",
+      "error": null
+    },
+    {
+      "itemId": "CAU-2",
+      "run": 1,
+      "order": [
+        "K4",
+        "K2",
+        "K3",
+        "K1"
+      ],
+      "answer": "No",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly says the study could not establish that the drop in blood pressure caused the reduction in headaches. All candidates are correct.",
+      "error": null
+    },
+    {
+      "itemId": "PAR-3",
+      "run": 1,
+      "order": [
+        "K3",
+        "K4",
+        "K2",
+        "K1"
+      ],
+      "answer": "Mercury",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly identify Mercury as the planet closest to the Sun.",
+      "error": null
+    },
+    {
+      "itemId": "PAR-1",
+      "run": 1,
+      "order": [
+        "K4",
+        "K2",
+        "K3",
+        "K1"
+      ],
+      "answer": "Canberra",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly identify Canberra as the capital city of Australia.",
+      "error": null
+    },
+    {
+      "itemId": "PAR-2",
+      "run": 1,
+      "order": [
+        "K4",
+        "K3",
+        "K2",
+        "K1"
+      ],
+      "answer": "210 minutes",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All four candidates correctly calculate 3.5 hours × 60 minutes per hour = 210 minutes.",
+      "error": null
+    },
+    {
+      "itemId": "FAL-1",
+      "run": 1,
+      "order": [
+        "K4",
+        "K3",
+        "K2",
+        "K1"
+      ],
+      "answer": "none",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly state that the Einstein-Szilard letter was not awarded a Nobel Prize in Physics.",
+      "error": null
+    },
+    {
+      "itemId": "FAL-3",
+      "run": 1,
+      "order": [
+        "K2",
+        "K1",
+        "K4",
+        "K3"
+      ],
+      "answer": "none",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The premise is false: the Treaty of Westphalia did not establish the European Union.",
+      "error": null
+    },
+    {
+      "itemId": "MIN-1",
+      "run": 1,
+      "order": [
+        "K3",
+        "K1",
+        "K2",
+        "K4"
+      ],
+      "answer": "100",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly note that the discounted price is 80% of the original price, so the original price is 80 ÷ 0.8 = 100.",
+      "error": null
+    },
+    {
+      "itemId": "FAL-2",
+      "run": 1,
+      "order": [
+        "K3",
+        "K2",
+        "K4",
+        "K1"
+      ],
+      "answer": "none",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "No ISO 4217 currency code can be determined for a sovereign state named Sylvania, so the required response is exactly \"none\".",
+      "error": null
+    },
+    {
+      "itemId": "MIN-2",
+      "run": 1,
+      "order": [
+        "K1",
+        "K2",
+        "K4",
+        "K3"
+      ],
+      "answer": "3",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "“Strawberry” is spelled s-t-r-a-w-b-e-r-r-y, containing three instances of the letter r.",
+      "error": null
+    },
+    {
+      "itemId": "VRB-1",
+      "run": 1,
+      "order": [
+        "K2",
+        "K3",
+        "K1",
+        "K4"
+      ],
+      "answer": "6 sides",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly state that a hexagon has six sides.",
+      "error": null
+    },
+    {
+      "itemId": "MIN-3",
+      "run": 1,
+      "order": [
+        "K4",
+        "K2",
+        "K1",
+        "K3"
+      ],
+      "answer": "5 minutes",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "Five machines producing five widgets in five minutes means each machine produces one widget in five minutes. Therefore, 100 machines working simultaneously produce 100 widgets in five minutes.",
+      "error": null
+    },
+    {
+      "itemId": "VRB-2",
+      "run": 1,
+      "order": [
+        "K3",
+        "K2",
+        "K1",
+        "K4"
+      ],
+      "answer": "100°C",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly state that water boils at 100°C at sea level.",
+      "error": null
+    },
+    {
+      "itemId": "VRB-3",
+      "run": 1,
+      "order": [
+        "K1",
+        "K2",
+        "K3",
+        "K4"
+      ],
+      "answer": "Nitrogen",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "Nitrogen makes up the largest share of Earth's atmosphere.",
+      "error": null
+    },
+    {
+      "itemId": "NEG-1",
+      "run": 2,
+      "order": [
+        "K3",
+        "K2",
+        "K4",
+        "K1"
+      ],
+      "answer": "No, XR-19 did not reduce mortality in the trial.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that the drug did not reduce mortality.",
+      "error": null
+    },
+    {
+      "itemId": "NEG-3",
+      "run": 2,
+      "order": [
+        "K2",
+        "K3",
+        "K4",
+        "K1"
+      ],
+      "answer": "No",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage excludes contractors who work fewer than 20 hours per week. A contractor working 10 hours per week falls within that exception.",
+      "error": null
+    },
+    {
+      "itemId": "NEG-2",
+      "run": 2,
+      "order": [
+        "K1",
+        "K3",
+        "K4",
+        "K2"
+      ],
+      "answer": "A",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that company A's revenue fell in 2024, while company B's rose.",
+      "error": null
+    },
+    {
+      "itemId": "ENT-1",
+      "run": 2,
+      "order": [
+        "K3",
+        "K2",
+        "K1",
+        "K4"
+      ],
+      "answer": "2018",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that the 2018 report projected an eight percent cost increase.",
+      "error": null
+    },
+    {
+      "itemId": "NUM-1",
+      "run": 2,
+      "order": [
+        "K1",
+        "K3",
+        "K2",
+        "K4"
+      ],
+      "answer": "20.0%",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The increase is 300 − 250 = 50. Dividing by the original price gives 50/250 = 0.20, or 20.0%.",
+      "error": null
+    },
+    {
+      "itemId": "NUM-3",
+      "run": 2,
+      "order": [
+        "K4",
+        "K2",
+        "K1",
+        "K3"
+      ],
+      "answer": "1020",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly calculate that 15% of 1200 is 180, leaving 1200 - 180 = 1020 rows.",
+      "error": null
+    },
+    {
+      "itemId": "NUM-2",
+      "run": 2,
+      "order": [
+        "K1",
+        "K2",
+        "K4",
+        "K3"
+      ],
+      "answer": "126 km/h",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "Average speed is distance divided by time: 315 ÷ 2.5 = 126 km/h. All candidates are correct.",
+      "error": null
+    },
+    {
+      "itemId": "ENT-2",
+      "run": 2,
+      "order": [
+        "K4",
+        "K2",
+        "K3",
+        "K1"
+      ],
+      "answer": "Stockholm",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that Stockholm is the capital of Sweden.",
+      "error": null
+    },
+    {
+      "itemId": "ENT-3",
+      "run": 2,
+      "order": [
+        "K1",
+        "K3",
+        "K4",
+        "K2"
+      ],
+      "answer": "B",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that Adapter B is configured with 'phi-4-mini'.",
+      "error": null
+    },
+    {
+      "itemId": "CAU-1",
+      "run": 2,
+      "order": [
+        "K4",
+        "K3",
+        "K1",
+        "K2"
+      ],
+      "answer": "No. The passage attributes both increased ice cream sales and increased drowning incidents to warmer weather, not to ice cream causing drowning.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All four candidates correctly identify warmer weather as the common cause described in the passage and reject a causal link between eating ice cream and drowning.",
+      "error": null
+    },
+    {
+      "itemId": "CAU-2",
+      "run": 2,
+      "order": [
+        "K4",
+        "K2",
+        "K3",
+        "K1"
+      ],
+      "answer": "No.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage explicitly states that the study could not establish that the drop in blood pressure caused the reduction in headaches. All candidates are correct.",
+      "error": null
+    },
+    {
+      "itemId": "CAU-3",
+      "run": 2,
+      "order": [
+        "K4",
+        "K1",
+        "K2",
+        "K3"
+      ],
+      "answer": "No. The passage does not support attributing the yield increase to rainfall alone, because fertiliser use also increased and could have contributed. Answers A, B, C, and D are all factually correct.",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The passage identifies both increased rainfall and increased fertiliser use alongside higher yields, without isolating their effects. Therefore, rainfall alone cannot be established as the cause.",
+      "error": null
+    },
+    {
+      "itemId": "PAR-3",
+      "run": 2,
+      "order": [
+        "K3",
+        "K4",
+        "K2",
+        "K1"
+      ],
+      "answer": "Mercury",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly identify Mercury as the planet closest to the Sun.",
+      "error": null
+    },
+    {
+      "itemId": "PAR-1",
+      "run": 2,
+      "order": [
+        "K4",
+        "K2",
+        "K3",
+        "K1"
+      ],
+      "answer": "Canberra",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly identify Canberra as the capital city of Australia.",
+      "error": null
+    },
+    {
+      "itemId": "PAR-2",
+      "run": 2,
+      "order": [
+        "K4",
+        "K3",
+        "K2",
+        "K1"
+      ],
+      "answer": "210 minutes",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly calculate 3.5 hours × 60 minutes per hour = 210 minutes.",
+      "error": null
+    },
+    {
+      "itemId": "FAL-1",
+      "run": 2,
+      "order": [
+        "K4",
+        "K3",
+        "K2",
+        "K1"
+      ],
+      "answer": "none",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly state that the Einstein-Szilard letter was not awarded a Nobel Prize in Physics.",
+      "error": null
+    },
+    {
+      "itemId": "MIN-1",
+      "run": 2,
+      "order": [
+        "K3",
+        "K1",
+        "K2",
+        "K4"
+      ],
+      "answer": "100",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly note that the discounted price is 80% of the original price, so the original price is 80 ÷ 0.8 = 100.",
+      "error": null
+    },
+    {
+      "itemId": "FAL-2",
+      "run": 2,
+      "order": [
+        "K3",
+        "K2",
+        "K4",
+        "K1"
+      ],
+      "answer": "none",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The requested currency code cannot be determined for Sylvania, so the exact required answer is \"none\".",
+      "error": null
+    },
+    {
+      "itemId": "FAL-3",
+      "run": 2,
+      "order": [
+        "K2",
+        "K1",
+        "K4",
+        "K3"
+      ],
+      "answer": "none",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "The premise is false: the Treaty of Westphalia did not establish the European Union.",
+      "error": null
+    },
+    {
+      "itemId": "MIN-2",
+      "run": 2,
+      "order": [
+        "K1",
+        "K2",
+        "K4",
+        "K3"
+      ],
+      "answer": "3",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "“Strawberry” is spelled s-t-r-a-w-b-e-r-r-y, containing three instances of the letter r.",
+      "error": null
+    },
+    {
+      "itemId": "MIN-3",
+      "run": 2,
+      "order": [
+        "K4",
+        "K2",
+        "K1",
+        "K3"
+      ],
+      "answer": "5 minutes",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "Five machines producing five widgets in five minutes means each machine produces one widget in five minutes. Therefore, 100 machines working simultaneously produce 100 widgets in five minutes.",
+      "error": null
+    },
+    {
+      "itemId": "VRB-1",
+      "run": 2,
+      "order": [
+        "K2",
+        "K3",
+        "K1",
+        "K4"
+      ],
+      "answer": "6",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidate answers correctly state that a hexagon has six sides.",
+      "error": null
+    },
+    {
+      "itemId": "VRB-2",
+      "run": 2,
+      "order": [
+        "K3",
+        "K2",
+        "K1",
+        "K4"
+      ],
+      "answer": "100°C",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "All candidates correctly state that water boils at 100°C at sea level.",
+      "error": null
+    },
+    {
+      "itemId": "VRB-3",
+      "run": 2,
+      "order": [
+        "K1",
+        "K2",
+        "K3",
+        "K4"
+      ],
+      "answer": "Nitrogen",
+      "confidence": 1,
+      "abstain": false,
+      "rationale": "Nitrogen makes up the largest share of Earth's atmosphere.",
+      "error": null
+    }
+  ]
+}

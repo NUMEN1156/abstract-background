@@ -1,0 +1,12 @@
+{
+  "frozenAt": "2026-10-03T23:51:23.954Z",
+  "hashes": {
+    "preregistration": "c9b76eadb027df29ce0d3b2a01553867ad26c901b4feb3d529ad18128e3e8c41",
+    "corpus": "76f45f840c134a43249b6f272b1a7d8592c6e5528d9c6d18b5a7fbb4fbd14445",
+    "evaluationLib": "d221c7f21ec8fe24d98e8042a472e7680adbbbc28cdaa82f20722e020600b1cb",
+    "channelOutputs": "be2e7be385329656278d62e08833f6986c6ea70054d760aec6db475e63cd7138",
+    "judgeRuns": "eccf3a36645b0a5d5be0e7f504fd6a2b4e10b2878c521fddeea8abbb31e66afa"
+  },
+  "channelsFailed": 0,
+  "judgeFailed": 0
+}

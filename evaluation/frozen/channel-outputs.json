@@ -1,0 +1,944 @@
+{
+  "generatedAt": "2026-10-03T23:50:39.808Z",
+  "channels": [
+    {
+      "id": "K1",
+      "model": "gpt-5-mini",
+      "family": "openai",
+      "label": "Kanal A"
+    },
+    {
+      "id": "K2",
+      "model": "gpt-5.5",
+      "family": "openai",
+      "label": "Kanal B"
+    },
+    {
+      "id": "K3",
+      "model": "claude-haiku-4-5",
+      "family": "anthropic",
+      "label": "Kanal C"
+    },
+    {
+      "id": "K4",
+      "model": "gemini-3-flash-preview",
+      "family": "google",
+      "label": "Kanal D"
+    }
+  ],
+  "orderInstruction": "Answer the question below as precisely as you can. Use only the information in the passage when a passage is given. End your reply with a final line in exactly this format:\nANSWER: <your short answer>",
+  "byItem": {
+    "NEG-1": {
+      "K3": {
+        "itemId": "NEG-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 743,
+        "content": "No, XR-19 did not reduce mortality in the trial.",
+        "error": null
+      },
+      "K2": {
+        "itemId": "NEG-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1589,
+        "content": "No. In the XR-19 trial, the drug did not reduce mortality.\n\nANSWER: No",
+        "error": null
+      },
+      "K4": {
+        "itemId": "NEG-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1631,
+        "content": "No, the drug did not reduce mortality in the XR-19 trial.\n\nANSWER: No",
+        "error": null
+      },
+      "K1": {
+        "itemId": "NEG-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 3824,
+        "content": "ANSWER: No.",
+        "error": null
+      }
+    },
+    "NEG-2": {
+      "K3": {
+        "itemId": "NEG-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 586,
+        "content": "ANSWER: A",
+        "error": null
+      },
+      "K1": {
+        "itemId": "NEG-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 1983,
+        "content": "ANSWER: A",
+        "error": null
+      },
+      "K2": {
+        "itemId": "NEG-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1247,
+        "content": "ANSWER: A",
+        "error": null
+      },
+      "K4": {
+        "itemId": "NEG-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1887,
+        "content": "According to the passage, the revenue of company A fell in 2024.\n\nANSWER: A",
+        "error": null
+      }
+    },
+    "NEG-3": {
+      "K3": {
+        "itemId": "NEG-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 514,
+        "content": "ANSWER: No.",
+        "error": null
+      },
+      "K2": {
+        "itemId": "NEG-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1601,
+        "content": "No. A contractor working 10 hours per week is excluded because they work fewer than 20 hours per week.\n\nANSWER: No",
+        "error": null
+      },
+      "K4": {
+        "itemId": "NEG-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1932,
+        "content": "Based on the passage, the rule applies to all employees except contractors who work fewer than 20 hours per week. Since 10 hours is fewer than 20 hours, the contractor is not covered by the rule.\n\nANSWER: No",
+        "error": null
+      },
+      "K1": {
+        "itemId": "NEG-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 4721,
+        "content": "No — contractors who work fewer than 20 hours per week are excluded, so a contractor working 10 hours per week is not covered by the rule.\n\nANSWER: No",
+        "error": null
+      }
+    },
+    "NUM-1": {
+      "K2": {
+        "itemId": "NUM-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1752,
+        "content": "The percentage increase is 20.0%.\n\nANSWER: 20.0%",
+        "error": null
+      },
+      "K1": {
+        "itemId": "NUM-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2765,
+        "content": "The increase is 300 − 250 = 50. As a percentage of the original 250: (50/250)×100% = 20.0%.\n\nANSWER: 20.0%",
+        "error": null
+      },
+      "K3": {
+        "itemId": "NUM-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1061,
+        "content": "The percentage increase is \\((300-250)/250 \\times 100 = 20.0\\%\\).\n\nANSWER: 20.0%",
+        "error": null
+      },
+      "K4": {
+        "itemId": "NUM-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 4614,
+        "content": "To calculate the percentage increase, use the formula:\nPercentage Increase = ((Final Value - Initial Value) / Initial Value) × 100\n\n1. Subtract the initial",
+        "error": null
+      }
+    },
+    "NUM-2": {
+      "K3": {
+        "itemId": "NUM-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 753,
+        "content": "Average speed = 315 ÷ 2.5 = **126 kilometres per hour**.\n\nANSWER: 126 kilometres per hour",
+        "error": null
+      },
+      "K2": {
+        "itemId": "NUM-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1721,
+        "content": "Average speed = 315 ÷ 2.5 = 126 km/h\n\nANSWER: 126 km/h",
+        "error": null
+      },
+      "K1": {
+        "itemId": "NUM-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2986,
+        "content": "Average speed = 315 ÷ 2.5 = 126 km/h\n\nANSWER: 126 km/h",
+        "error": null
+      },
+      "K4": {
+        "itemId": "NUM-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2222,
+        "content": "To find the average speed, divide the total distance by the total time:\n\nAverage Speed = Distance / Time\nAverage Speed = 315 km / 2.5 hours\nAverage Speed = 126 km/h\n\nANSWER: 126 km/h",
+        "error": null
+      }
+    },
+    "NUM-3": {
+      "K2": {
+        "itemId": "NUM-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1605,
+        "content": "15% of 1200 is 180, so 1200 − 180 = 1020 rows remain.\n\nANSWER: 1020",
+        "error": null
+      },
+      "K1": {
+        "itemId": "NUM-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2879,
+        "content": "15% of 1200 = 0.15 × 1200 = 180 dropped.\nRemaining rows = 1200 − 180 = 1020.\n\nANSWER: 1020",
+        "error": null
+      },
+      "K3": {
+        "itemId": "NUM-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1516,
+        "content": "15% of 1200 is 180, so 1200 − 180 = 1020 rows remain.\n\nANSWER: 1020 rows",
+        "error": null
+      },
+      "K4": {
+        "itemId": "NUM-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2522,
+        "content": "To find the number of rows remaining, first calculate 15 percent of the total rows:\n1200 * 0.15 = 180\n\nThen, subtract the dropped rows from the total:\n1200 - 180 = 1020\n\nANSWER: 1020",
+        "error": null
+      }
+    },
+    "ENT-1": {
+      "K3": {
+        "itemId": "ENT-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 717,
+        "content": "ANSWER: 2018",
+        "error": null
+      },
+      "K1": {
+        "itemId": "ENT-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 1431,
+        "content": "ANSWER: 2018",
+        "error": null
+      },
+      "K2": {
+        "itemId": "ENT-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1476,
+        "content": "ANSWER: 2018",
+        "error": null
+      },
+      "K4": {
+        "itemId": "ENT-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1635,
+        "content": "The 2018 report projected an eight percent cost increase.\n\nANSWER: 2018",
+        "error": null
+      }
+    },
+    "ENT-2": {
+      "K3": {
+        "itemId": "ENT-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 717,
+        "content": "ANSWER: Stockholm",
+        "error": null
+      },
+      "K2": {
+        "itemId": "ENT-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1342,
+        "content": "ANSWER: Stockholm",
+        "error": null
+      },
+      "K1": {
+        "itemId": "ENT-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 1774,
+        "content": "ANSWER: Stockholm",
+        "error": null
+      },
+      "K4": {
+        "itemId": "ENT-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1230,
+        "content": "Stockholm is the capital of Sweden.\n\nANSWER: Stockholm",
+        "error": null
+      }
+    },
+    "ENT-3": {
+      "K3": {
+        "itemId": "ENT-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 819,
+        "content": "ANSWER: B",
+        "error": null
+      },
+      "K2": {
+        "itemId": "ENT-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1497,
+        "content": "ANSWER: B",
+        "error": null
+      },
+      "K1": {
+        "itemId": "ENT-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 1805,
+        "content": "ANSWER: B",
+        "error": null
+      },
+      "K4": {
+        "itemId": "ENT-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1597,
+        "content": "Based on the passage, Adapter B is configured with the model 'phi-4-mini'.\n\nANSWER: B",
+        "error": null
+      }
+    },
+    "CAU-1": {
+      "K3": {
+        "itemId": "CAU-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1071,
+        "content": "No. The passage attributes both increases to warmer weather, not to ice cream causing drowning.\n\nANSWER: No",
+        "error": null
+      },
+      "K2": {
+        "itemId": "CAU-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1455,
+        "content": "No. The passage says both ice cream sales and drowning incidents rise because of warmer weather, not because eating ice cream causes drowning.\n\nANSWER: No",
+        "error": null
+      },
+      "K1": {
+        "itemId": "CAU-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 3112,
+        "content": "No. The passage says researchers attribute the simultaneous rise in ice cream sales and drowning incidents to warmer weather, implying a common cause rather than that eating ice cream causes drowning.\n\nANSWER: No.",
+        "error": null
+      },
+      "K4": {
+        "itemId": "CAU-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2674,
+        "content": "According to the passage, researchers attribute both ice cream sales and drowning incidents to warmer weather, not to each other.\n\nANSWER: No",
+        "error": null
+      }
+    },
+    "CAU-2": {
+      "K2": {
+        "itemId": "CAU-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1479,
+        "content": "No, the study could not establish that causation.\n\nANSWER: No",
+        "error": null
+      },
+      "K3": {
+        "itemId": "CAU-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 536,
+        "content": "No, the study did not establish that the drop in blood pressure caused the headache reduction.\n\nANSWER: No",
+        "error": null
+      },
+      "K1": {
+        "itemId": "CAU-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 3028,
+        "content": "ANSWER: No.",
+        "error": null
+      },
+      "K4": {
+        "itemId": "CAU-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1695,
+        "content": "The study did not establish that the headache reduction was caused by the drop in blood pressure; the passage explicitly states that the study could not establish that causal link.\n\nANSWER: No",
+        "error": null
+      }
+    },
+    "CAU-3": {
+      "K3": {
+        "itemId": "CAU-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 942,
+        "content": "No. Fertiliser use also increased, so the passage does not establish that rainfall alone caused the higher yields.\n\nANSWER: No.",
+        "error": null
+      },
+      "K2": {
+        "itemId": "CAU-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1749,
+        "content": "No. The passage says fertiliser use also increased, so based on the passage alone the yield increase cannot be attributed to rainfall alone.\n\nANSWER: No",
+        "error": null
+      },
+      "K4": {
+        "itemId": "CAU-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2801,
+        "content": "Based on the passage, the yield increase cannot be attributed to rainfall alone because fertiliser use also increased in the same year, and the passage does not specify the individual impact of each factor.\n\nANSWER: No",
+        "error": null
+      },
+      "K1": {
+        "itemId": "CAU-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 4399,
+        "content": "No. The passage only reports that higher rainfall was followed by higher yields and that fertiliser use also increased in the same year. Because fertiliser use is a possible alternative explanation (a confounder), the increase in yield cannot be attributed to rainfall alone based on the passage.\n\nANSWER: No — the passage does not allow attributing the yield increase to rainfall alone.",
+        "error": null
+      }
+    },
+    "PAR-1": {
+      "K2": {
+        "itemId": "PAR-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1572,
+        "content": "ANSWER: Canberra",
+        "error": null
+      },
+      "K3": {
+        "itemId": "PAR-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1052,
+        "content": "ANSWER: Canberra",
+        "error": null
+      },
+      "K1": {
+        "itemId": "PAR-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 3526,
+        "content": "ANSWER: Canberra",
+        "error": null
+      },
+      "K4": {
+        "itemId": "PAR-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 3250,
+        "content": "Canberra\nANSWER: Canberra",
+        "error": null
+      }
+    },
+    "PAR-2": {
+      "K2": {
+        "itemId": "PAR-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1627,
+        "content": "Three and a half hours is 3.5 × 60 = 210 minutes.\n\nANSWER: 210",
+        "error": null
+      },
+      "K3": {
+        "itemId": "PAR-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1123,
+        "content": "Three and a half hours contain 210 minutes.\n\nANSWER: 210 minutes",
+        "error": null
+      },
+      "K1": {
+        "itemId": "PAR-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2547,
+        "content": "One hour = 60 minutes. Three and a half hours = 3.5 × 60 = 210 minutes.\n\nANSWER: 210 minutes",
+        "error": null
+      },
+      "K4": {
+        "itemId": "PAR-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2667,
+        "content": "To calculate the number of minutes in three and a half hours:\n1. One hour contains 60 minutes.\n2. Three hours contain 3 × 60 = 180 minutes.\n3. Half an hour contains 30 minutes.\n4. Total minutes = 180 + 30 = 210 minutes.\n\nANSWER: 210",
+        "error": null
+      }
+    },
+    "PAR-3": {
+      "K3": {
+        "itemId": "PAR-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 787,
+        "content": "ANSWER: Mercury",
+        "error": null
+      },
+      "K2": {
+        "itemId": "PAR-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1508,
+        "content": "ANSWER: Mercury",
+        "error": null
+      },
+      "K1": {
+        "itemId": "PAR-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2020,
+        "content": "ANSWER: Mercury",
+        "error": null
+      },
+      "K4": {
+        "itemId": "PAR-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1765,
+        "content": "Mercury is the planet that orbits closest to the Sun.\n\nANSWER: Mercury",
+        "error": null
+      }
+    },
+    "FAL-1": {
+      "K3": {
+        "itemId": "FAL-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1188,
+        "content": "ANSWER: none",
+        "error": null
+      },
+      "K2": {
+        "itemId": "FAL-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1927,
+        "content": "The Einstein-Szilard letter was not awarded the Nobel Prize in Physics.\n\nANSWER: none",
+        "error": null
+      },
+      "K1": {
+        "itemId": "FAL-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 3151,
+        "content": "ANSWER: none",
+        "error": null
+      },
+      "K4": {
+        "itemId": "FAL-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2170,
+        "content": "The Einstein-Szilard letter was a document sent to President Franklin D. Roosevelt in 1939 concerning nuclear research; it was not an achievement for which a Nobel Prize was awarded.\n\nANSWER: none",
+        "error": null
+      }
+    },
+    "FAL-2": {
+      "K3": {
+        "itemId": "FAL-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1020,
+        "content": "ANSWER: none",
+        "error": null
+      },
+      "K2": {
+        "itemId": "FAL-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 2660,
+        "content": "ANSWER: none",
+        "error": null
+      },
+      "K1": {
+        "itemId": "FAL-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 4145,
+        "content": "There is no internationally recognized sovereign state called \"Sylvania,\" so it has no ISO 4217 currency code.\nANSWER: none",
+        "error": null
+      },
+      "K4": {
+        "itemId": "FAL-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2492,
+        "content": "The sovereign state named Sylvania is a fictional country (most notably appearing in the Marx Brothers' film *Duck Soup*), and it does not have a real-world ISO 4217 currency code.\n\nANSWER: none",
+        "error": null
+      }
+    },
+    "FAL-3": {
+      "K2": {
+        "itemId": "FAL-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1802,
+        "content": "ANSWER: none",
+        "error": null
+      },
+      "K3": {
+        "itemId": "FAL-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1106,
+        "content": "ANSWER: none",
+        "error": null
+      },
+      "K4": {
+        "itemId": "FAL-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1905,
+        "content": "The Treaty of Westphalia did not establish the European Union; it was signed in 1648 to end the Thirty Years' War, while the European Union was established by the Maastricht Treaty in 1993.\n\nANSWER: none",
+        "error": null
+      },
+      "K1": {
+        "itemId": "FAL-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 5066,
+        "content": "ANSWER: none",
+        "error": null
+      }
+    },
+    "MIN-1": {
+      "K2": {
+        "itemId": "MIN-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1733,
+        "content": "A 20% discount means the shirt costs 80% of its original price.\n\nOriginal price = 80 ÷ 0.8 = 100\n\nANSWER: 100",
+        "error": null
+      },
+      "K3": {
+        "itemId": "MIN-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1072,
+        "content": "After a 20% discount, the shirt costs 80% of its original price:\n\n80 ÷ 0.8 = 100\n\nANSWER: 100",
+        "error": null
+      },
+      "K1": {
+        "itemId": "MIN-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2742,
+        "content": "Let the original price be P. After a 20% discount, the price is 80% of P: 0.8P = 80. So P = 80 / 0.8 = 100.\n\nANSWER: 100",
+        "error": null
+      },
+      "K4": {
+        "itemId": "MIN-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2534,
+        "content": "To find the original price, let $x$ be the original price.\n\n1. A 20 percent discount means the shirt is being sold for 80 percent of its original price (100% - 20% = 80%).\n2. Set up the equation: $0.80x = 80$.\n3. Solve for $x$: $x = 80 / 0.80$.\n4. $x = 100$.\n\nANSWER: 100",
+        "error": null
+      }
+    },
+    "MIN-2": {
+      "K3": {
+        "itemId": "MIN-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1108,
+        "content": "ANSWER: 3",
+        "error": null
+      },
+      "K2": {
+        "itemId": "MIN-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1863,
+        "content": "The letter “r” appears 3 times in “strawberry”.\n\nANSWER: 3",
+        "error": null
+      },
+      "K1": {
+        "itemId": "MIN-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2798,
+        "content": "The letter \"r\" appears 3 times in the word \"strawberry\".\nANSWER: 3",
+        "error": null
+      },
+      "K4": {
+        "itemId": "MIN-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1995,
+        "content": "The word \"strawberry\" contains the letter \"r\" three times: once after the \"t\" and twice after the \"e\".\n\nANSWER: 3",
+        "error": null
+      }
+    },
+    "MIN-3": {
+      "K3": {
+        "itemId": "MIN-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 1077,
+        "content": "Each machine makes one widget in five minutes, so 100 machines make 100 widgets in five minutes.\n\nANSWER: 5 minutes",
+        "error": null
+      },
+      "K2": {
+        "itemId": "MIN-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 2063,
+        "content": "Each machine takes 5 minutes to make 1 widget, so 100 machines can make 100 widgets in 5 minutes.\n\nANSWER: 5 minutes",
+        "error": null
+      },
+      "K1": {
+        "itemId": "MIN-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 3175,
+        "content": "If 5 machines make 5 widgets in 5 minutes, each machine makes 1 widget in 5 minutes. So 100 machines will make 100 widgets in the same 5 minutes.\n\nANSWER: 5 minutes",
+        "error": null
+      },
+      "K4": {
+        "itemId": "MIN-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 2341,
+        "content": "If five machines take five minutes to make five widgets, then one machine takes five minutes to make one widget. Therefore, if one hundred machines are working simultaneously, they will each produce one widget in five minutes, resulting in one hundred widgets.\n\nANSWER: 5 minutes",
+        "error": null
+      }
+    },
+    "VRB-1": {
+      "K2": {
+        "itemId": "VRB-1",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1390,
+        "content": "A hexagon has 6 sides.\n\nANSWER: 6",
+        "error": null
+      },
+      "K3": {
+        "itemId": "VRB-1",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 858,
+        "content": "ANSWER: 6 sides",
+        "error": null
+      },
+      "K1": {
+        "itemId": "VRB-1",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2576,
+        "content": "A hexagon has six sides.\n\nANSWER: 6",
+        "error": null
+      },
+      "K4": {
+        "itemId": "VRB-1",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1084,
+        "content": "A hexagon has 6 sides.\n\nANSWER: 6",
+        "error": null
+      }
+    },
+    "VRB-2": {
+      "K3": {
+        "itemId": "VRB-2",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 533,
+        "content": "ANSWER: 100°C",
+        "error": null
+      },
+      "K2": {
+        "itemId": "VRB-2",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1448,
+        "content": "At sea level, water boils at 100 degrees Celsius.\n\nANSWER: 100°C",
+        "error": null
+      },
+      "K1": {
+        "itemId": "VRB-2",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2693,
+        "content": "At sea level (1 atmosphere), water boils at 100 degrees Celsius.\nANSWER: 100°C",
+        "error": null
+      },
+      "K4": {
+        "itemId": "VRB-2",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1732,
+        "content": "At sea level, the boiling point of water is 100 degrees Celsius.\n\nANSWER: 100 degrees Celsius",
+        "error": null
+      }
+    },
+    "VRB-3": {
+      "K2": {
+        "itemId": "VRB-3",
+        "channelId": "K2",
+        "model": "gpt-5.5",
+        "family": "openai",
+        "ms": 1462,
+        "content": "ANSWER: Nitrogen",
+        "error": null
+      },
+      "K3": {
+        "itemId": "VRB-3",
+        "channelId": "K3",
+        "model": "claude-haiku-4-5",
+        "family": "anthropic",
+        "ms": 672,
+        "content": "ANSWER: Nitrogen",
+        "error": null
+      },
+      "K1": {
+        "itemId": "VRB-3",
+        "channelId": "K1",
+        "model": "gpt-5-mini",
+        "family": "openai",
+        "ms": 2031,
+        "content": "ANSWER: Nitrogen",
+        "error": null
+      },
+      "K4": {
+        "itemId": "VRB-3",
+        "channelId": "K4",
+        "model": "gemini-3-flash-preview",
+        "family": "google",
+        "ms": 1612,
+        "content": "Nitrogen\n\nANSWER: Nitrogen",
+        "error": null
+      }
+    }
+  }
+}
